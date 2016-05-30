@@ -9,6 +9,7 @@
     <url>http://epam.com</url>
 
     <properties>
+        <commons.version>1.2.2</commons.version>
         <spring.version>4.2.6.RELEASE</spring.version>
         <ojdbc.version>11.2.0</ojdbc.version>
         <log4j.version>2.5</log4j.version>
@@ -20,7 +21,7 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
+            <version>${commons.version}</version>
         </dependency>
 
         <dependency>
