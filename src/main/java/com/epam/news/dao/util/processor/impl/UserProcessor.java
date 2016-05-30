@@ -3,6 +3,7 @@ package com.epam.news.dao.util.processor.impl;
 import com.epam.news.dao.util.processor.EntityProcessor;
 import com.epam.news.dao.util.processor.exception.EntityProcessorException;
 import com.epam.news.domain.User;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,13 +13,14 @@ import java.util.List;
 /**
  * Created by Zheny Chaichits on 28.05.2016.
  */
+@Component
 public class UserProcessor implements EntityProcessor<User> {
 
     // TODO: 28.05.2016  probably can be replaced with enum
-    private static final String USER_ID_KEY = "USER_ID";
-    private static final String USER_NAME_KEY = "USER_NAME";
-    private static final String LOGIN_KEY = "LOGIN";
-    private static final String PASSWORD_KEY = "PASSWORD";
+    public static final String USER_ID_KEY = "USER_ID";
+    public static final String USER_NAME_KEY = "USER_NAME";
+    public static final String LOGIN_KEY = "LOGIN";
+    public static final String PASSWORD_KEY = "PASSWORD";
 
     private UserProcessor() {
     }
@@ -27,7 +29,7 @@ public class UserProcessor implements EntityProcessor<User> {
         public static final UserProcessor INSTANCE = new UserProcessor();
     }
 
-    public UserProcessor getInstance() {
+    public static UserProcessor getInstance() {
         return UserProcessorHolder.INSTANCE;
     }
 
@@ -66,4 +68,5 @@ public class UserProcessor implements EntityProcessor<User> {
             throw new EntityProcessorException("Couldn't get user list from result set", e);
         }
     }
+
 }

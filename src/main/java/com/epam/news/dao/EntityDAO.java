@@ -1,7 +1,11 @@
 package com.epam.news.dao;
 
 import com.epam.news.dao.exception.DAOException;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -12,9 +16,9 @@ public interface EntityDAO<K, T> {
 
     T find(K domain) throws DAOException;
 
-    T update(T entity) throws DAOException;
+    boolean update(T entity) throws DAOException;
 
-    T delete(K domain) throws DAOException;
+    boolean delete(K domain) throws DAOException;
 
     List<T> all() throws DAOException;
 

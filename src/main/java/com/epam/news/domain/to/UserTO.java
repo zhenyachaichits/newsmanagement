@@ -1,14 +1,14 @@
 package com.epam.news.domain.to;
 
 import com.epam.news.domain.User;
-import com.epam.news.domain.UserRole;
+import com.epam.news.domain.Role;
 
 /**
  * Created by Zheny Chaichits on 26.05.2016.
  */
 public class UserTO {
     private User user;
-    private UserRole role;
+    private Role role;
 
     public User getUser() {
         return user;
@@ -18,11 +18,11 @@ public class UserTO {
         this.user = user;
     }
 
-    public UserRole getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

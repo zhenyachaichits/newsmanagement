@@ -3,7 +3,7 @@ package com.epam.news.domain;
 /**
  * Created by Zheny Chaichits on 26.05.2016.
  */
-public class UserRole {
+public class Role {
     private long userId;
     private String roleName;
 
