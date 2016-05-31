@@ -131,6 +131,4 @@ public class UserDAOImpl implements UserDAO {
             ConnectionProvider.releaseConnection(connection, dataSource);
         }
     }
-
-
 }

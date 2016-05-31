@@ -20,7 +20,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDAO dao;
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Role add(Role role) throws ServiceException {

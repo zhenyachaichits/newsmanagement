@@ -26,7 +26,6 @@ public class RoleDAOImpl implements RoleDAO {
     private static final String SQL_DELETE_ROLE_QUERY = "DELETE FROM ROLES WHERE USER_ID = ?";
     private static final String SQL_GET_ALL_ROLES_QUERY = "SELECT USER_ID, ROLE_NAME FROM ROLES";
 
-
     @Autowired
     private DataSource dataSource;
     @Autowired

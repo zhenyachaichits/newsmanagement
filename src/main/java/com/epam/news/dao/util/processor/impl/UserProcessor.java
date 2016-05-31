@@ -22,17 +22,6 @@ public class UserProcessor implements EntityProcessor<User> {
     public static final String LOGIN_KEY = "LOGIN";
     public static final String PASSWORD_KEY = "PASSWORD";
 
-    private UserProcessor() {
-    }
-
-    private static final class UserProcessorHolder {
-        public static final UserProcessor INSTANCE = new UserProcessor();
-    }
-
-    public static UserProcessor getInstance() {
-        return UserProcessorHolder.INSTANCE;
-    }
-
     @Override
     public User toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {

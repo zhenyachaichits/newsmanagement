@@ -19,17 +19,6 @@ public class RoleProcessor implements EntityProcessor<Role> {
     public static final String USER_ID_KEY = "USER_ID";
     public static final String ROLE_NAME_KEY = "ROLE_NAME";
 
-    private RoleProcessor() {
-    }
-
-    private static final class RoleProcessorHolder {
-        public static final RoleProcessor INSTANCE = new RoleProcessor();
-    }
-
-    public static RoleProcessor getInstance() {
-        return RoleProcessorHolder.INSTANCE;
-    }
-
     @Override
     public Role toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {

@@ -12,7 +12,7 @@ public class News {
     private String shortText;
     private String fullText;
     private Timestamp creationDate;
-    private Date modificationDate;
+    private Timestamp modificationDate;
 
     public long getNewsId() {
         return newsId;
@@ -46,11 +46,11 @@ public class News {
         this.fullText = fullText;
     }
 
-    public Date getModificationDate() {
+    public Timestamp getModificationDate() {
         return modificationDate;
     }
 
-    public void setModificationDate(Date modificationDate) {
+    public void setModificationDate(Timestamp modificationDate) {
         this.modificationDate = modificationDate;
     }
 
