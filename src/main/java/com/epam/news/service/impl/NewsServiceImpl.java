@@ -3,6 +3,7 @@ package com.epam.news.service.impl;
 import com.epam.news.dao.NewsDAO;
 import com.epam.news.dao.exception.DAOException;
 import com.epam.news.domain.News;
+import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.service.NewsService;
 import com.epam.news.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,15 @@ public class NewsServiceImpl implements NewsService {
             return dao.all();
         } catch (DAOException e) {
             throw new ServiceException("Couldn't execute getting all news service", e);
+        }
+    }
+
+    @Override
+    public List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws ServiceException {
+        try {
+            return dao.getNewsByCriteria(criteria);
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute news searching by criteria service", e);
         }
     }
 }

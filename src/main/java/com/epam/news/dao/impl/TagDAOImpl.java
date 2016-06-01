@@ -2,7 +2,7 @@ package com.epam.news.dao.impl;
 
 import com.epam.news.dao.TagDAO;
 import com.epam.news.dao.exception.DAOException;
-import com.epam.news.dao.util.ConnectionProvider;
+import com.epam.news.dao.util.DAOUtil;
 import com.epam.news.dao.util.processor.EntityProcessor;
 import com.epam.news.dao.util.processor.exception.EntityProcessorException;
 import com.epam.news.dao.util.processor.impl.TagProcessor;
@@ -52,7 +52,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new tag", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -71,7 +71,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find tag by id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -89,7 +89,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update tag", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -105,7 +105,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete tag with id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -123,7 +123,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all tags", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 }

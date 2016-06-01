@@ -27,4 +27,23 @@ public class NewsTO {
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NewsTO newsTO = (NewsTO) o;
+
+        if (news != null ? !news.equals(newsTO.news) : newsTO.news != null) return false;
+        return authors != null ? authors.equals(newsTO.authors) : newsTO.authors == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = news != null ? news.hashCode() : 0;
+        result = 31 * result + (authors != null ? authors.hashCode() : 0);
+        return result;
+    }
 }

@@ -42,4 +42,27 @@ public class Comment {
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comment comment = (Comment) o;
+
+        if (commentId != comment.commentId) return false;
+        if (newsId != comment.newsId) return false;
+        if (commentText != null ? !commentText.equals(comment.commentText) : comment.commentText != null) return false;
+        return creationDate != null ? creationDate.equals(comment.creationDate) : comment.creationDate == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (commentId ^ (commentId >>> 32));
+        result = 31 * result + (int) (newsId ^ (newsId >>> 32));
+        result = 31 * result + (commentText != null ? commentText.hashCode() : 0);
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
+        return result;
+    }
 }

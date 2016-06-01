@@ -2,7 +2,7 @@ package com.epam.news.dao.impl;
 
 import com.epam.news.dao.RoleDAO;
 import com.epam.news.dao.exception.DAOException;
-import com.epam.news.dao.util.ConnectionProvider;
+import com.epam.news.dao.util.DAOUtil;
 import com.epam.news.dao.util.processor.EntityProcessor;
 import com.epam.news.dao.util.processor.exception.EntityProcessorException;
 import com.epam.news.domain.Role;
@@ -46,7 +46,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new role", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -65,7 +65,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find role by id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -83,7 +83,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update role", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -99,7 +99,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete role with user id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -117,7 +117,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all roles", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 }

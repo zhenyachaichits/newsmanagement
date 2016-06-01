@@ -2,7 +2,7 @@ package com.epam.news.dao.impl;
 
 import com.epam.news.dao.AuthorDAO;
 import com.epam.news.dao.exception.DAOException;
-import com.epam.news.dao.util.ConnectionProvider;
+import com.epam.news.dao.util.DAOUtil;
 import com.epam.news.dao.util.processor.EntityProcessor;
 import com.epam.news.dao.util.processor.exception.EntityProcessorException;
 import com.epam.news.dao.util.processor.impl.AuthorProcessor;
@@ -55,7 +55,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new author", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -74,7 +74,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find author by id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -93,7 +93,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update author", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -109,7 +109,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete author with id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -127,7 +127,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all authors", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 }

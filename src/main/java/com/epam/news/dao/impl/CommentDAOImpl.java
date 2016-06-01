@@ -2,7 +2,7 @@ package com.epam.news.dao.impl;
 
 import com.epam.news.dao.CommentDAO;
 import com.epam.news.dao.exception.DAOException;
-import com.epam.news.dao.util.ConnectionProvider;
+import com.epam.news.dao.util.DAOUtil;
 import com.epam.news.dao.util.processor.EntityProcessor;
 import com.epam.news.dao.util.processor.exception.EntityProcessorException;
 import com.epam.news.dao.util.processor.impl.CommentProcessor;
@@ -57,7 +57,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new comment", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -76,7 +76,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find comment by id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -94,7 +94,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update comment text", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -110,7 +110,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete comment with id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -128,7 +128,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all comments", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 }

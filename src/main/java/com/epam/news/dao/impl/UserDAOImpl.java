@@ -2,14 +2,13 @@ package com.epam.news.dao.impl;
 
 import com.epam.news.dao.UserDAO;
 import com.epam.news.dao.exception.DAOException;
-import com.epam.news.dao.util.ConnectionProvider;
+import com.epam.news.dao.util.DAOUtil;
 import com.epam.news.dao.util.processor.EntityProcessor;
 import com.epam.news.dao.util.processor.exception.EntityProcessorException;
 import com.epam.news.dao.util.processor.impl.UserProcessor;
 import com.epam.news.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -59,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new user", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -77,7 +76,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find user by id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -96,7 +95,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update user", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -111,7 +110,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete user with id", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
@@ -128,7 +127,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all users", e);
         } finally {
-            ConnectionProvider.releaseConnection(connection, dataSource);
+            DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 }

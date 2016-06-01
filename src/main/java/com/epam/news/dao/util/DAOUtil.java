@@ -11,7 +11,10 @@ import java.sql.SQLException;
  * Created by Yauhen_Chaichyts on 5/30/2016.
  */
 // TODO: 5/30/2016 it's stupid
-public class ConnectionProvider {
+public final class DAOUtil {
+
+    public static final String ARRAY_DATA_TYPE = "NUMBER";
+
     public static void releaseConnection(Connection connection, DataSource dataSource) throws DAOException {
         if (connection != null) {
             try {

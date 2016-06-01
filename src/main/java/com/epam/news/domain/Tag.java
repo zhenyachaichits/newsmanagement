@@ -22,4 +22,23 @@ public class Tag {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tag tag = (Tag) o;
+
+        if (tagId != tag.tagId) return false;
+        return tagName != null ? tagName.equals(tag.tagName) : tag.tagName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (tagId ^ (tagId >>> 32));
+        result = 31 * result + (tagName != null ? tagName.hashCode() : 0);
+        return result;
+    }
 }

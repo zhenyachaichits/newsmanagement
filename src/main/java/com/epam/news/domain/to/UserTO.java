@@ -25,4 +25,23 @@ public class UserTO {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserTO userTO = (UserTO) o;
+
+        if (user != null ? !user.equals(userTO.user) : userTO.user != null) return false;
+        return role != null ? role.equals(userTO.role) : userTO.role == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
 }
