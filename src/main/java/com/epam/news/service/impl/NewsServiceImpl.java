@@ -1,7 +1,7 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.dao.NewsDAO;
-import com.epam.news.dao.exception.DAOException;
+import com.epam.news.persistence.NewsDAO;
+import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.News;
 import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.service.NewsService;
@@ -83,6 +83,15 @@ public class NewsServiceImpl implements NewsService {
             return dao.getNewsByCriteria(criteria);
         } catch (DAOException e) {
             throw new ServiceException("Couldn't execute news searching by criteria service", e);
+        }
+    }
+
+    @Override
+    public int getNewsCount() throws ServiceException {
+        try {
+            return dao.getNewsCount();
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute news counting service", e);
         }
     }
 }

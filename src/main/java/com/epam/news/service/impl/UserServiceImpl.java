@@ -1,13 +1,12 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.dao.UserDAO;
-import com.epam.news.dao.exception.DAOException;
+import com.epam.news.persistence.UserDAO;
+import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.User;
 import com.epam.news.service.UserService;
 import com.epam.news.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

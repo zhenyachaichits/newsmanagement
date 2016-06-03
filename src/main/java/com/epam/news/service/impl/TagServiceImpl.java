@@ -1,7 +1,7 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.dao.TagDAO;
-import com.epam.news.dao.exception.DAOException;
+import com.epam.news.persistence.TagDAO;
+import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.Tag;
 import com.epam.news.service.TagService;
 import com.epam.news.service.exception.ServiceException;

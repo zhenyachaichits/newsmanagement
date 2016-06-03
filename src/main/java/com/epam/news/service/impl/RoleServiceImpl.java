@@ -1,7 +1,7 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.dao.RoleDAO;
-import com.epam.news.dao.exception.DAOException;
+import com.epam.news.persistence.RoleDAO;
+import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.Role;
 import com.epam.news.service.RoleService;
 import com.epam.news.service.exception.ServiceException;

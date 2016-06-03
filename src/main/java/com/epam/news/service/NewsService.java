@@ -12,4 +12,6 @@ import java.util.List;
 public interface NewsService extends EntityService<Long, News> {
 
     List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws ServiceException;
+
+    int getNewsCount() throws ServiceException;
 }

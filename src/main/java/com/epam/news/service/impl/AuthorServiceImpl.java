@@ -1,7 +1,7 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.dao.AuthorDAO;
-import com.epam.news.dao.exception.DAOException;
+import com.epam.news.persistence.AuthorDAO;
+import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.Author;
 import com.epam.news.service.AuthorService;
 import com.epam.news.service.exception.ServiceException;

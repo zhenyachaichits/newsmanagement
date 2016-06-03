@@ -1,7 +1,7 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.dao.CommentDAO;
-import com.epam.news.dao.exception.DAOException;
+import com.epam.news.persistence.CommentDAO;
+import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.Comment;
 import com.epam.news.service.CommentService;
 import com.epam.news.service.exception.ServiceException;
