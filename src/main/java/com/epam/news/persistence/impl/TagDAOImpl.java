@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yauhen_Chaichyts on 5/31/2016.
@@ -26,6 +28,9 @@ public class TagDAOImpl implements TagDAO {
     private static final String SQL_UPDATE_TAG_QUERY = "UPDATE TAG SET TAG_NAME = ? WHERE TAG_ID = ?";
     private static final String SQL_DELETE_TAG_QUERY = "DELETE FROM TAG WHERE TAG_ID = ?";
     private static final String SQL_GET_ALL_TAGS_QUERY = "SELECT TAG_ID, TAG_NAME FROM TAG";
+    private static final String SQL_ADD_NEWS_TAG_QUERY = "INSERT INTO NEWS_TAG (NEWS_ID, TAG_ID) VALUES (?, ?)";
+    private static final String SQL_GET_NEWS_TAGS_QUERY = "SELECT TAG.TAG_ID, TAG.TAG_NAME FROM TAG " +
+            "INNER JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG_ID WHERE NEWS_TAG.NEWS_ID = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -122,6 +127,42 @@ public class TagDAOImpl implements TagDAO {
             return tagList;
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all tags", e);
+        } finally {
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public void addNewsTag(long newsId, long tagId) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_NEWS_TAG_QUERY);
+
+            statement.setLong(1, newsId);
+            statement.setLong(2, tagId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't add news author", e);
+        } finally {
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public List<Tag> getNewsTags(long newsId) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_TAGS_QUERY);
+
+            statement.setLong(1, newsId);
+            ResultSet resultSet = statement.executeQuery();
+            List<Tag> tagList = entityProcessor.toEntityList(resultSet);
+
+            return tagList;
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get id set", e);
         } finally {
             DAOUtil.releaseConnection(connection, dataSource);
         }

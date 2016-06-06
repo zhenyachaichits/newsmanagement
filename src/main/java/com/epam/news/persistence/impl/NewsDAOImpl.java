@@ -12,6 +12,7 @@ import com.epam.news.domain.criteria.NewsSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -34,16 +35,17 @@ public class NewsDAOImpl implements NewsDAO {
     private static final String SQL_DELETE_ROLE_QUERY = "DELETE FROM NEWS WHERE NEWS_ID = ?";
     private static final String SQL_GET_ALL_NEWS_QUERY = "SELECT NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, " +
             "CREATION_DATE, MODIFICATION_DATE FROM NEWS";
-    private static final String SQL_GET_NEWS_AUTHORS_QUERY = "SELECT NEWS_AUTHOR.AUTHOR_ID FROM NEWS " +
-            "INNER JOIN NEWS_AUTHOR ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID WHERE NEWS.NEWS_ID = ?";
-    private static final String SQL_GET_NEWS_TAGS_QUERY = "SELECT NEWS_TAG.TAG_ID FROM NEWS " +
-            "INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID WHERE NEWS.NEWS_ID = ?";
     private static final String SQL_GET_NEWS_BY_AUTHORS_QUERY = "SELECT NEWS.NEWS_ID, NEWS.TITLE, " +
             "NEWS.SHORT_TEXT, NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE FROM NEWS " +
             "INNER JOIN NEWS_AUTHOR ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID WHERE NEWS_AUTHOR.AUTHOR_ID IN (?)";
     private static final String SQL_GET_NEWS_BY_TAGS_QUERY = "SELECT NEWS.NEWS_ID, NEWS.TITLE, " +
             "NEWS.SHORT_TEXT, NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE FROM NEWS " +
             "INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID WHERE NEWS_TAG.TAG_ID IN (?)";
+    private static final String SQL_GET_NEWS_ORDERED_BY_COMMENTS_QUERY = "SELECT NEWS.NEWS_ID, NEWS.TITLE, " +
+            "NEWS.SHORT_TEXT, NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE, " +
+            "COUNT(COMMENTS.COMMENT_ID) AS COUNT FROM NEWS LEFT JOIN COMMENTS " +
+            "ON NEWS.NEWS_ID = COMMENTS.NEWS_ID GROUP BY NEWS.NEWS_ID, NEWS.TITLE, NEWS.SHORT_TEXT, " +
+            "NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE ORDER BY COUNT DESC";
     private static final String SQL_GET_NEWS_BY_SEARCH_CRITERIA_QUERY = "SELECT NEWS.NEWS_ID, NEWS.TITLE, " +
             "NEWS.SHORT_TEXT, NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE FROM NEWS " +
             "INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID INNER JOIN NEWS_AUTHOR " +
@@ -141,52 +143,29 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public List<News> all() throws DAOException {
-        Connection connection = null;
         try {
-            connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_NEWS_QUERY);
-            List<News> newsList = entityProcessor.toEntityList(resultSet);
-
-            return newsList;
-        } catch (SQLException | EntityProcessorException e) {
+            return getNewsList(SQL_GET_ALL_NEWS_QUERY);
+        } catch (DAOException e) {
             throw new DAOException("Couldn't get all news", e);
-        } finally {
-            DAOUtil.releaseConnection(connection, dataSource);
-        }
-    }
-
-    @Override
-    public Set<Long> getNewsAuthors(long newsId) throws DAOException {
-        try {
-            Set<Long> authorIdSet = getIdSet(SQL_GET_NEWS_AUTHORS_QUERY);
-
-            return authorIdSet;
-        } catch (DAOException e) {
-            throw new DAOException("Couldn't get news author id set", e);
-        }
-    }
-
-    @Override
-    public Set<Long> getNewsTags(long newsId) throws DAOException {
-        try {
-            Set<Long> tagIdSet = getIdSet(SQL_GET_NEWS_TAGS_QUERY);
-
-            return tagIdSet;
-        } catch (DAOException e) {
-            throw new DAOException("Couldn't get news tag id set", e);
         }
     }
 
     @Override
     public List<News> getNewsByTags(Set<Long> tagIdSet) throws DAOException {
-        return null;
+        try {
+            return getByIdSet(SQL_GET_NEWS_BY_TAGS_QUERY, tagIdSet);
+        } catch (DAOException e) {
+            throw new DAOException("Couldn't get news by tags", e);
+        }
     }
 
     @Override
     public List<News> getNewsByAuthors(Set<Long> authorSet) throws DAOException {
-        return null;
+        try {
+            return getByIdSet(SQL_GET_NEWS_BY_AUTHORS_QUERY, authorSet);
+        } catch (DAOException e) {
+            throw new DAOException("Couldn't get news by authors", e);
+        }
     }
 
     @Override
@@ -196,10 +175,8 @@ public class NewsDAOImpl implements NewsDAO {
             connection = DataSourceUtils.getConnection(dataSource);
             PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_BY_SEARCH_CRITERIA_QUERY);
 
-            Array authorIdArray = connection.createArrayOf(DAOUtil.ARRAY_DATA_TYPE, criteria.getAuthorIdSet().toArray());
-            Array tagIdArray = connection.createArrayOf(DAOUtil.ARRAY_DATA_TYPE, criteria.getTagIdSet().toArray());
-            statement.setArray(1, authorIdArray);
-            statement.setArray(2, tagIdArray);
+            statement.setString(1, StringUtils.collectionToCommaDelimitedString(criteria.getAuthorIdSet()));
+            statement.setString(2, StringUtils.collectionToCommaDelimitedString(criteria.getTagIdSet()));
 
             ResultSet resultSet = statement.executeQuery();
             List<News> newsList = entityProcessor.toEntityList(resultSet);
@@ -209,6 +186,15 @@ public class NewsDAOImpl implements NewsDAO {
             throw new DAOException("Couldn't get news by criteria", e);
         } finally {
             DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public List<News> getNewsOrderedByCommentsNumber() throws DAOException {
+        try {
+            return getNewsList(SQL_GET_NEWS_ORDERED_BY_COMMENTS_QUERY);
+        } catch (DAOException e) {
+            throw new DAOException("Couldn't get news ordered by comments number", e);
         }
     }
 
@@ -233,27 +219,40 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    private Set<Long> getIdSet(String query) throws DAOException {
+    private List<News> getByIdSet(String query, Set<Long> idSet) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, StringUtils.collectionToCommaDelimitedString(idSet));
+
+            ResultSet resultSet = statement.executeQuery();
+            List<News> newsList = entityProcessor.toEntityList(resultSet);
+
+            return newsList;
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get news by id set", e);
+        } finally {
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    private List<News> getNewsList(String query) throws DAOException {
         Connection connection = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(query);
-            Set<Long> authorIdSet = new HashSet<>();
+            List<News> newsList = entityProcessor.toEntityList(resultSet);
 
-            while(resultSet.next()) {
-                authorIdSet.add(resultSet.getLong(1));
-            }
-
-            return authorIdSet;
-        } catch (SQLException e) {
-            throw new DAOException("Couldn't get id set", e);
+            return newsList;
+        } catch (SQLException | EntityProcessorException  e) {
+            throw new DAOException("Couldn't get news list", e);
         } finally {
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
-
-
 
 }

@@ -14,16 +14,13 @@ package com.epam.news.persistence;
 // TODO: 6/1/2016 set or list?
 public interface NewsDAO extends EntityDAO<Long, News> {
 
-    // TODO: 6/3/2016  remove
-    Set<Long> getNewsAuthors(long newsId) throws DAOException;
-
-    Set<Long> getNewsTags(long newsId) throws DAOException;
-
     List<News> getNewsByTags(Set<Long> tagIdSet) throws DAOException;
 
     List<News> getNewsByAuthors(Set<Long> authorSet) throws DAOException;
 
     List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws DAOException;
+
+    List<News> getNewsOrderedByCommentsNumber() throws DAOException;
 
     int getNewsCount() throws DAOException;
 }

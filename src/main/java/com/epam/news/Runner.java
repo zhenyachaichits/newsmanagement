@@ -31,14 +31,15 @@ public class Runner {
 
         NewsSearchCriteria criteria = new NewsSearchCriteria();
         Set<Long> idSet = new HashSet<>(5);
-        idSet.add(5L);
+        idSet.add(1L);
+        idSet.add(2L);
 
         criteria.setAuthorIdSet(idSet);
         criteria.setTagIdSet(idSet);
         try {
             //obj.getService().add(user);
-            System.out.print(obj.getNewsService().getNewsCount());
-            obj.getNewsService().getNewsByCriteria(criteria);
+            System.out.println(obj.getNewsService().getNewsCount());
+            System.out.println(obj.getNewsService().getNewsByCriteria(criteria));
 
         } catch (ServiceException e) {
             e.printStackTrace();

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yauhen_Chaichyts on 5/31/2016.
@@ -28,6 +30,11 @@ public class AuthorDAOImpl implements AuthorDAO {
             "WHERE AUTHOR_ID = ?";
     private static final String SQL_DELETE_AUTHOR_QUERY = "DELETE FROM AUTHOR WHERE AUTHOR_ID = ?";
     private static final String SQL_GET_ALL_AUTHORS_QUERY = "SELECT AUTHOR_ID, AUTHOR_NAME, EXPIRED FROM AUTHOR";
+    private static final String SQL_ADD_NEWS_AUTHOR_QUERY = "INSERT INTO NEWS_AUTHOR (NEWS_ID, AUTHOR_ID) " +
+            "VALUES (?, ?)";
+    private static final String SQL_GET_NEWS_AUTHORS_QUERY = "SELECT AUTHOR.AUTHOR_ID, AUTHOR.AUTHOR_NAME, " +
+            "AUTHOR.EXPIRED FROM AUTHOR INNER JOIN NEWS_AUTHOR ON AUTHOR.AUTHOR_ID = NEWS_AUTHOR.AUTHOR_ID " +
+            "WHERE NEWS_AUTHOR.NEWS_ID = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -126,6 +133,42 @@ public class AuthorDAOImpl implements AuthorDAO {
             return authorList;
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all authors", e);
+        } finally {
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public void addNewsAuthor(long newsId, long authorId) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_NEWS_AUTHOR_QUERY);
+
+            statement.setLong(1, newsId);
+            statement.setLong(2, authorId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't add news author", e);
+        } finally {
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public List<Author> getNewsAuthors(long newsId) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_AUTHORS_QUERY);
+
+            statement.setLong(1, newsId);
+            ResultSet resultSet = statement.executeQuery();
+            List<Author> authorList = entityProcessor.toEntityList(resultSet);
+
+            return authorList;
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get id set", e);
         } finally {
             DAOUtil.releaseConnection(connection, dataSource);
         }

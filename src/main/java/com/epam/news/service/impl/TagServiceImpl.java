@@ -67,4 +67,23 @@ public class TagServiceImpl implements TagService {
             throw new ServiceException("Couldn't execute getting all tags service", e);
         }
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addNewsTag(long newsId, long tagId) throws ServiceException {
+        try {
+            dao.addNewsTag(newsId, tagId);
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute adding news tags service", e);
+        }
+    }
+
+    @Override
+    public List<Tag> getNewsTags(long newsId) throws ServiceException {
+        try {
+            return dao.getNewsTags(newsId);
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute getting news tags service", e);
+        }
+    }
 }

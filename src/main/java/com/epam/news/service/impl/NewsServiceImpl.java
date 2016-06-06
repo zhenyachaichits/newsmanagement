@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -77,12 +79,31 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    // TODO: 6/5/2016 refactor (and add validation?)
     @Override
     public List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws ServiceException {
         try {
+            if (criteria.getAuthorIdSet().isEmpty() && criteria.getTagIdSet().isEmpty()) {
+                throw new ServiceException("Criteria is invalid");
+            }
+            if (criteria.getAuthorIdSet().isEmpty() && !criteria.getTagIdSet().isEmpty()) {
+                return dao.getNewsByTags(criteria.getTagIdSet());
+            }
+            if (!criteria.getAuthorIdSet().isEmpty() && criteria.getTagIdSet().isEmpty()) {
+                return dao.getNewsByAuthors(criteria.getAuthorIdSet());
+            }
             return dao.getNewsByCriteria(criteria);
-        } catch (DAOException e) {
+        } catch (DAOException | ServiceException e) {
             throw new ServiceException("Couldn't execute news searching by criteria service", e);
+        }
+    }
+
+    @Override
+    public List<News> getNewsOrderedByCommentsNumber() throws ServiceException {
+        try {
+            return dao.getNewsOrderedByCommentsNumber();
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute getting all news ordered by comments service", e);
         }
     }
 

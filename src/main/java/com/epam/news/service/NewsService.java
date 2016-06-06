@@ -13,5 +13,7 @@ public interface NewsService extends EntityService<Long, News> {
 
     List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws ServiceException;
 
+    List<News> getNewsOrderedByCommentsNumber() throws ServiceException;
+
     int getNewsCount() throws ServiceException;
 }

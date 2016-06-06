@@ -10,7 +10,6 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="accessToUnderlyingConnectionAllowed" value="true"/>
         <property name="url" value="jdbc:oracle:thin:@//localhost:1521/XE"/>
         <property name="username" value="admin"/>
         <property name="password" value="admin"/>

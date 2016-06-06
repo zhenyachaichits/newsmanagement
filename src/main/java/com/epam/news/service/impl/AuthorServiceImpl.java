@@ -67,4 +67,23 @@ public class AuthorServiceImpl implements AuthorService {
             throw new ServiceException("Couldn't execute getting all authors service", e);
         }
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addNewsAuthor(long newsId, long authorId) throws ServiceException {
+        try {
+            dao.addNewsAuthor(newsId, authorId);
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute adding news author service", e);
+        }
+    }
+
+    @Override
+    public List<Author> getNewsAuthors(long newsId) throws ServiceException {
+        try {
+            return dao.getNewsAuthors(newsId);
+        } catch (DAOException e) {
+            throw new ServiceException("Couldn't execute getting news authors service", e);
+        }
+    }
 }
