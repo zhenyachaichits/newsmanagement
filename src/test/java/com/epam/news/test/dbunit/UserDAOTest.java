@@ -37,5 +37,6 @@ public class UserDAOTest {
     @Test
     public void testAdd() throws Exception {
         dao.add(new User());
+
     }
 }

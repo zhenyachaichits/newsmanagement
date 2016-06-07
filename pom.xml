@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <junit.version>4.11</junit.version>
         <testng.version>6.8.8</testng.version>
-        <dbunit.version>2.2</dbunit.version>
+        <dbunit.version>2.4.8</dbunit.version>
     </properties>
 
     <dependencies>
@@ -77,6 +77,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -103,6 +110,7 @@
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
+            <type>jar</type>
             <version>${dbunit.version}</version>
         </dependency>
     </dependencies>
