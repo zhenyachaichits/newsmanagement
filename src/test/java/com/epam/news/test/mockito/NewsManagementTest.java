@@ -25,9 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.mockito.Mockito.*;
-/**
- * Created by Zheny Chaichits on 6/5/2016.
- */
+
 @RunWith(MockitoJUnitRunner.class)
 public class NewsManagementTest {
     private static final Long TEST_ID = 1L;

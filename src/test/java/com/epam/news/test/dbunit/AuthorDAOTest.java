@@ -21,9 +21,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Yauhen_Chaichyts on 6/8/2016.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
 @Transactional
