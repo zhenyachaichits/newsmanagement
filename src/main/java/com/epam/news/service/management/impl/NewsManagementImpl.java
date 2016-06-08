@@ -8,7 +8,7 @@ import com.epam.news.service.AuthorService;
 import com.epam.news.service.NewsService;
 import com.epam.news.service.TagService;
 import com.epam.news.service.exception.ServiceException;
-import com.epam.news.service.management.NewsManagementService;
+import com.epam.news.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by Yauhen_Chaichyts on 6/3/2016.
  */
 @Service
-public class NewsManagementServiceImpl implements NewsManagementService {
+public class NewsManagementImpl implements NewsManagement {
 
     @Autowired
     private NewsService newsService;

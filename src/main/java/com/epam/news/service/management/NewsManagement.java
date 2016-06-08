@@ -6,6 +6,6 @@ import com.epam.news.service.exception.ServiceException;
 /**
  * Created by Yauhen_Chaichyts on 6/3/2016.
  */
-public interface NewsManagementService {
+public interface NewsManagement {
     void addNewsData(NewsTO newsData) throws ServiceException;
 }

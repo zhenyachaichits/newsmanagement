@@ -22,16 +22,12 @@ public class RoleProcessor implements EntityProcessor<Role> {
     @Override
     public Role toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
-            Role role = new Role();
+            if (!resultSet.next()) {
+                throw new EntityProcessorException("Result set is empty");
+            }
 
-            long userId = resultSet.getLong(USER_ID_KEY);
-            String roleName = resultSet.getString(ROLE_NAME_KEY);
-
-            role.setUserId(userId);
-            role.setRoleName(roleName);
-
-            return role;
-        } catch (SQLException e) {
+            return getEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
             throw new EntityProcessorException("Couldn't get role from result set", e);
         }
     }
@@ -42,12 +38,24 @@ public class RoleProcessor implements EntityProcessor<Role> {
             List<Role> roleList = new ArrayList<>();
 
             while (resultSet.next()) {
-                roleList.add(toEntity(resultSet));
+                roleList.add(getEntity(resultSet));
             }
 
             return roleList;
-        } catch (SQLException | EntityProcessorException e) {
+        } catch (SQLException e) {
             throw new EntityProcessorException("Couldn't get role list from result set", e);
         }
+    }
+
+    private Role getEntity(ResultSet resultSet) throws SQLException {
+        Role role = new Role();
+
+        long userId = resultSet.getLong(USER_ID_KEY);
+        String roleName = resultSet.getString(ROLE_NAME_KEY);
+
+        role.setUserId(userId);
+        role.setRoleName(roleName);
+
+        return role;
     }
 }

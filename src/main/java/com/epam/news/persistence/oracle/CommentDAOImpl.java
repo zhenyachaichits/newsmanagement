@@ -1,4 +1,4 @@
-package com.epam.news.persistence.impl;
+package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.CommentDAO;
 import com.epam.news.persistence.exception.DAOException;
@@ -70,9 +70,8 @@ public class CommentDAOImpl implements CommentDAO {
 
             statement.setLong(1, commentId);
             ResultSet resultSet = statement.executeQuery();
-            Comment comment = entityProcessor.toEntity(resultSet);
 
-            return comment;
+            return entityProcessor.toEntity(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find comment by id", e);
         } finally {
@@ -122,9 +121,8 @@ public class CommentDAOImpl implements CommentDAO {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_COMMENTS_QUERY);
-            List<Comment> tagList = entityProcessor.toEntityList(resultSet);
 
-            return tagList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all comments", e);
         } finally {

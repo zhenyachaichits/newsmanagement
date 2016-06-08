@@ -5,11 +5,26 @@ import com.epam.news.service.exception.ServiceException;
 
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * The interface Tag service.
  */
 public interface TagService extends EntityService<Long, Tag> {
+    /**
+     * Add news tag.
+     *
+     * @param newsId the news id
+     * @param tagId  the tag id
+     * @throws ServiceException the service exception
+     */
     void addNewsTag(long newsId, long tagId) throws ServiceException;
 
+    /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws ServiceException the service exception
+     */
     List<Tag> getNewsTags(long newsId) throws ServiceException;
 }

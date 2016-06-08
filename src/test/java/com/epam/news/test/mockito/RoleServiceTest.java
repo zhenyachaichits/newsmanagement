@@ -1,7 +1,6 @@
 package com.epam.news.test.mockito;
 
 import com.epam.news.domain.Role;
-import com.epam.news.domain.User;
 import com.epam.news.persistence.RoleDAO;
 import com.epam.news.service.impl.RoleServiceImpl;
 import org.junit.Test;
@@ -15,9 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 

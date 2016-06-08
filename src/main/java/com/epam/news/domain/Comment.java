@@ -2,8 +2,9 @@ package com.epam.news.domain;
 
 import java.sql.Timestamp;
 
+
 /**
- * Created by Zheny Chaichits on 26.05.2016.
+ * The type Comment.
  */
 public class Comment {
     private long commentId;
@@ -11,34 +12,74 @@ public class Comment {
     private String commentText;
     private Timestamp creationDate;
 
+    /**
+     * Gets comment id.
+     *
+     * @return the comment id
+     */
     public long getCommentId() {
         return commentId;
     }
 
+    /**
+     * Sets comment id.
+     *
+     * @param commentId the comment id
+     */
     public void setCommentId(long commentId) {
         this.commentId = commentId;
     }
 
+    /**
+     * Gets news id.
+     *
+     * @return the news id
+     */
     public long getNewsId() {
         return newsId;
     }
 
+    /**
+     * Sets news id.
+     *
+     * @param newsId the news id
+     */
     public void setNewsId(long newsId) {
         this.newsId = newsId;
     }
 
+    /**
+     * Gets comment text.
+     *
+     * @return the comment text
+     */
     public String getCommentText() {
         return commentText;
     }
 
+    /**
+     * Sets comment text.
+     *
+     * @param commentText the comment text
+     */
     public void setCommentText(String commentText) {
         this.commentText = commentText;
     }
 
+    /**
+     * Gets creation date.
+     *
+     * @return the creation date
+     */
     public Timestamp getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Sets creation date.
+     *
+     * @param creationDate the creation date
+     */
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }

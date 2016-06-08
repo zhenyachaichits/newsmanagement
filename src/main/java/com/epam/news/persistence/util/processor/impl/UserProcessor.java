@@ -16,7 +16,6 @@ import java.util.List;
 @Component
 public class UserProcessor implements EntityProcessor<User> {
 
-    // TODO: 28.05.2016  probably can be replaced with enum
     public static final String USER_ID_KEY = "USER_ID";
     public static final String USER_NAME_KEY = "USER_NAME";
     public static final String LOGIN_KEY = "LOGIN";
@@ -25,20 +24,12 @@ public class UserProcessor implements EntityProcessor<User> {
     @Override
     public User toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
-            User user = new User();
+            if (!resultSet.next()) {
+                throw new EntityProcessorException("Result set is empty");
+            }
 
-            long userId = resultSet.getLong(USER_ID_KEY);
-            String userName = resultSet.getString(USER_NAME_KEY);
-            String login = resultSet.getString(LOGIN_KEY);
-            String password = resultSet.getString(PASSWORD_KEY);
-
-            user.setUserId(userId);
-            user.setUserName(userName);
-            user.setLogin(login);
-            user.setPassword(password);
-
-            return user;
-        } catch (SQLException e) {
+            return getEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
             throw new EntityProcessorException("Couldn't get user from result set", e);
         }
     }
@@ -49,13 +40,29 @@ public class UserProcessor implements EntityProcessor<User> {
             List<User> userList = new ArrayList<>();
 
             while (resultSet.next()) {
-                userList.add(toEntity(resultSet));
+                userList.add(getEntity(resultSet));
             }
 
             return userList;
-        } catch (SQLException | EntityProcessorException e) {
+        } catch (SQLException e) {
             throw new EntityProcessorException("Couldn't get user list from result set", e);
         }
+    }
+
+    private User getEntity(ResultSet resultSet) throws SQLException {
+        User user = new User();
+
+        long userId = resultSet.getLong(USER_ID_KEY);
+        String userName = resultSet.getString(USER_NAME_KEY);
+        String login = resultSet.getString(LOGIN_KEY);
+        String password = resultSet.getString(PASSWORD_KEY);
+
+        user.setUserId(userId);
+        user.setUserName(userName);
+        user.setLogin(login);
+        user.setPassword(password);
+
+        return user;
     }
 
 }

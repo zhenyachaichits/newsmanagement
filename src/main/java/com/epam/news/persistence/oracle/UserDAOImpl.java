@@ -1,4 +1,4 @@
-package com.epam.news.persistence.impl;
+package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.UserDAO;
 import com.epam.news.persistence.exception.DAOException;
@@ -46,7 +46,6 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
-            // TODO: 5/30/2016 probably add checking
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -70,9 +69,8 @@ public class UserDAOImpl implements UserDAO {
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            User user = entityProcessor.toEntity(resultSet);
 
-            return user;
+            return entityProcessor.toEntity(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find user by id", e);
         } finally {
@@ -121,9 +119,8 @@ public class UserDAOImpl implements UserDAO {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_USERS_QUERY);
-            List<User> userList = entityProcessor.toEntityList(resultSet);
 
-            return userList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all users", e);
         } finally {

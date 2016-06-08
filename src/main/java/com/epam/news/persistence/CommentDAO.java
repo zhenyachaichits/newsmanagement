@@ -2,8 +2,9 @@ package com.epam.news.persistence;
 
 import com.epam.news.domain.Comment;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * The interface Comment dao.
  */
 public interface CommentDAO extends EntityDAO<Long, Comment> {
 }

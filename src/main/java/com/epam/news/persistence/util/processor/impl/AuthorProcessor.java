@@ -11,9 +11,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Yauhen_Chaichyts on 5/31/2016.
- */
 @Component
 public class AuthorProcessor implements EntityProcessor<Author> {
 
@@ -24,18 +21,12 @@ public class AuthorProcessor implements EntityProcessor<Author> {
     @Override
     public Author toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
-            Author author = new Author();
+            if (!resultSet.next()) {
+                throw new EntityProcessorException("Result set is empty");
+            }
 
-            long authorId = resultSet.getLong(AUTHOR_ID_KEY);
-            String authorName = resultSet.getString(AUTHOR_NAME_KEY);
-            Timestamp expiredDate = resultSet.getTimestamp(EXPIRED_STATE_KEY);
-
-            author.setAuthorId(authorId);
-            author.setAuthorName(authorName);
-            author.setExpiredDate(expiredDate);
-
-            return author;
-        } catch (SQLException e) {
+           return getEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
             throw new EntityProcessorException("Couldn't get author from result set", e);
         }
     }
@@ -46,12 +37,26 @@ public class AuthorProcessor implements EntityProcessor<Author> {
             List<Author> authorList = new ArrayList<>();
 
             while (resultSet.next()) {
-                authorList.add(toEntity(resultSet));
+                authorList.add(getEntity(resultSet));
             }
 
             return authorList;
-        } catch (SQLException | EntityProcessorException e) {
+        } catch (SQLException e) {
             throw new EntityProcessorException("Couldn't get author list from result set", e);
         }
+    }
+
+    private Author getEntity(ResultSet resultSet) throws SQLException {
+        Author author = new Author();
+
+        long authorId = resultSet.getLong(AUTHOR_ID_KEY);
+        String authorName = resultSet.getString(AUTHOR_NAME_KEY);
+        Timestamp expiredDate = resultSet.getTimestamp(EXPIRED_STATE_KEY);
+
+        author.setAuthorId(authorId);
+        author.setAuthorName(authorName);
+        author.setExpiredDate(expiredDate);
+
+        return author;
     }
 }

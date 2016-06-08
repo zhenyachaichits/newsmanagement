@@ -6,34 +6,65 @@ import com.epam.news.domain.Tag;
 
 import java.util.Set;
 
+
 /**
- * Created by Zheny Chaichits on 26.05.2016.
+ * The type News to.
  */
 public class NewsTO {
     private News news;
     private Set<Author> authors;
     private Set<Tag> tags;
 
+    /**
+     * Gets news.
+     *
+     * @return the news
+     */
     public News getNews() {
         return news;
     }
 
+    /**
+     * Sets news.
+     *
+     * @param news the news
+     */
     public void setNews(News news) {
         this.news = news;
     }
 
+    /**
+     * Gets authors.
+     *
+     * @return the authors
+     */
     public Set<Author> getAuthors() {
         return authors;
     }
 
+    /**
+     * Sets authors.
+     *
+     * @param authors the authors
+     */
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 
+    /**
+     * Gets tags.
+     *
+     * @return the tags
+     */
     public Set<Tag> getTags() {
         return tags;
     }
 
+    /**
+     * Sets tags.
+     *
+     * @param tags the tags
+     */
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }

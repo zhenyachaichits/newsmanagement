@@ -10,7 +10,7 @@ import com.epam.news.persistence.TagDAO;
 import com.epam.news.service.impl.AuthorServiceImpl;
 import com.epam.news.service.impl.NewsServiceImpl;
 import com.epam.news.service.impl.TagServiceImpl;
-import com.epam.news.service.management.impl.NewsManagementServiceImpl;
+import com.epam.news.service.management.impl.NewsManagementImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * Created by Zheny Chaichits on 6/5/2016.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class NewsManagementServiceTest {
+public class NewsManagementTest {
     private static final Long TEST_ID = 1L;
 
     @Mock
@@ -45,7 +45,7 @@ public class NewsManagementServiceTest {
     @Spy
     private TagServiceImpl tagService;
     @InjectMocks
-    private NewsManagementServiceImpl newsManagementService;
+    private NewsManagementImpl newsManagementService;
 
     @BeforeMethod
     public void initMocks() {

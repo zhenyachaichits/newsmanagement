@@ -2,25 +2,46 @@ package com.epam.news.domain.criteria;
 
 import java.util.Set;
 
+
 /**
- * Created by Yauhen_Chaichyts on 6/1/2016.
+ * The type News search criteria.
  */
 public class NewsSearchCriteria {
     private Set<Long> authorIdSet;
     private Set<Long> tagIdSet;
 
+    /**
+     * Gets author id set.
+     *
+     * @return the author id set
+     */
     public Set<Long> getAuthorIdSet() {
         return authorIdSet;
     }
 
+    /**
+     * Sets author id set.
+     *
+     * @param authorIdSet the author id set
+     */
     public void setAuthorIdSet(Set<Long> authorIdSet) {
         this.authorIdSet = authorIdSet;
     }
 
+    /**
+     * Gets tag id set.
+     *
+     * @return the tag id set
+     */
     public Set<Long> getTagIdSet() {
         return tagIdSet;
     }
 
+    /**
+     * Sets tag id set.
+     *
+     * @param tagIdSet the tag id set
+     */
     public void setTagIdSet(Set<Long> tagIdSet) {
         this.tagIdSet = tagIdSet;
     }

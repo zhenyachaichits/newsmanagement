@@ -2,8 +2,9 @@ package com.epam.news.domain;
 
 import java.sql.Timestamp;
 
+
 /**
- * Created by Zheny Chaichits on 26.05.2016.
+ * The type News.
  */
 public class News {
     private long newsId;
@@ -13,50 +14,110 @@ public class News {
     private Timestamp creationDate;
     private Timestamp modificationDate;
 
+    /**
+     * Gets news id.
+     *
+     * @return the news id
+     */
     public long getNewsId() {
         return newsId;
     }
 
+    /**
+     * Sets news id.
+     *
+     * @param newsId the news id
+     */
     public void setNewsId(long newsId) {
         this.newsId = newsId;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Gets short text.
+     *
+     * @return the short text
+     */
     public String getShortText() {
         return shortText;
     }
 
+    /**
+     * Sets short text.
+     *
+     * @param shortText the short text
+     */
     public void setShortText(String shortText) {
         this.shortText = shortText;
     }
 
+    /**
+     * Gets full text.
+     *
+     * @return the full text
+     */
     public String getFullText() {
         return fullText;
     }
 
+    /**
+     * Sets full text.
+     *
+     * @param fullText the full text
+     */
     public void setFullText(String fullText) {
         this.fullText = fullText;
     }
 
+    /**
+     * Gets modification date.
+     *
+     * @return the modification date
+     */
     public Timestamp getModificationDate() {
         return modificationDate;
     }
 
+    /**
+     * Sets modification date.
+     *
+     * @param modificationDate the modification date
+     */
     public void setModificationDate(Timestamp modificationDate) {
         this.modificationDate = modificationDate;
     }
 
+    /**
+     * Gets creation date.
+     *
+     * @return the creation date
+     */
     public Timestamp getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Sets creation date.
+     *
+     * @param creationDate the creation date
+     */
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }

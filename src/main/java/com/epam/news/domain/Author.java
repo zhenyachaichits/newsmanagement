@@ -2,34 +2,65 @@ package com.epam.news.domain;
 
 import java.sql.Timestamp;
 
+
 /**
- * Created by Zheny Chaichits on 26.05.2016.
+ * The type Author.
  */
 public class Author {
     private long authorId;
     private String authorName;
     private Timestamp expiredDate;
 
+    /**
+     * Gets author id.
+     *
+     * @return the author id
+     */
     public long getAuthorId() {
         return authorId;
     }
 
+    /**
+     * Sets author id.
+     *
+     * @param authorId the author id
+     */
     public void setAuthorId(long authorId) {
         this.authorId = authorId;
     }
 
+    /**
+     * Gets author name.
+     *
+     * @return the author name
+     */
     public String getAuthorName() {
         return authorName;
     }
 
+    /**
+     * Sets author name.
+     *
+     * @param authorName the author name
+     */
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
 
+    /**
+     * Gets expired date.
+     *
+     * @return the expired date
+     */
     public Timestamp getExpiredDate() {
         return expiredDate;
     }
 
+    /**
+     * Sets expired date.
+     *
+     * @param expiredDate the expired date
+     */
     public void setExpiredDate(Timestamp expiredDate) {
         this.expiredDate = expiredDate;
     }

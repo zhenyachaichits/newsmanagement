@@ -1,24 +1,45 @@
 package com.epam.news.domain;
 
+
 /**
- * Created by Zheny Chaichits on 26.05.2016.
+ * The type Tag.
  */
 public class Tag {
     private long tagId;
     private String tagName;
 
+    /**
+     * Gets tag id.
+     *
+     * @return the tag id
+     */
     public long getTagId() {
         return tagId;
     }
 
+    /**
+     * Sets tag id.
+     *
+     * @param tagId the tag id
+     */
     public void setTagId(long tagId) {
         this.tagId = tagId;
     }
 
+    /**
+     * Gets tag name.
+     *
+     * @return the tag name
+     */
     public String getTagName() {
         return tagName;
     }
 
+    /**
+     * Sets tag name.
+     *
+     * @param tagName the tag name
+     */
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }

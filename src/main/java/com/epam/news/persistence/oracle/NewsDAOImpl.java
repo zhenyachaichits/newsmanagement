@@ -1,14 +1,13 @@
-package com.epam.news.persistence.impl;
+package com.epam.news.persistence.oracle;
 
+import com.epam.news.domain.News;
+import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.persistence.NewsDAO;
 import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
 import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
-import com.epam.news.persistence.util.processor.impl.AuthorProcessor;
 import com.epam.news.persistence.util.processor.impl.NewsProcessor;
-import com.epam.news.domain.News;
-import com.epam.news.domain.criteria.NewsSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
@@ -16,7 +15,6 @@ import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -62,7 +60,7 @@ public class NewsDAOImpl implements NewsDAO {
         Connection connection = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            String[] generatedKeyName = {AuthorProcessor.AUTHOR_ID_KEY};
+            String[] generatedKeyName = {NewsProcessor.NEWS_ID_KEY};
             PreparedStatement statement = connection.prepareStatement(SQL_ADD_NEWS_QUERY, generatedKeyName);
 
             statement.setString(1, news.getTitle());
@@ -94,9 +92,8 @@ public class NewsDAOImpl implements NewsDAO {
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            News news = entityProcessor.toEntity(resultSet);
 
-            return news;
+            return entityProcessor.toEntity(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find news by id", e);
         } finally {
@@ -115,7 +112,7 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setString(2, news.getShortText());
             statement.setString(3, news.getFullText());
             statement.setTimestamp(4, news.getModificationDate());
-            statement.setLong(2, news.getNewsId());
+            statement.setLong(5, news.getNewsId());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -179,9 +176,8 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setString(2, StringUtils.collectionToCommaDelimitedString(criteria.getTagIdSet()));
 
             ResultSet resultSet = statement.executeQuery();
-            List<News> newsList = entityProcessor.toEntityList(resultSet);
 
-            return newsList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get news by criteria", e);
         } finally {
@@ -207,7 +203,7 @@ public class NewsDAOImpl implements NewsDAO {
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_NEWS_COUNT_QUERY);
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 return resultSet.getInt(NewsProcessor.COUNT);
             } else {
                 throw new DAOException("Count was not found. Result set is empty");
@@ -228,9 +224,8 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setString(1, StringUtils.collectionToCommaDelimitedString(idSet));
 
             ResultSet resultSet = statement.executeQuery();
-            List<News> newsList = entityProcessor.toEntityList(resultSet);
 
-            return newsList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get news by id set", e);
         } finally {
@@ -245,10 +240,9 @@ public class NewsDAOImpl implements NewsDAO {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(query);
-            List<News> newsList = entityProcessor.toEntityList(resultSet);
 
-            return newsList;
-        } catch (SQLException | EntityProcessorException  e) {
+            return entityProcessor.toEntityList(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get news list", e);
         } finally {
             DAOUtil.releaseConnection(connection, dataSource);

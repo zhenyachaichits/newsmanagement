@@ -28,24 +28,12 @@ public class NewsProcessor implements EntityProcessor<News> {
     @Override
     public News toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
-            News news = new News();
+            if (!resultSet.next()) {
+                throw new EntityProcessorException("Result set is empty");
+            }
 
-            long newsId = resultSet.getLong(NEWS_ID_KEY);
-            String title = resultSet.getString(TITLE_KEY);
-            String shortText = resultSet.getString(SHORT_TEST_KEY);
-            String fullText = resultSet.getString(FULL_TEXT_KEY);
-            Timestamp creationDate = resultSet.getTimestamp(CREATION_DATE_KEY);
-            Timestamp modificationDate = resultSet.getTimestamp(MODIFICATION_DATE_KEY);
-
-            news.setNewsId(newsId);
-            news.setTitle(title);
-            news.setShortText(shortText);
-            news.setFullText(fullText);
-            news.setCreationDate(creationDate);
-            news.setModificationDate(modificationDate);
-
-            return news;
-        } catch (SQLException e) {
+           return getEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
             throw new EntityProcessorException("Couldn't get news entry from result set", e);
         }
     }
@@ -56,12 +44,32 @@ public class NewsProcessor implements EntityProcessor<News> {
             List<News> newsList = new ArrayList<>();
 
             while (resultSet.next()) {
-                newsList.add(toEntity(resultSet));
+                newsList.add(getEntity(resultSet));
             }
 
             return newsList;
-        } catch (SQLException | EntityProcessorException e) {
+        } catch (SQLException e) {
             throw new EntityProcessorException("Couldn't get news list from result set", e);
         }
+    }
+
+    private News getEntity(ResultSet resultSet) throws SQLException {
+        News news = new News();
+
+        long newsId = resultSet.getLong(NEWS_ID_KEY);
+        String title = resultSet.getString(TITLE_KEY);
+        String shortText = resultSet.getString(SHORT_TEST_KEY);
+        String fullText = resultSet.getString(FULL_TEXT_KEY);
+        Timestamp creationDate = resultSet.getTimestamp(CREATION_DATE_KEY);
+        Timestamp modificationDate = resultSet.getTimestamp(MODIFICATION_DATE_KEY);
+
+        news.setNewsId(newsId);
+        news.setTitle(title);
+        news.setShortText(shortText);
+        news.setFullText(fullText);
+        news.setCreationDate(creationDate);
+        news.setModificationDate(modificationDate);
+
+        return news;
     }
 }

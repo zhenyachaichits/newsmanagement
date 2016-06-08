@@ -5,17 +5,21 @@ import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.Tag;
 import com.epam.news.service.TagService;
 import com.epam.news.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * The type Tag service.
  */
 @Service
 public class TagServiceImpl implements TagService {
+
+    private static final Logger LOG = Logger.getLogger(TagServiceImpl.class);
 
     @Autowired
     private TagDAO dao;
@@ -26,6 +30,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.add(tag);
         } catch (DAOException e) {
+            LOG.error("Error in method: add(Tag tag)", e);
             throw new ServiceException("Couldn't execute tag adding service", e);
         }
     }
@@ -35,6 +40,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.find(id);
         } catch (DAOException e) {
+            LOG.error("Error in method: find(Long id)", e);
             throw new ServiceException("Couldn't execute tag finding service", e);
         }
     }
@@ -45,6 +51,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.update(tag);
         } catch (DAOException e) {
+            LOG.error("Error in method: update(Tag tag)", e);
             throw new ServiceException("Couldn't execute tag updating service", e);
         }
     }
@@ -55,6 +62,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.delete(id);
         } catch (DAOException e) {
+            LOG.error("Error in method: delete(Long id)", e);
             throw new ServiceException("Couldn't execute tag deleting service", e);
         }
     }
@@ -64,6 +72,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.all();
         } catch (DAOException e) {
+            LOG.error("Error in method: all()", e);
             throw new ServiceException("Couldn't execute getting all tags service", e);
         }
     }
@@ -74,6 +83,7 @@ public class TagServiceImpl implements TagService {
         try {
             dao.addNewsTag(newsId, tagId);
         } catch (DAOException e) {
+            LOG.error("Error in method: addNewsTag(long newsId, long tagId)", e);
             throw new ServiceException("Couldn't execute adding news tags service", e);
         }
     }
@@ -83,6 +93,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.getNewsTags(newsId);
         } catch (DAOException e) {
+            LOG.error("Error in method: getNewsTags(long newsId)", e);
             throw new ServiceException("Couldn't execute getting news tags service", e);
         }
     }

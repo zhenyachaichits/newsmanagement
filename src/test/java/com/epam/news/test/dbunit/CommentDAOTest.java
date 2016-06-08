@@ -1,13 +1,11 @@
 package com.epam.news.test.dbunit;
 
-import com.epam.news.domain.User;
-import com.epam.news.persistence.UserDAO;
+import com.epam.news.domain.Comment;
+import com.epam.news.persistence.CommentDAO;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +16,13 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by Yauhen_Chaichyts on 6/6/2016.
+ * Created by Yauhen_Chaichyts on 6/7/2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
@@ -31,49 +30,49 @@ import static org.junit.Assert.*;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/data/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
-@DatabaseTearDown(value = "/data/user-data.xml", type = DatabaseOperation.DELETE_ALL)
-public class UserDAOTest {
-
-    private static final String TEST_USER_NAME = "Test";
-    private static final String TEST_LOGIN = "test_user";
-    private static final String TEST_PASSWORD = "test";
+@DatabaseSetup(value = "/data/comment-data.xml", type = DatabaseOperation.CLEAN_INSERT)
+@DatabaseTearDown(value = "/data/comment-data.xml", type = DatabaseOperation.DELETE_ALL)
+public class CommentDAOTest {
+    private static final String TEST_COMMENT_TEXT = "test short text";
+    private static final Timestamp TEST_CREATION_DATE;
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
+    static {
+        TEST_CREATION_DATE = new Timestamp(System.currentTimeMillis());
+    }
+
     @Autowired
-    private UserDAO dao;
+    private CommentDAO dao;
 
     @Test
     public void testAdd() throws Exception {
-        User user = new User();
-        user.setUserName(TEST_USER_NAME);
-        user.setLogin(TEST_LOGIN);
-        user.setPassword(TEST_PASSWORD);
-        user = dao.add(user);
+        Comment comment = new Comment();
+        comment.setNewsId(TEST_ID);
+        comment.setCommentText(TEST_COMMENT_TEXT);
+        comment.setCreationDate(TEST_CREATION_DATE);
 
-        assertNotNull(user);
+        assertNotNull(dao.add(comment));
     }
 
     @Test
     public void testUpdate() throws Exception {
-        User user = new User();
-        user.setUserId(TEST_ID);
-        user.setUserName(TEST_USER_NAME);
-        user.setLogin(TEST_LOGIN);
-        user.setPassword(TEST_PASSWORD);
+        Comment comment = new Comment();
+        comment.setCommentId(TEST_ID);
+        comment.setNewsId(TEST_ID);
+        comment.setCommentText(TEST_COMMENT_TEXT);
+        comment.setCreationDate(TEST_CREATION_DATE);
 
-        assertTrue(dao.update(user));
+        assertTrue(dao.update(comment));
     }
 
     @Test
     public void testFind() throws Exception {
-        User user = dao.find(TEST_ID);
-        assertNotNull(user);
+        Comment comment = dao.find(TEST_ID);
+        assertNotNull(comment);
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/user-expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
         assertFalse(result);
@@ -81,7 +80,7 @@ public class UserDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<User> userList = dao.all();
-        assertEquals(TEST_LIST_SIZE, userList.size());
+        List<Comment> newsList = dao.all();
+        assertEquals(TEST_LIST_SIZE, newsList.size());
     }
 }

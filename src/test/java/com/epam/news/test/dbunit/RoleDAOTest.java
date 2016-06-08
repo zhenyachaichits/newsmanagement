@@ -1,13 +1,11 @@
 package com.epam.news.test.dbunit;
 
-import com.epam.news.domain.User;
-import com.epam.news.persistence.UserDAO;
+import com.epam.news.domain.Role;
+import com.epam.news.persistence.RoleDAO;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Yauhen_Chaichyts on 6/6/2016.
+ * Created by Yauhen_Chaichyts on 6/7/2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
@@ -31,49 +29,41 @@ import static org.junit.Assert.*;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/data/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
-@DatabaseTearDown(value = "/data/user-data.xml", type = DatabaseOperation.DELETE_ALL)
-public class UserDAOTest {
-
-    private static final String TEST_USER_NAME = "Test";
-    private static final String TEST_LOGIN = "test_user";
-    private static final String TEST_PASSWORD = "test";
+@DatabaseSetup(value = "/data/role-data.xml", type = DatabaseOperation.CLEAN_INSERT)
+@DatabaseTearDown(value = "/data/role-data.xml", type = DatabaseOperation.DELETE_ALL)
+public class RoleDAOTest {
+    private static final String TEST_ROLE_NAME = "Test";
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
     @Autowired
-    private UserDAO dao;
+    private RoleDAO dao;
 
     @Test
     public void testAdd() throws Exception {
-        User user = new User();
-        user.setUserName(TEST_USER_NAME);
-        user.setLogin(TEST_LOGIN);
-        user.setPassword(TEST_PASSWORD);
-        user = dao.add(user);
+        Role role = new Role();
+        role.setUserId(TEST_ID);
+        role.setRoleName(TEST_ROLE_NAME);
 
-        assertNotNull(user);
+        assertEquals(role, dao.add(role));
     }
 
     @Test
     public void testUpdate() throws Exception {
-        User user = new User();
-        user.setUserId(TEST_ID);
-        user.setUserName(TEST_USER_NAME);
-        user.setLogin(TEST_LOGIN);
-        user.setPassword(TEST_PASSWORD);
+        Role role = new Role();
+        role.setUserId(TEST_ID);
+        role.setRoleName(TEST_ROLE_NAME);
 
-        assertTrue(dao.update(user));
+        assertTrue(dao.update(role));
     }
 
     @Test
     public void testFind() throws Exception {
-        User user = dao.find(TEST_ID);
-        assertNotNull(user);
+        Role role = dao.find(TEST_ID);
+        assertNotNull(role);
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/user-expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
         assertFalse(result);
@@ -81,7 +71,7 @@ public class UserDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<User> userList = dao.all();
-        assertEquals(TEST_LIST_SIZE, userList.size());
+        List<Role> roleList = dao.all();
+        assertEquals(TEST_LIST_SIZE, roleList.size());
     }
 }

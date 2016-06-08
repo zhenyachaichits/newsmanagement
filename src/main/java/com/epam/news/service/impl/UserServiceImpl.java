@@ -5,17 +5,22 @@ import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.User;
 import com.epam.news.service.UserService;
 import com.epam.news.service.exception.ServiceException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/27/2016.
+ * The type User service.
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserDAO dao;
 
@@ -25,6 +30,7 @@ public class UserServiceImpl implements UserService {
         try {
             return dao.add(user);
         } catch (DAOException e) {
+            LOG.error("Error in method: add(User user)", e);
             throw new ServiceException("Couldn't execute adding new user service", e);
         }
     }
@@ -34,6 +40,7 @@ public class UserServiceImpl implements UserService {
         try {
             return dao.find(id);
         } catch (DAOException e) {
+            LOG.error("Error in method: find(Long id)", e);
             throw new ServiceException("Couldn't execute user finding service", e);
         }
     }
@@ -44,6 +51,7 @@ public class UserServiceImpl implements UserService {
         try {
             return dao.update(user);
         } catch (DAOException e) {
+            LOG.error("Error in method: update(User user)", e);
             throw new ServiceException("Couldn't execute user updating service", e);
         }
     }
@@ -54,6 +62,7 @@ public class UserServiceImpl implements UserService {
         try {
             return dao.delete(id);
         } catch (DAOException e) {
+            LOG.error("Error in method: delete(Long id)", e);
             throw new ServiceException("Couldn't execute user deleting service", e);
         }
     }
@@ -63,6 +72,7 @@ public class UserServiceImpl implements UserService {
         try {
             return dao.all();
         } catch (DAOException e) {
+            LOG.error("Error in method: all()", e);
             throw new ServiceException("Couldn't execute getting all users service", e);
         }
     }

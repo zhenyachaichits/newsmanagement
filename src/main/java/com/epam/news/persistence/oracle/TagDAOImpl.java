@@ -1,4 +1,4 @@
-package com.epam.news.persistence.impl;
+package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.TagDAO;
 import com.epam.news.persistence.exception.DAOException;
@@ -13,9 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Yauhen_Chaichyts on 5/31/2016.
@@ -70,9 +68,8 @@ public class TagDAOImpl implements TagDAO {
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            Tag tag = entityProcessor.toEntity(resultSet);
 
-            return tag;
+            return entityProcessor.toEntity(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find tag by id", e);
         } finally {
@@ -122,9 +119,8 @@ public class TagDAOImpl implements TagDAO {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_TAGS_QUERY);
-            List<Tag> tagList = entityProcessor.toEntityList(resultSet);
 
-            return tagList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all tags", e);
         } finally {
@@ -158,9 +154,8 @@ public class TagDAOImpl implements TagDAO {
 
             statement.setLong(1, newsId);
             ResultSet resultSet = statement.executeQuery();
-            List<Tag> tagList = entityProcessor.toEntityList(resultSet);
 
-            return tagList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {

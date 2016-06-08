@@ -25,20 +25,12 @@ public class CommentProcessor implements EntityProcessor<Comment> {
     @Override
     public Comment toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
-            Comment comment = new Comment();
+            if (!resultSet.next()) {
+                throw new EntityProcessorException("Result set is empty");
+            }
 
-            long commentId = resultSet.getLong(COMMENT_ID_KEY);
-            long newsId = resultSet.getLong(NEWS_ID_KEY);
-            String commentText = resultSet.getString(COMMENT_TEXT_KEY);
-            Timestamp creationDate = resultSet.getTimestamp(CREATION_DATE_KEY);
-
-            comment.setCommentId(commentId);
-            comment.setNewsId(newsId);
-            comment.setCommentText(commentText);
-            comment.setCreationDate(creationDate);
-
-            return comment;
-        } catch (SQLException e) {
+            return getEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
             throw new EntityProcessorException("Couldn't get comment from result set", e);
         }
     }
@@ -49,12 +41,28 @@ public class CommentProcessor implements EntityProcessor<Comment> {
             List<Comment> commentList = new ArrayList<>();
 
             while (resultSet.next()) {
-                commentList.add(toEntity(resultSet));
+                commentList.add(getEntity(resultSet));
             }
 
             return commentList;
-        } catch (SQLException | EntityProcessorException e) {
+        } catch (SQLException e) {
             throw new EntityProcessorException("Couldn't get comment list from result set", e);
         }
+    }
+
+    private Comment getEntity(ResultSet resultSet) throws SQLException {
+        Comment comment = new Comment();
+
+        long commentId = resultSet.getLong(COMMENT_ID_KEY);
+        long newsId = resultSet.getLong(NEWS_ID_KEY);
+        String commentText = resultSet.getString(COMMENT_TEXT_KEY);
+        Timestamp creationDate = resultSet.getTimestamp(CREATION_DATE_KEY);
+
+        comment.setCommentId(commentId);
+        comment.setNewsId(newsId);
+        comment.setCommentText(commentText);
+        comment.setCreationDate(creationDate);
+
+        return comment;
     }
 }

@@ -3,25 +3,46 @@ package com.epam.news.domain.to;
 import com.epam.news.domain.User;
 import com.epam.news.domain.Role;
 
+
 /**
- * Created by Zheny Chaichits on 26.05.2016.
+ * The type User to.
  */
 public class UserTO {
     private User user;
     private Role role;
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets role.
+     *
+     * @return the role
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     * Sets role.
+     *
+     * @param role the role
+     */
     public void setRole(Role role) {
         this.role = role;
     }

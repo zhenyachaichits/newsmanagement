@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <Users user_id="1" user_name="Yauhen Chaichyts" login="test" password="test"/>
+    <Users user_id="2" user_name="Zhenya Chaichits" login="test1" password="test"/>
+
+    <Roles user_id="1" role_name="Admin"/>
+    <Roles user_id="2" role_name="User"/>
+</dataset>

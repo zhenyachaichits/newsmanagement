@@ -1,4 +1,4 @@
-package com.epam.news.persistence.impl;
+package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.RoleDAO;
 import com.epam.news.persistence.exception.DAOException;
@@ -59,9 +59,8 @@ public class RoleDAOImpl implements RoleDAO {
 
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            Role role = entityProcessor.toEntity(resultSet);
 
-            return role;
+            return entityProcessor.toEntity(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find role by id", e);
         } finally {
@@ -111,9 +110,8 @@ public class RoleDAOImpl implements RoleDAO {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_ROLES_QUERY);
-            List<Role> roleList = entityProcessor.toEntityList(resultSet);
 
-            return roleList;
+            return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all roles", e);
         } finally {
