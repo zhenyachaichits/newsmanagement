@@ -20,7 +20,7 @@ public interface AuthorService extends EntityService<Long, Author> {
     void addNewsAuthor(long newsId, long authorId) throws ServiceException;
 
     /**
-     * Gets news authors.
+     * Gets news authors list.
      *
      * @param newsId the news id
      * @return the news authors

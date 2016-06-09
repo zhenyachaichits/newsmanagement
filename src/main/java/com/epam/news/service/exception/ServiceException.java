@@ -2,7 +2,8 @@ package com.epam.news.service.exception;
 
 
 /**
- * The type Service exception.
+ * The Service exception.
+ * Can be thrown in any method at the service layer.
  */
 public class ServiceException extends Exception {
     /**

@@ -1,8 +1,8 @@
 package com.epam.news.service.impl;
 
+import com.epam.news.domain.Author;
 import com.epam.news.persistence.AuthorDAO;
 import com.epam.news.persistence.exception.DAOException;
-import com.epam.news.domain.Author;
 import com.epam.news.service.AuthorService;
 import com.epam.news.service.exception.ServiceException;
 import org.apache.log4j.Logger;
@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * The type Author service.
+ * The Author service.
  */
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -24,6 +24,13 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorDAO dao;
 
+    /**
+     * Add new author
+     *
+     * @param author author to be added
+     * @return
+     * @throws ServiceException if DAOException das thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Author add(Author author) throws ServiceException {
@@ -35,6 +42,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Search author by author id
+     *
+     * @param id author id
+     * @throws ServiceException if DAOException das thrown
+     * @returnn found author
+     */
     @Override
     public Author find(Long id) throws ServiceException {
         try {
@@ -45,6 +59,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Update author data
+     *
+     * @param author author to be updated
+     * @return true in case of success, else false
+     * @throws ServiceException if DAOException das thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(Author author) throws ServiceException {
@@ -56,6 +77,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Delete author by id
+     *
+     * @param id author id
+     * @return true in case of success, else false
+     * @throws ServiceException if DAOException das thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(Long id) throws ServiceException {
@@ -67,6 +95,12 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Get all authors
+     *
+     * @return list of authors
+     * @throws ServiceException if DAOException das thrown
+     */
     @Override
     public List<Author> all() throws ServiceException {
         try {
@@ -77,6 +111,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Add author for news entry
+     *
+     * @param newsId   the news id
+     * @param authorId the author id
+     * @throws ServiceException if DAOException das thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addNewsAuthor(long newsId, long authorId) throws ServiceException {
@@ -88,6 +129,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Get all authors for selected news entry
+     *
+     * @param newsId the news id
+     * @return list of authors
+     * @throws ServiceException if DAOException das thrown
+     */
     @Override
     public List<Author> getNewsAuthors(long newsId) throws ServiceException {
         try {

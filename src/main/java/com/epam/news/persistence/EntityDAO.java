@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * The interface Entity dao. Describes common behaviour of data access objects.
  *
- * @param <K> the type parameter
- * @param <T> the type parameter
+ * @param <K> the type of domain
+ * @param <T> the type of Entity
  */
 public interface EntityDAO<K, T> {
     /**

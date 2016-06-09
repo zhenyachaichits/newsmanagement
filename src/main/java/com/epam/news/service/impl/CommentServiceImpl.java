@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * The type Comment service.
+ * The Comment service.
  */
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -24,6 +24,12 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentDAO dao;
 
+    /**
+     * 
+     * @param comment
+     * @return
+     * @throws ServiceException
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Comment add(Comment comment) throws ServiceException {

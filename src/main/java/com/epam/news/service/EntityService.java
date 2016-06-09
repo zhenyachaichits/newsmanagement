@@ -8,51 +8,51 @@ import java.util.List;
 /**
  * The interface Entity service.
  *
- * @param <K> the type parameter
- * @param <T> the type parameter
+ * @param <K> the type of domain
+ * @param <T> the type of entity
  */
 public interface EntityService<K, T> {
     /**
-     * Add t.
+     * Add entity to data source.
      *
      * @param entity the entity
-     * @return the t
-     * @throws ServiceException the service exception
+     * @return added entity
+     * @throws ServiceException the dao exception
      */
     T add(T entity) throws ServiceException;
 
     /**
-     * Find t.
+     * Find entity by domain.
      *
      * @param domain the domain
-     * @return the t
-     * @throws ServiceException the service exception
+     * @return found entity
+     * @throws ServiceException the dao exception
      */
     T find(K domain) throws ServiceException;
 
     /**
-     * Update boolean.
+     * Update entity.
      *
      * @param entity the entity
-     * @return the boolean
-     * @throws ServiceException the service exception
+     * @return true if operation successfully completed
+     * @throws ServiceException the dao exception
      */
     boolean update(T entity) throws ServiceException;
 
     /**
-     * Delete boolean.
+     * Delete entity from data source by domain.
      *
      * @param domain the domain
-     * @return the boolean
-     * @throws ServiceException the service exception
+     * @return true if operation successfully completed
+     * @throws ServiceException the dao exception
      */
     boolean delete(K domain) throws ServiceException;
 
     /**
-     * All list.
+     * Get all entities.
      *
-     * @return the list
-     * @throws ServiceException the service exception
+     * @return the list of entities
+     * @throws ServiceException the dao exception
      */
     List<T> all() throws ServiceException;
 }
