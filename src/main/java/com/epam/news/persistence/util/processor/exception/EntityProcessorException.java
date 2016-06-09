@@ -2,7 +2,8 @@ package com.epam.news.persistence.util.processor.exception;
 
 
 /**
- * The type Entity processor exception.
+ * The EntityProcessor exception.
+ * Can be thrown in any method of EntityProcessor implementations.
  */
 public class EntityProcessorException extends Exception {
     /**

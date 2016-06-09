@@ -1,8 +1,8 @@
 package com.epam.news.persistence.util.processor.impl;
 
+import com.epam.news.domain.Comment;
 import com.epam.news.persistence.util.processor.EntityProcessor;
 import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
-import com.epam.news.domain.Comment;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -11,8 +11,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * The Comment processor. Extracts comment data from result set and contains comment keys
  */
 @Component
 public class CommentProcessor implements EntityProcessor<Comment> {
@@ -22,6 +23,14 @@ public class CommentProcessor implements EntityProcessor<Comment> {
     public static final String COMMENT_TEXT_KEY = "COMMENT_TEXT";
     public static final String CREATION_DATE_KEY = "CREATION_DATE";
 
+    /**
+     * Extracts comment object from result set.
+     *
+     * @param resultSet the result set
+     * @return extracted comment
+     * @throws EntityProcessorException in case of result set is empty
+     *                                  or any exception was thrown in method
+     */
     @Override
     public Comment toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
@@ -35,6 +44,13 @@ public class CommentProcessor implements EntityProcessor<Comment> {
         }
     }
 
+    /**
+     * Extracts the list of comments from result set
+     *
+     * @param resultSet the result set
+     * @return the list of extracted authors
+     * @throws EntityProcessorException if any exception was thrown in method
+     */
     @Override
     public List<Comment> toEntityList(ResultSet resultSet) throws EntityProcessorException {
         try {

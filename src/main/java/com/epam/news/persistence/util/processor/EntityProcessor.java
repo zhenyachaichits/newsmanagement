@@ -14,20 +14,20 @@ import java.util.List;
 public interface EntityProcessor<T> {
 
     /**
-     * To entity t.
+     * Extracts entity of type T from the result set.
      *
      * @param resultSet the result set
-     * @return the t
-     * @throws EntityProcessorException the entity processor exception
+     * @return entity of type T
+     * @throws EntityProcessorException the entity processor exception in case of error
      */
     T toEntity(ResultSet resultSet) throws EntityProcessorException;
 
     /**
-     * To entity list list.
+     * Extracts list of entity of type T from the result set.
      *
      * @param resultSet the result set
-     * @return the list
-     * @throws EntityProcessorException the entity processor exception
+     * @return the list of entity
+     * @throws EntityProcessorException the entity processor exception  in case of error
      */
     List<T> toEntityList(ResultSet resultSet) throws EntityProcessorException;
 }

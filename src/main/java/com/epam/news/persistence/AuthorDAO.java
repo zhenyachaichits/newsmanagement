@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface AuthorDAO extends EntityDAO<Long, Author> {
     /**
-     * Add news author.
+     * Add new news' author data.
      *
      * @param newsId   the news id
      * @param authorId the author id
@@ -20,10 +20,10 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
     void addNewsAuthor(long newsId, long authorId) throws DAOException;
 
     /**
-     * Gets news authors.
+     * Gets the list of news' authors.
      *
      * @param newsId the news id
-     * @return the news authors
+     * @return the news authors list
      * @throws DAOException the dao exception
      */
     List<Author> getNewsAuthors(long newsId) throws DAOException;

@@ -5,7 +5,8 @@ import com.epam.news.domain.Role;
 
 
 /**
- * The type User to.
+ * The type User transfer object.
+ * Contains user personal data and access level.
  */
 public class UserTO {
     private User user;

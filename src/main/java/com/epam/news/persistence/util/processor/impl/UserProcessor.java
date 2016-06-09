@@ -1,8 +1,8 @@
 package com.epam.news.persistence.util.processor.impl;
 
+import com.epam.news.domain.User;
 import com.epam.news.persistence.util.processor.EntityProcessor;
 import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
-import com.epam.news.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Zheny Chaichits on 28.05.2016.
+ * The User processor. Extracts user data from result set and contains comment keys.
  */
 @Component
 public class UserProcessor implements EntityProcessor<User> {
@@ -21,6 +21,14 @@ public class UserProcessor implements EntityProcessor<User> {
     public static final String LOGIN_KEY = "LOGIN";
     public static final String PASSWORD_KEY = "PASSWORD";
 
+    /**
+     * Extracts user object from result set.
+     *
+     * @param resultSet the result set
+     * @return extracted user
+     * @throws EntityProcessorException in case of result set is empty
+     *                                  or any exception was thrown in method
+     */
     @Override
     public User toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
@@ -34,6 +42,13 @@ public class UserProcessor implements EntityProcessor<User> {
         }
     }
 
+    /**
+     * Extracts the list of users from result set
+     *
+     * @param resultSet the result set
+     * @return the list of extracted users
+     * @throws EntityProcessorException if any exception was thrown in method
+     */
     @Override
     public List<User> toEntityList(ResultSet resultSet) throws EntityProcessorException {
         try {

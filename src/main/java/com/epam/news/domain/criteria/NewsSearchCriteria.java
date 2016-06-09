@@ -4,7 +4,7 @@ import java.util.Set;
 
 
 /**
- * The type News search criteria.
+ * The type News Search Criteria. Contains information about authors and tags for news search
  */
 public class NewsSearchCriteria {
     private Set<Long> authorIdSet;

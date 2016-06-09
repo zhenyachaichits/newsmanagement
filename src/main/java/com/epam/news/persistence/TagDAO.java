@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface TagDAO extends EntityDAO<Long, Tag> {
     /**
-     * Add news tag.
+     * Add new news' tag.
      *
      * @param newsId the news id
      * @param tagId  the tag id
@@ -20,10 +20,10 @@ public interface TagDAO extends EntityDAO<Long, Tag> {
     void addNewsTag(long newsId, long tagId) throws DAOException;
 
     /**
-     * Gets news tags.
+     * Gets all news' tags.
      *
      * @param newsId the news id
-     * @return the news tags
+     * @return the list of tags
      * @throws DAOException the dao exception
      */
     List<Tag> getNewsTags(long newsId) throws DAOException;

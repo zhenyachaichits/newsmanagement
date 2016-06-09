@@ -1,8 +1,8 @@
 package com.epam.news.persistence.util.processor.impl;
 
+import com.epam.news.domain.Role;
 import com.epam.news.persistence.util.processor.EntityProcessor;
 import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
-import com.epam.news.domain.Role;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Yauhen_Chaichyts on 5/30/2016.
+ * The Role processor. Extracts user access level data from result set and contains comment keys.
  */
 @Component
 public class RoleProcessor implements EntityProcessor<Role> {
@@ -19,6 +19,14 @@ public class RoleProcessor implements EntityProcessor<Role> {
     public static final String USER_ID_KEY = "USER_ID";
     public static final String ROLE_NAME_KEY = "ROLE_NAME";
 
+    /**
+     * Extracts user role object from result set.
+     *
+     * @param resultSet the result set
+     * @return extracted user role
+     * @throws EntityProcessorException in case of result set is empty
+     *                                  or any exception was thrown in method
+     */
     @Override
     public Role toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
@@ -32,6 +40,13 @@ public class RoleProcessor implements EntityProcessor<Role> {
         }
     }
 
+    /**
+     * Extracts the list of roles from result set
+     *
+     * @param resultSet the result set
+     * @return the list of extracted roles
+     * @throws EntityProcessorException if any exception was thrown in method
+     */
     @Override
     public List<Role> toEntityList(ResultSet resultSet) throws EntityProcessorException {
         try {

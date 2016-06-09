@@ -9,14 +9,14 @@ import java.sql.SQLException;
 
 
 /**
- * The type Dao util.
+ * DAO Utils.
  */
 public final class DAOUtil {
 
     private static final Logger LOG = Logger.getLogger(DAOUtil.class);
 
     /**
-     * Release connection.
+     * This method simplify process of releasing connection to data source.
      *
      * @param connection the connection
      * @param dataSource the data source

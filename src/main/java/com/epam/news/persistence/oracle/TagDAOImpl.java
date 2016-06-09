@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.List;
 
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * Oracle Tag data access object. Provides operations with Tag table in database.
  */
 @Repository
 public class TagDAOImpl implements TagDAO {
@@ -35,6 +35,13 @@ public class TagDAOImpl implements TagDAO {
     @Autowired
     private EntityProcessor<Tag> entityProcessor;
 
+    /**
+     * Add new tag to database
+     *
+     * @param tag to add
+     * @return added tag with generated id
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public Tag add(Tag tag) throws DAOException {
         Connection connection = null;
@@ -59,6 +66,13 @@ public class TagDAOImpl implements TagDAO {
         }
     }
 
+    /**
+     * Search tag by id
+     *
+     * @param id tag id
+     * @return found tag
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public Tag find(Long id) throws DAOException {
         Connection connection = null;
@@ -77,6 +91,13 @@ public class TagDAOImpl implements TagDAO {
         }
     }
 
+    /**
+     * Update tag record
+     *
+     * @param tag to be updated
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean update(Tag tag) throws DAOException {
         Connection connection = null;
@@ -95,6 +116,13 @@ public class TagDAOImpl implements TagDAO {
         }
     }
 
+    /**
+     * Delete record from database by tag id
+     *
+     * @param id tag id
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
@@ -111,6 +139,12 @@ public class TagDAOImpl implements TagDAO {
         }
     }
 
+    /**
+     * Get all tag
+     *
+     * @return list of tags
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<Tag> all() throws DAOException {
         Connection connection = null;
@@ -128,6 +162,13 @@ public class TagDAOImpl implements TagDAO {
         }
     }
 
+    /**
+     * Add news tag to News_Tag table
+     *
+     * @param newsId   the news id
+     * @param tagId the tag id
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public void addNewsTag(long newsId, long tagId) throws DAOException {
         Connection connection = null;
@@ -145,6 +186,13 @@ public class TagDAOImpl implements TagDAO {
         }
     }
 
+    /**
+     * Get all tags for news entry
+     *
+     * @param newsId the news id
+     * @return list of tags
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<Tag> getNewsTags(long newsId) throws DAOException {
         Connection connection = null;

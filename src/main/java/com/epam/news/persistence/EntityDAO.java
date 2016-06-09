@@ -6,52 +6,52 @@ import java.util.List;
 
 
 /**
- * The interface Entity dao.
+ * The interface Entity dao. Describes common behaviour of data access objects.
  *
  * @param <K> the type parameter
  * @param <T> the type parameter
  */
 public interface EntityDAO<K, T> {
     /**
-     * Add t.
+     * Add entity to data source.
      *
      * @param entity the entity
-     * @return the t
+     * @return added entity
      * @throws DAOException the dao exception
      */
     T add(T entity) throws DAOException;
 
     /**
-     * Find t.
+     * Find entity by domain.
      *
      * @param domain the domain
-     * @return the t
+     * @return found entity
      * @throws DAOException the dao exception
      */
     T find(K domain) throws DAOException;
 
     /**
-     * Update boolean.
+     * Update entity.
      *
      * @param entity the entity
-     * @return the boolean
+     * @return true if operation successfully completed
      * @throws DAOException the dao exception
      */
     boolean update(T entity) throws DAOException;
 
     /**
-     * Delete boolean.
+     * Delete entity from data source by domain.
      *
      * @param domain the domain
-     * @return the boolean
+     * @return true if operation successfully completed
      * @throws DAOException the dao exception
      */
     boolean delete(K domain) throws DAOException;
 
     /**
-     * All list.
+     * Get all entities.
      *
-     * @return the list
+     * @return the list of entities
      * @throws DAOException the dao exception
      */
     List<T> all() throws DAOException;

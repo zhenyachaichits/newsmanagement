@@ -1,12 +1,12 @@
 package com.epam.news.persistence.oracle;
 
+import com.epam.news.domain.Comment;
 import com.epam.news.persistence.CommentDAO;
 import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
 import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.CommentProcessor;
-import com.epam.news.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
@@ -15,8 +15,9 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * Oracle Comment data access object. Provides operations with Comments table in database.
  */
 @Repository
 public class CommentDAOImpl implements CommentDAO {
@@ -35,6 +36,13 @@ public class CommentDAOImpl implements CommentDAO {
     @Autowired
     private EntityProcessor<Comment> entityProcessor;
 
+    /**
+     * Add new comment record to database
+     *
+     * @param comment to add
+     * @return added author with generated id
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public Comment add(Comment comment) throws DAOException {
         Connection connection = null;
@@ -61,6 +69,13 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
+    /**
+     * Search comment by id
+     *
+     * @param commentId id of comment
+     * @return found author
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public Comment find(Long commentId) throws DAOException {
         Connection connection = null;
@@ -79,6 +94,13 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
+    /**
+     * Update comment record
+     *
+     * @param comment to be updated
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean update(Comment comment) throws DAOException {
         Connection connection = null;
@@ -97,6 +119,13 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
+    /**
+     * Delete record from database by comment id
+     *
+     * @param commentId author id
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean delete(Long commentId) throws DAOException {
         Connection connection = null;
@@ -113,6 +142,12 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
+    /**
+     * Get all comments
+     *
+     * @return list of comments
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<Comment> all() throws DAOException {
         Connection connection = null;

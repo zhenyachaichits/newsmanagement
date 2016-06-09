@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * Oracle News data access object. Provides operations with news table in database.
  */
 @Repository
 public class NewsDAOImpl implements NewsDAO {
@@ -55,6 +55,13 @@ public class NewsDAOImpl implements NewsDAO {
     @Autowired
     private EntityProcessor<News> entityProcessor;
 
+    /**
+     * Add new news record to database
+     *
+     * @param news to add
+     * @return added news with generated id
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public News add(News news) throws DAOException {
         Connection connection = null;
@@ -83,6 +90,13 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Search news by id
+     *
+     * @param id id of news entry
+     * @return found news
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public News find(Long id) throws DAOException {
         Connection connection = null;
@@ -101,6 +115,13 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Update news record
+     *
+     * @param news to be updated
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean update(News news) throws DAOException {
         Connection connection = null;
@@ -122,6 +143,13 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Delete record from database by comment id
+     *
+     * @param id news id
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
@@ -138,6 +166,12 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Get all news
+     *
+     * @return list of news
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<News> all() throws DAOException {
         try {
@@ -147,6 +181,13 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Get news by tags
+     *
+     * @param tagIdSet the tag id set
+     * @return list of news
+     * @throws DAOException if DAOException thrown
+     */
     @Override
     public List<News> getNewsByTags(Set<Long> tagIdSet) throws DAOException {
         try {
@@ -156,6 +197,13 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Get news by authors
+     *
+     * @param authorSet the author set
+     * @return list of news
+     * @throws DAOException if DAOException thrown
+     */
     @Override
     public List<News> getNewsByAuthors(Set<Long> authorSet) throws DAOException {
         try {
@@ -165,6 +213,13 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Get news by criteria, which contains authors and tags
+     *
+     * @param criteria the criteria
+     * @return list of news
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws DAOException {
         Connection connection = null;
@@ -185,6 +240,12 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Get news ordered by comments number
+     *
+     * @return list of news
+     * @throws DAOException if DAOException thrown
+     */
     @Override
     public List<News> getNewsOrderedByCommentsNumber() throws DAOException {
         try {
@@ -194,6 +255,12 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Get all news count
+     *
+     * @return news count
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public int getNewsCount() throws DAOException {
         Connection connection = null;

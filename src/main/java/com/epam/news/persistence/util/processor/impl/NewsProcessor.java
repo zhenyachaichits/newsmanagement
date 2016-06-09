@@ -1,8 +1,8 @@
 package com.epam.news.persistence.util.processor.impl;
 
+import com.epam.news.domain.News;
 import com.epam.news.persistence.util.processor.EntityProcessor;
 import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
-import com.epam.news.domain.News;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -11,8 +11,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * The News processor. Extracts news data from result set and contains comment keys.
  */
 @Component
 public class NewsProcessor implements EntityProcessor<News> {
@@ -25,6 +26,14 @@ public class NewsProcessor implements EntityProcessor<News> {
     public static final String MODIFICATION_DATE_KEY = "MODIFICATION_DATE";
     public static final String COUNT = "COUNT";
 
+    /**
+     * Extracts news entry object from result set.
+     *
+     * @param resultSet the result set
+     * @return extracted news
+     * @throws EntityProcessorException in case of result set is empty
+     *                                  or any exception was thrown in method
+     */
     @Override
     public News toEntity(ResultSet resultSet) throws EntityProcessorException {
         try {
@@ -32,12 +41,19 @@ public class NewsProcessor implements EntityProcessor<News> {
                 throw new EntityProcessorException("Result set is empty");
             }
 
-           return getEntity(resultSet);
+            return getEntity(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new EntityProcessorException("Couldn't get news entry from result set", e);
         }
     }
 
+    /**
+     * Extracts the list of news from result set
+     *
+     * @param resultSet the result set
+     * @return the list of extracted news
+     * @throws EntityProcessorException if any exception was thrown in method
+     */
     @Override
     public List<News> toEntityList(ResultSet resultSet) throws EntityProcessorException {
         try {

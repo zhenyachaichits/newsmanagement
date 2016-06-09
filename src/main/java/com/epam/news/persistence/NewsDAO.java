@@ -14,19 +14,19 @@ import java.util.Set;
 public interface NewsDAO extends EntityDAO<Long, News> {
 
     /**
-     * Gets news by tags.
+     * Gets news list by tags.
      *
      * @param tagIdSet the tag id set
-     * @return the news by tags
+     * @return the list of news
      * @throws DAOException the dao exception
      */
     List<News> getNewsByTags(Set<Long> tagIdSet) throws DAOException;
 
     /**
-     * Gets news by authors.
+     * Gets news list by authors.
      *
      * @param authorSet the author set
-     * @return the news by authors
+     * @return the list of news
      * @throws DAOException the dao exception
      */
     List<News> getNewsByAuthors(Set<Long> authorSet) throws DAOException;
@@ -35,13 +35,13 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      * Gets news by criteria.
      *
      * @param criteria the criteria
-     * @return the news by criteria
+     * @return the list of news
      * @throws DAOException the dao exception
      */
     List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws DAOException;
 
     /**
-     * Gets news ordered by comments number.
+     * Gets news list ordered by comments number.
      *
      * @return the news ordered by comments number
      * @throws DAOException the dao exception
@@ -49,7 +49,7 @@ public interface NewsDAO extends EntityDAO<Long, News> {
     List<News> getNewsOrderedByCommentsNumber() throws DAOException;
 
     /**
-     * Gets news count.
+     * Gets all news count.
      *
      * @return the news count
      * @throws DAOException the dao exception

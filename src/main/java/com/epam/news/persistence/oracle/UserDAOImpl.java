@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.List;
 
 /**
- * Created by Yauhen_Chaichyts on 5/27/2016.
+ * Oracle User data access object. Provides operations with Users table in database.
  */
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -35,7 +35,15 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private EntityProcessor<User> entityProcessor;
 
+    /**
+     * Add new user record to database
+     *
+     * @param user to add
+     * @return added user
+     * @throws DAOException if SQLException thrown
+     */
     // TODO: 5/30/2016 add password encryption
+    @Override
     public User add(User user) throws DAOException {
         Connection connection = null;
         try {
@@ -61,6 +69,14 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * Search user by user id
+     *
+     * @param id id of user
+     * @return found user
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
+    @Override
     public User find(Long id) throws DAOException {
         Connection connection = null;
         try {
@@ -78,6 +94,14 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * Update user record
+     *
+     * @param user to be updated
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
+    @Override
     public boolean update(User user) throws DAOException {
         Connection connection = null;
         try {
@@ -97,6 +121,14 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * Delete record from database by user id
+     *
+     * @param id user id
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
+    @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
         try {
@@ -112,6 +144,13 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * Get all users
+     *
+     * @return list of users
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
+    @Override
     public List<User> all() throws DAOException {
         Connection connection = null;
         try {

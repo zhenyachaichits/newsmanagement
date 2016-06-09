@@ -2,7 +2,7 @@ package com.epam.news.domain;
 
 
 /**
- * The type Role.
+ * The type Role. Contains information about user access level
  */
 public class Role {
     private long userId;

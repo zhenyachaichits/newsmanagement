@@ -15,7 +15,7 @@ import java.sql.*;
 import java.util.List;
 
 /**
- * Created by Yauhen_Chaichyts on 5/30/2016.
+ * Oracle Role data access object. Provides operations with role table in database.
  */
 @Repository
 public class RoleDAOImpl implements RoleDAO {
@@ -31,6 +31,13 @@ public class RoleDAOImpl implements RoleDAO {
     @Autowired
     private EntityProcessor<Role> entityProcessor;
 
+    /**
+     * Add new user role record to database
+     *
+     * @param role to add
+     * @return added role
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public Role add(Role role) throws DAOException {
         Connection connection = null;
@@ -50,6 +57,13 @@ public class RoleDAOImpl implements RoleDAO {
         }
     }
 
+    /**
+     * Search user role by user id
+     *
+     * @param userId id of user
+     * @return found role
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public Role find(Long userId) throws DAOException {
         Connection connection = null;
@@ -68,6 +82,13 @@ public class RoleDAOImpl implements RoleDAO {
         }
     }
 
+    /**
+     * Update user role record
+     *
+     * @param role to be updated
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean update(Role role) throws DAOException {
         Connection connection = null;
@@ -86,6 +107,13 @@ public class RoleDAOImpl implements RoleDAO {
         }
     }
 
+    /**
+     * Delete record from database by user id
+     *
+     * @param userId news id
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean delete(Long userId) throws DAOException {
         Connection connection = null;
@@ -102,6 +130,12 @@ public class RoleDAOImpl implements RoleDAO {
         }
     }
 
+    /**
+     * Get all user roles
+     *
+     * @return list of roles
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<Role> all() throws DAOException {
         Connection connection = null;

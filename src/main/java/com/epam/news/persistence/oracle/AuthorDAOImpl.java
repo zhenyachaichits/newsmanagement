@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * The type Author dao.
+ * Oracle Author data access object. Provides operations with Author table in database.
  */
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
@@ -34,13 +34,20 @@ public class AuthorDAOImpl implements AuthorDAO {
             "VALUES (?, ?)";
     private static final String SQL_GET_NEWS_AUTHORS_QUERY = "SELECT AUTHOR.AUTHOR_ID, AUTHOR.AUTHOR_NAME, " +
             "AUTHOR.EXPIRED FROM AUTHOR INNER JOIN NEWS_AUTHOR ON AUTHOR.AUTHOR_ID = NEWS_AUTHOR.AUTHOR_ID " +
-            "WHERE NEWS_AUTHOR.NEWS_ID = ? AND EXPIRED >= CURRENT_TIMESTAMP";
+            "WHERE NEWS_AUTHOR.NEWS_ID = ?";
 
     @Autowired
     private DataSource dataSource;
     @Autowired
     private EntityProcessor<Author> entityProcessor;
 
+    /**
+     * Add new author to database
+     *
+     * @param author to add
+     * @return added author with generated id
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public Author add(Author author) throws DAOException {
         Connection connection = null;
@@ -66,6 +73,13 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
+    /**
+     * Search author by id
+     *
+     * @param id of author
+     * @return found author
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public Author find(Long id) throws DAOException {
         Connection connection = null;
@@ -84,6 +98,13 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
+    /**
+     * Update author record
+     *
+     * @param author to be updated
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean update(Author author) throws DAOException {
         Connection connection = null;
@@ -103,6 +124,13 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
+    /**
+     * Delete record from database by author id
+     *
+     * @param id author id
+     * @return true in case of success
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
@@ -119,6 +147,12 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
+    /**
+     * Get all authors
+     *
+     * @return list of authors
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<Author> all() throws DAOException {
         Connection connection = null;
@@ -136,6 +170,13 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
+    /**
+     * Add news author to News_Author table
+     *
+     * @param newsId   the news id
+     * @param authorId the author id
+     * @throws DAOException if SQLException thrown
+     */
     @Override
     public void addNewsAuthor(long newsId, long authorId) throws DAOException {
         Connection connection = null;
@@ -153,6 +194,13 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
+    /**
+     * Get all authors for news entry
+     *
+     * @param newsId the news id
+     * @return list of authors
+     * @throws DAOException if SQLException or EntityProcessorException thrown
+     */
     @Override
     public List<Author> getNewsAuthors(long newsId) throws DAOException {
         Connection connection = null;
