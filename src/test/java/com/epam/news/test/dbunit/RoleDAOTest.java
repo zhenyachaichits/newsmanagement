@@ -6,6 +6,8 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,8 @@ public class RoleDAOTest {
     }
 
     @Test
+    @ExpectedDatabase(value = "/data/expected/role-expected.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
         assertFalse(result);

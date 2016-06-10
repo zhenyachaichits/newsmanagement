@@ -14,8 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
+
 /**
- * Created by Yauhen_Chaichyts on 5/31/2016.
+ * The News service.
  */
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -25,6 +26,13 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     private NewsDAO dao;
 
+    /**
+     * Add new news entry
+     *
+     * @param news news data
+     * @return added news with generated id
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public News add(News news) throws ServiceException {
@@ -40,6 +48,13 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Search news entry by id
+     *
+     * @param id news id
+     * @return found news
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public News find(Long id) throws ServiceException {
         try {
@@ -50,6 +65,13 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Update news data
+     *
+     * @param news news data to be updated
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(News news) throws ServiceException {
@@ -64,6 +86,13 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Delete news entry by id
+     *
+     * @param id news id
+     * @return true if news was deleted
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(Long id) throws ServiceException {
@@ -75,6 +104,12 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Get all news
+     *
+     * @return the list of news
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<News> all() throws ServiceException {
         try {
@@ -85,6 +120,14 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Search news by criteria, including authors and tags.
+     * If Tags/Authors not selected, news will be found by Authors/Tags only.
+     *
+     * @param criteria the criteria, containing tags and authors
+     * @return the list of news
+     * @throws ServiceException if authors and tags not specified or if DAOException was thrown
+     */
     @Override
     public List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws ServiceException {
         try {
@@ -104,6 +147,12 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Get all news in order of news' comments number
+     *
+     * @return list of news ordered by comments amount
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<News> getNewsOrderedByCommentsNumber() throws ServiceException {
         try {
@@ -114,6 +163,12 @@ public class NewsServiceImpl implements NewsService {
         }
     }
 
+    /**
+     * Get news count
+     *
+     * @return news count
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public int getNewsCount() throws ServiceException {
         try {

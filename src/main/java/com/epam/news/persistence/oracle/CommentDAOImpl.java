@@ -30,6 +30,8 @@ public class CommentDAOImpl implements CommentDAO {
     private static final String SQL_DELETE_COMMENT_QUERY = "DELETE FROM COMMENTS WHERE COMMENT_ID = ?";
     private static final String SQL_GET_ALL_COMMENTS_QUERY = "SELECT COMMENT_ID, NEWS_ID, COMMENT_TEXT, CREATION_DATE " +
             "FROM COMMENTS";
+    private static final String SQL_GET_NEWS_COMMENTS_QUERY = "SELECT COMMENT_ID, NEWS_ID, COMMENT_TEXT, CREATION_DATE " +
+            "FROM COMMENTS WHERE NEWS_ID = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -160,6 +162,31 @@ public class CommentDAOImpl implements CommentDAO {
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get all comments", e);
+        } finally {
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Get all news' comments
+     *
+     * @param newsId news id
+     * @return list of comments
+     * @throws DAOException
+     */
+    @Override
+    public List<Comment> getNewsComments(long newsId) throws DAOException {
+        Connection connection = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_COMMENTS_QUERY);
+
+            statement.setLong(1, newsId);
+            ResultSet resultSet = statement.executeQuery();
+
+            return entityProcessor.toEntityList(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get all news comments", e);
         } finally {
             DAOUtil.releaseConnection(connection, dataSource);
         }

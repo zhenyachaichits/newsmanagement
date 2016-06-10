@@ -29,6 +29,10 @@ public class NewsManagementImpl implements NewsManagement {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addNewsData(NewsTO newsData) throws ServiceException {
+        if (newsData.getAuthors() == null || newsData.getTags() == null || newsData.getNews() == null) {
+            throw new ServiceException("Invalid data");
+        }
+
         News news = newsService.add(newsData.getNews());
         long newsId = news.getNewsId();
 

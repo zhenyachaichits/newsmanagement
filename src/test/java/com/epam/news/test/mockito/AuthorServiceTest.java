@@ -5,13 +5,13 @@ import com.epam.news.persistence.AuthorDAO;
 import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.service.exception.ServiceException;
 import com.epam.news.service.impl.AuthorServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class AuthorServiceTest {
     @InjectMocks
     private AuthorServiceImpl service;
 
-    @BeforeMethod
+    @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }

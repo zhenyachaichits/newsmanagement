@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * The type Role service.
+ * The Role service.
  */
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -24,6 +24,13 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDAO dao;
 
+    /**
+     * Add user's role data
+     *
+     * @param role user role data
+     * @return added role
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Role add(Role role) throws ServiceException {
@@ -35,6 +42,13 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
+    /**
+     * Search user role data by user id
+     *
+     * @param userId id of user
+     * @return user's role
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public Role find(Long userId) throws ServiceException {
         try {
@@ -45,6 +59,13 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
+    /**
+     * Update user role
+     *
+     * @param role user role
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(Role role) throws ServiceException {
@@ -56,6 +77,13 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
+    /**
+     * Delete user role by user id
+     *
+     * @param userId id of user
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(Long userId) throws ServiceException {
@@ -67,6 +95,12 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
+    /**
+     * Get all users roles
+     *
+     * @return list of all user's roles
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<Role> all() throws ServiceException {
         try {

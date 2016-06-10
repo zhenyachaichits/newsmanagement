@@ -5,20 +5,19 @@ import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.persistence.NewsDAO;
 import com.epam.news.service.exception.ServiceException;
 import com.epam.news.service.impl.NewsServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +31,7 @@ public class NewsServiceTest {
     @InjectMocks
     private NewsServiceImpl service;
 
-    @BeforeMethod
+    @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
@@ -56,8 +55,8 @@ public class NewsServiceTest {
     @Test
     public void testAdd() throws Exception {
         News news = new News();
-        when(dao.add(any())).thenReturn(news);
-        News result = service.add(any());
+        when(dao.add(news)).thenReturn(news);
+        News result = service.add(news);
 
         assertEquals(news, result);
     }

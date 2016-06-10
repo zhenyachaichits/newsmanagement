@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * The type Tag service.
+ * The Tag service.
  */
 @Service
 public class TagServiceImpl implements TagService {
@@ -24,6 +24,13 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private TagDAO dao;
 
+    /**
+     * Add new tag
+     *
+     * @param tag tag data
+     * @return added tag with id
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Tag add(Tag tag) throws ServiceException {
@@ -35,6 +42,13 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+    /**
+     * Search tag by id
+     *
+     * @param id tag id
+     * @return found tag
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public Tag find(Long id) throws ServiceException {
         try {
@@ -45,6 +59,13 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+    /**
+     * Update tag data
+     *
+     * @param tag tag data
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(Tag tag) throws ServiceException {
@@ -56,6 +77,13 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+    /**
+     * Delete tag by id
+     *
+     * @param id tag id
+     * @return
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(Long id) throws ServiceException {
@@ -67,6 +95,12 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+    /**
+     * Get all tags
+     *
+     * @return list of all tags
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<Tag> all() throws ServiceException {
         try {
@@ -77,6 +111,13 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+    /**
+     * Add new tag for news entry
+     *
+     * @param newsId the news id
+     * @param tagId  the tag id
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addNewsTag(long newsId, long tagId) throws ServiceException {
@@ -88,6 +129,13 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+    /**
+     * Search tags for specified news entry
+     *
+     * @param newsId the news id
+     * @return list of found tags
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<Tag> getNewsTags(long newsId) throws ServiceException {
         try {

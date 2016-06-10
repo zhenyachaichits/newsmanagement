@@ -25,10 +25,11 @@ public class CommentServiceImpl implements CommentService {
     private CommentDAO dao;
 
     /**
-     * 
-     * @param comment
-     * @return
-     * @throws ServiceException
+     * Add new comment for news entry
+     *
+     * @param comment comment data
+     * @return added comment with generated id
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -41,6 +42,13 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    /**
+     * Find comment by id
+     *
+     * @param commentId comment id
+     * @return found comment
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public Comment find(Long commentId) throws ServiceException {
         try {
@@ -51,6 +59,13 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    /**
+     * Update comment data
+     *
+     * @param comment comment data
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(Comment comment) throws ServiceException {
@@ -62,6 +77,13 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    /**
+     * Delete comment by id
+     *
+     * @param commentId
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(Long commentId) throws ServiceException {
@@ -73,6 +95,12 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    /**
+     * Get all comments
+     *
+     * @return the list of all comments
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<Comment> all() throws ServiceException {
         try {
@@ -80,6 +108,22 @@ public class CommentServiceImpl implements CommentService {
         } catch (DAOException e) {
             LOG.error("Error in method: all()", e);
             throw new ServiceException("Couldn't execute getting all comments service", e);
+        }
+    }
+
+    /**
+     * Get news comments list.
+     *
+     * @param newsId the news id
+     * @return the list of comments
+     */
+    @Override
+    public List<Comment> getNewsComments(long newsId) throws ServiceException {
+        try {
+            return dao.getNewsComments(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getNewsComments(long newsId)", e);
+            throw new ServiceException("Couldn't execute getting news comments service", e);
         }
     }
 }

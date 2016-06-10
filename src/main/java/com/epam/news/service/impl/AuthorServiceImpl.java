@@ -29,7 +29,7 @@ public class AuthorServiceImpl implements AuthorService {
      *
      * @param author author to be added
      * @return
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -46,7 +46,7 @@ public class AuthorServiceImpl implements AuthorService {
      * Search author by author id
      *
      * @param id author id
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      * @returnn found author
      */
     @Override
@@ -64,7 +64,7 @@ public class AuthorServiceImpl implements AuthorService {
      *
      * @param author author to be updated
      * @return true in case of success, else false
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -82,7 +82,7 @@ public class AuthorServiceImpl implements AuthorService {
      *
      * @param id author id
      * @return true in case of success, else false
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -99,7 +99,7 @@ public class AuthorServiceImpl implements AuthorService {
      * Get all authors
      *
      * @return list of authors
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     public List<Author> all() throws ServiceException {
@@ -116,7 +116,7 @@ public class AuthorServiceImpl implements AuthorService {
      *
      * @param newsId   the news id
      * @param authorId the author id
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -134,7 +134,7 @@ public class AuthorServiceImpl implements AuthorService {
      *
      * @param newsId the news id
      * @return list of authors
-     * @throws ServiceException if DAOException das thrown
+     * @throws ServiceException if DAOException was thrown
      */
     @Override
     public List<Author> getNewsAuthors(long newsId) throws ServiceException {

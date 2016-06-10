@@ -7,28 +7,28 @@ import com.epam.news.domain.to.NewsTO;
 import com.epam.news.persistence.AuthorDAO;
 import com.epam.news.persistence.NewsDAO;
 import com.epam.news.persistence.TagDAO;
+import com.epam.news.service.exception.ServiceException;
 import com.epam.news.service.impl.AuthorServiceImpl;
 import com.epam.news.service.impl.NewsServiceImpl;
 import com.epam.news.service.impl.TagServiceImpl;
 import com.epam.news.service.management.impl.NewsManagementImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NewsManagementTest {
-    private static final Long TEST_ID = 1L;
 
     @Mock
     private NewsDAO newsDAO;
@@ -37,15 +37,18 @@ public class NewsManagementTest {
     @Mock
     private TagDAO tagDAO;
     @Spy
+    @InjectMocks
     private NewsServiceImpl newsService;
     @Spy
+    @InjectMocks
     private AuthorServiceImpl authorService;
     @Spy
+    @InjectMocks
     private TagServiceImpl tagService;
     @InjectMocks
     private NewsManagementImpl newsManagementService;
 
-    @BeforeMethod
+    @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
@@ -75,7 +78,13 @@ public class NewsManagementTest {
         doReturn(tag).when(tagService).add(tag);
 
         newsManagementService.addNewsData(newsTO);
+    }
 
+    @Test(expected = ServiceException.class)
+    public void testAddError() throws Exception {
+        NewsTO newsTO = new NewsTO();
+
+        newsManagementService.addNewsData(newsTO);
     }
 
 }

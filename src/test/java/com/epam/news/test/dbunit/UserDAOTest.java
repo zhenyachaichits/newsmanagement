@@ -70,7 +70,8 @@ public class UserDAOTest {
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/user-expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    @ExpectedDatabase(value = "/data/expected/user-expected.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
         assertFalse(result);

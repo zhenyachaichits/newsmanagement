@@ -3,20 +3,18 @@ package com.epam.news.test.mockito;
 import com.epam.news.domain.User;
 import com.epam.news.persistence.UserDAO;
 import com.epam.news.service.impl.UserServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -30,7 +28,7 @@ public class UserServiceTest {
     @InjectMocks
     private UserServiceImpl service;
 
-    @BeforeMethod
+    @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }

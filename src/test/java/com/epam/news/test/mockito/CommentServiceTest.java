@@ -3,13 +3,13 @@ package com.epam.news.test.mockito;
 import com.epam.news.domain.Comment;
 import com.epam.news.persistence.CommentDAO;
 import com.epam.news.service.impl.CommentServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class CommentServiceTest {
     @InjectMocks
     private CommentServiceImpl service;
 
-    @BeforeMethod
+    @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }

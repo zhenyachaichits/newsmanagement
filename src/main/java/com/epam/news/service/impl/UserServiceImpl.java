@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * The type User service.
+ * The User service.
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,6 +24,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO dao;
 
+    /**
+     * Add new user
+     *
+     * @param user user data
+     * @return added user with id
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public User add(User user) throws ServiceException {
@@ -35,6 +42,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Search user by id
+     *
+     * @param id user id
+     * @return Found user
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public User find(Long id) throws ServiceException {
         try {
@@ -45,6 +59,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Update user data
+     *
+     * @param user user data
+     * @return true in case of success
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(User user) throws ServiceException {
@@ -56,6 +77,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Delete user by id
+     *
+     * @param id user id
+     * @return
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(Long id) throws ServiceException {
@@ -67,6 +95,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Get all users data
+     *
+     * @return list of all users
+     * @throws ServiceException if DAOException was thrown
+     */
     @Override
     public List<User> all() throws ServiceException {
         try {
