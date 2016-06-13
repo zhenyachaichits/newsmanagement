@@ -35,6 +35,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     private static final String SQL_GET_NEWS_AUTHORS_QUERY = "SELECT AUTHOR.AUTHOR_ID, AUTHOR.AUTHOR_NAME, " +
             "AUTHOR.EXPIRED FROM AUTHOR INNER JOIN NEWS_AUTHOR ON AUTHOR.AUTHOR_ID = NEWS_AUTHOR.AUTHOR_ID " +
             "WHERE NEWS_AUTHOR.NEWS_ID = ?";
+    private static final String SQL_DELETE_NEWS_AUTHORS_QUERY = "DELETE FROM NEWS_AUTHOR WHERE NEWS_ID = ? ";
 
     @Autowired
     private DataSource dataSource;
@@ -184,20 +185,24 @@ public class AuthorDAOImpl implements AuthorDAO {
      * Add news author to News_Author table
      *
      * @param newsId   the news id
-     * @param authorId the author id
+     * @param authorIdArray the author id array
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void addNewsAuthor(long newsId, long authorId) throws DAOException {
+    public void addNewsAuthors(long newsId, long... authorIdArray) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_ADD_NEWS_AUTHOR_QUERY);
 
-            statement.setLong(1, newsId);
-            statement.setLong(2, authorId);
-            statement.executeUpdate();
+            for (long authorId : authorIdArray) {
+                statement.setLong(1, newsId);
+                statement.setLong(2, authorId);
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't add news author", e);
         } finally {
@@ -207,7 +212,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     /**
-     * Get findAll authors for news entry
+     * Get all authors for news entry
      *
      * @param newsId the news id
      * @return list of authors
@@ -226,6 +231,31 @@ public class AuthorDAOImpl implements AuthorDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get id set", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Delete news authors.
+     *
+     * @param newsId the news id
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public void deleteNewsAuthors(long newsId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_DELETE_NEWS_AUTHORS_QUERY);
+
+            statement.setLong(1, newsId);
+            statement.executeQuery();
+
+        } catch (SQLException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {
             DAOUtil.closeStatement(statement);

@@ -78,7 +78,7 @@ public class TagServiceTest {
 
     @Test(expected = ServiceException.class)
     public void testAddNewsTag() throws Exception {
-        doThrow(new DAOException()).when(dao).addNewsTag(TEST_ID, TEST_ID);
+        doThrow(new DAOException()).when(dao).addNewsTags(TEST_ID, TEST_ID);
 
         service.addNewsTag(TEST_ID, TEST_ID);
     }

@@ -5,4 +5,7 @@
 
     <News news_id="2" title="title" short_text="short text" full_text="full text"
           creation_date="2016-06-07 03:14:07" modification_date="2016-06-07 03:14:07"/>
+
+    <News_Author news_id="2" author_id="1"/>
+    <News_Author news_id="2" author_id="2"/>
 </dataset>

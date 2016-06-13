@@ -39,7 +39,7 @@ public class CommentDAOImpl implements CommentDAO {
     private EntityProcessor<Comment> entityProcessor;
 
     /**
-     * Add new comment record to database
+     * Add single comment record to database
      *
      * @param comment to add
      * @return added author with generated id
@@ -65,6 +65,37 @@ public class CommentDAOImpl implements CommentDAO {
             }
 
             return comment;
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't add new comment", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+
+    /**
+     * Add multiple comments data.
+     *
+     * @param comments the comments
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public void addComments(Comment... comments) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_ADD_COMMENT_QUERY);
+
+            for (Comment comment : comments) {
+                statement.setLong(1, comment.getNewsId());
+                statement.setString(2, comment.getCommentText());
+                statement.setTimestamp(3, comment.getCreationDate());
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new comment", e);
         } finally {
@@ -151,6 +182,35 @@ public class CommentDAOImpl implements CommentDAO {
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
+
+    /**
+     * Delete multiple comments by id.
+     *
+     * @param commentIdArray the comment id array
+     * @throws DAOException in case of error
+     */
+    @Override
+    public void deleteComments(long... commentIdArray) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_DELETE_COMMENT_QUERY);
+
+            for (long commentId : commentIdArray) {
+                statement.setLong(1, commentId);
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't delete comment with id", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
 
     /**
      * Get findAll comments

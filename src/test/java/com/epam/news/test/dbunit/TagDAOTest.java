@@ -34,6 +34,7 @@ public class TagDAOTest {
     private static final String TEST_TAG_NAME = "Test";
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
+    private static final long[] TEST_TAGS_ARRAY = {1, 2};
 
     @Autowired
     private TagDAO dao;
@@ -63,7 +64,7 @@ public class TagDAOTest {
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/tag-expected.xml",
+    @ExpectedDatabase(value = "/data/expected/tag-delete-expected.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
@@ -74,5 +75,12 @@ public class TagDAOTest {
     public void testAll() throws Exception {
         List<Tag> tagList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, tagList.size());
+    }
+
+    @Test
+    @ExpectedDatabase(value = "/data/expected/tag-add-expected.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    public void testAddNewsTags() throws Exception {
+        dao.addNewsTags(TEST_ID, TEST_TAGS_ARRAY);
     }
 }

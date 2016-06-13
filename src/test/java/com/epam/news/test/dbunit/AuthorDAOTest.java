@@ -36,6 +36,7 @@ public class AuthorDAOTest {
     private static final String TEST_AUTHOR_NAME = "Author";
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
+    private static final long[] TEST_AUTHORS_ARRAY = {1, 2};
 
     private static Timestamp testExpiredDate;
 
@@ -73,7 +74,7 @@ public class AuthorDAOTest {
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/author-expected.xml",
+    @ExpectedDatabase(value = "/data/expected/author-delete-expected.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
@@ -84,5 +85,12 @@ public class AuthorDAOTest {
     public void testAll() throws Exception {
         List<Author> newsList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, newsList.size());
+    }
+
+    @Test
+    @ExpectedDatabase(value = "/data/expected/author-add-expected.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    public void testAddNewsAuthors() throws Exception {
+        dao.addNewsAuthors(TEST_ID, TEST_AUTHORS_ARRAY);
     }
 }

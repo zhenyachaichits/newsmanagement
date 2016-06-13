@@ -20,6 +20,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -39,13 +41,17 @@ public class CommentDAOTest {
 
 
     private static Timestamp testCreationDate;
+    private static Timestamp testDate;
 
     @Autowired
     private CommentDAO dao;
 
     @Before
-    public void init() {
+    public void init() throws Exception {
         testCreationDate = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date parsedDate = dateFormat.parse("2016-06-07 03:14:07");
+        testDate = new java.sql.Timestamp(parsedDate.getTime());
     }
 
     @Test
@@ -76,7 +82,7 @@ public class CommentDAOTest {
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/comment-expected.xml",
+    @ExpectedDatabase(value = "/data/expected/comment-delete-expected.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
@@ -87,5 +93,23 @@ public class CommentDAOTest {
     public void testAll() throws Exception {
         List<Comment> newsList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, newsList.size());
+    }
+
+    @Test
+    @ExpectedDatabase(value = "/data/expected/comment-add-expected.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    public void testAddMultipleComments() throws Exception {
+
+        Comment[] comments = new Comment[3];
+        for (int i = 0; i < 3; i++) {
+            Comment comment = new Comment();
+            comment.setCommentId(i + 1);
+            comment.setNewsId(TEST_ID);
+            comment.setCommentText(TEST_COMMENT_TEXT);
+            comment.setCreationDate(testDate);
+            comments[i] = comment;
+        }
+
+        dao.addComments(comments);
     }
 }

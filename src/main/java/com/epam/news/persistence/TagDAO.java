@@ -17,7 +17,7 @@ public interface TagDAO extends EntityDAO<Long, Tag> {
      * @param tagId  the tag id
      * @throws DAOException the dao exception
      */
-    void addNewsTag(long newsId, long tagId) throws DAOException;
+    void addNewsTags(long newsId, long... tagId) throws DAOException;
 
     /**
      * Gets findAll news' tags.
@@ -27,4 +27,12 @@ public interface TagDAO extends EntityDAO<Long, Tag> {
      * @throws DAOException the dao exception
      */
     List<Tag> getNewsTags(long newsId) throws DAOException;
+
+    /**
+     * Delete news tags.
+     *
+     * @param newsId the news id
+     * @throws DAOException the dao exception
+     */
+    void deleteNewsTags(long newsId) throws DAOException;
 }

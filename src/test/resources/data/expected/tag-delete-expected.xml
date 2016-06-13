@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <Tag tag_id="1" tag_name="TestTag"/>
-    <Tag tag_id="2" tag_name="TestTag1"/>
 
     <News news_id="2" title="title1" short_text="short text1" full_text="full text1"
           creation_date="2016-06-07 03:14:07" modification_date="2016-06-07 03:14:07"/>

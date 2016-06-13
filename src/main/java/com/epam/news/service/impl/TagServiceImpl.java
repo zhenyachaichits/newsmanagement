@@ -123,9 +123,9 @@ public class TagServiceImpl implements TagService {
     @Transactional(rollbackFor = Exception.class)
     public void addNewsTag(long newsId, long tagId) throws ServiceException {
         try {
-            dao.addNewsTag(newsId, tagId);
+            dao.addNewsTags(newsId, tagId);
         } catch (DAOException e) {
-            LOG.error("Error in method: addNewsTag(long newsId, long tagId)", e);
+            LOG.error("Error in method: addNewsTags(long newsId, long tagId)", e);
             throw new ServiceException("Couldn't execute adding news tags service", e);
         }
     }

@@ -1,12 +1,12 @@
 package com.epam.news.persistence.oracle;
 
-import com.epam.news.persistence.TagDAO;
+import com.epam.news.domain.Tag;
 import com.epam.news.exception.DAOException;
+import com.epam.news.exception.EntityProcessorException;
+import com.epam.news.persistence.TagDAO;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.TagProcessor;
-import com.epam.news.domain.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
@@ -29,6 +29,7 @@ public class TagDAOImpl implements TagDAO {
     private static final String SQL_ADD_NEWS_TAG_QUERY = "INSERT INTO NEWS_TAG (NEWS_ID, TAG_ID) VALUES (?, ?)";
     private static final String SQL_GET_NEWS_TAGS_QUERY = "SELECT TAG.TAG_ID, TAG.TAG_NAME FROM TAG " +
             "INNER JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG_ID WHERE NEWS_TAG.NEWS_ID = ?";
+    private static final String SQL_DELETE_NEWS_TAGS_QUERY = "DELETE FROM NEWS_TAG WHERE NEWS_ID = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -175,21 +176,25 @@ public class TagDAOImpl implements TagDAO {
     /**
      * Add news tag to News_Tag table
      *
-     * @param newsId   the news id
-     * @param tagId the tag id
+     * @param newsId the news id
+     * @param tagIdArray the tag id array
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void addNewsTag(long newsId, long tagId) throws DAOException {
+    public void addNewsTags(long newsId, long... tagIdArray) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_ADD_NEWS_TAG_QUERY);
 
-            statement.setLong(1, newsId);
-            statement.setLong(2, tagId);
-            statement.executeUpdate();
+            for (long tagId : tagIdArray) {
+                statement.setLong(1, newsId);
+                statement.setLong(2, tagId);
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't add news author", e);
         } finally {
@@ -219,6 +224,30 @@ public class TagDAOImpl implements TagDAO {
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get id set", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Delete news tags.
+     *
+     * @param newsId the news id
+     * @throws DAOException if SQLException thrown
+     */
+    @Override
+    public void deleteNewsTags(long newsId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_DELETE_NEWS_TAGS_QUERY);
+
+            statement.setLong(1, newsId);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't delete tags by news id", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

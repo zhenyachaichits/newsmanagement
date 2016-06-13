@@ -123,9 +123,9 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional(rollbackFor = Exception.class)
     public void addNewsAuthor(long newsId, long authorId) throws ServiceException {
         try {
-            dao.addNewsAuthor(newsId, authorId);
+            dao.addNewsAuthors(newsId, authorId);
         } catch (DAOException e) {
-            LOG.error("Error in method: addNewsAuthor(long newsId, long authorId)", e);
+            LOG.error("Error in method: addNewsAuthors(long newsId, long authorId)", e);
             throw new ServiceException("Couldn't execute adding news author service", e);
         }
     }

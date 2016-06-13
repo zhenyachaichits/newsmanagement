@@ -78,7 +78,7 @@ public class AuthorServiceTest {
 
     @Test(expected = ServiceException.class)
     public void testAddNewsAuthor() throws Exception {
-        doThrow(new DAOException()).when(dao).addNewsAuthor(TEST_ID, TEST_ID);
+        doThrow(new DAOException()).when(dao).addNewsAuthors(TEST_ID, TEST_ID);
 
         service.addNewsAuthor(TEST_ID, TEST_ID);
     }
