@@ -1,11 +1,12 @@
 package com.epam.news.service.impl;
 
 import com.epam.news.persistence.RoleDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.domain.Role;
 import com.epam.news.service.RoleService;
-import com.epam.news.service.exception.ServiceException;
-import org.apache.log4j.Logger;
+import com.epam.news.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private static final Logger LOG = Logger.getLogger(RoleServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(RoleServiceImpl.class);
 
     @Autowired
     private RoleDAO dao;
@@ -96,18 +97,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * Get all users roles
+     * Get findAll users roles
      *
-     * @return list of all user's roles
+     * @return list of findAll user's roles
      * @throws ServiceException if DAOException was thrown
      */
     @Override
-    public List<Role> all() throws ServiceException {
+    public List<Role> findAll() throws ServiceException {
         try {
-            return dao.all();
+            return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: all()", e);
-            throw new ServiceException("Couldn't execute getting all roles service", e);
+            LOG.error("Error in method: findAll()", e);
+            throw new ServiceException("Couldn't execute getting findAll roles service", e);
         }
     }
 }

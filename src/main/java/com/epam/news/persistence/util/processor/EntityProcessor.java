@@ -1,6 +1,6 @@
 package com.epam.news.persistence.util.processor;
 
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 
 import java.sql.ResultSet;
 import java.util.List;

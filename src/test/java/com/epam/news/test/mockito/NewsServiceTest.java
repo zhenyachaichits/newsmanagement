@@ -3,7 +3,7 @@ package com.epam.news.test.mockito;
 import com.epam.news.domain.News;
 import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.persistence.NewsDAO;
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.ServiceException;
 import com.epam.news.service.impl.NewsServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +38,8 @@ public class NewsServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        when(dao.all()).thenReturn(new ArrayList<>());
-        List<News> result = service.all();
+        when(dao.findAll()).thenReturn(new ArrayList<>());
+        List<News> result = service.findAll();
 
         assertNotNull(result);
     }
@@ -85,7 +85,7 @@ public class NewsServiceTest {
 
     @Test
     public void testGetOrdered() throws Exception {
-        when(dao.all()).thenReturn(new ArrayList<>());
+        when(dao.findAll()).thenReturn(new ArrayList<>());
         List<News> result = service.getNewsOrderedByCommentsNumber();
 
         assertNotNull(result);

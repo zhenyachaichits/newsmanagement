@@ -3,10 +3,11 @@ package com.epam.news.service.impl;
 import com.epam.news.domain.News;
 import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.persistence.NewsDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.service.NewsService;
-import com.epam.news.service.exception.ServiceException;
-import org.apache.log4j.Logger;
+import com.epam.news.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The News service.
  */
 @Service
 public class NewsServiceImpl implements NewsService {
 
-    private static final Logger LOG = Logger.getLogger(NewsServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(NewsServiceImpl.class);
+
 
     @Autowired
     private NewsDAO dao;
@@ -105,18 +106,18 @@ public class NewsServiceImpl implements NewsService {
     }
 
     /**
-     * Get all news
+     * Get findAll news
      *
      * @return the list of news
      * @throws ServiceException if DAOException was thrown
      */
     @Override
-    public List<News> all() throws ServiceException {
+    public List<News> findAll() throws ServiceException {
         try {
-            return dao.all();
+            return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method:  all()", e);
-            throw new ServiceException("Couldn't execute getting all news service", e);
+            LOG.error("Error in method:  findAll()", e);
+            throw new ServiceException("Couldn't execute getting findAll news service", e);
         }
     }
 
@@ -148,7 +149,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     /**
-     * Get all news in order of news' comments number
+     * Get findAll news in order of news' comments number
      *
      * @return list of news ordered by comments amount
      * @throws ServiceException if DAOException was thrown
@@ -159,7 +160,7 @@ public class NewsServiceImpl implements NewsService {
             return dao.getNewsOrderedByCommentsNumber();
         } catch (DAOException e) {
             LOG.error("Error in method: getNewsOrderedByCommentsNumber()", e);
-            throw new ServiceException("Couldn't execute getting all news ordered by comments service", e);
+            throw new ServiceException("Couldn't execute getting findAll news ordered by comments service", e);
         }
     }
 

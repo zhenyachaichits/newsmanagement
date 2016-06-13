@@ -1,7 +1,7 @@
 package com.epam.news.service.management;
 
 import com.epam.news.domain.to.NewsTO;
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.ServiceException;
 
 /**
  * Created by Yauhen_Chaichyts on 6/3/2016.

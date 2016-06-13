@@ -1,10 +1,10 @@
 package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.TagDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.TagProcessor;
 import com.epam.news.domain.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +45,11 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public Tag add(Tag tag) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             String[] generatedKeyName = {TagProcessor.TAG_ID_KEY};
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_TAG_QUERY, generatedKeyName);
+            statement = connection.prepareStatement(SQL_ADD_TAG_QUERY, generatedKeyName);
 
             statement.setString(1, tag.getTagName());
             statement.executeUpdate();
@@ -62,6 +63,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new tag", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -76,9 +78,10 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public Tag find(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_TAG_BY_ID_QUERY);
+            statement = connection.prepareStatement(SQL_FIND_TAG_BY_ID_QUERY);
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -87,6 +90,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find tag by id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -101,9 +105,10 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public boolean update(Tag tag) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TAG_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_TAG_QUERY);
 
             statement.setString(1, tag.getTagName());
             statement.setLong(2, tag.getTagId());
@@ -112,6 +117,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update tag", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -126,38 +132,42 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TAG_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_TAG_QUERY);
 
             statement.setLong(1, id);
             return statement.execute();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete tag with id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all tag
+     * Get findAll tag
      *
      * @return list of tags
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<Tag> all() throws DAOException {
+    public List<Tag> findAll() throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_TAGS_QUERY);
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get all tags", e);
+            throw new DAOException("Couldn't get findAll tags", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -172,9 +182,10 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public void addNewsTag(long newsId, long tagId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_NEWS_TAG_QUERY);
+            statement = connection.prepareStatement(SQL_ADD_NEWS_TAG_QUERY);
 
             statement.setLong(1, newsId);
             statement.setLong(2, tagId);
@@ -182,12 +193,13 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add news author", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all tags for news entry
+     * Get findAll tags for news entry
      *
      * @param newsId the news id
      * @return list of tags
@@ -196,9 +208,10 @@ public class TagDAOImpl implements TagDAO {
     @Override
     public List<Tag> getNewsTags(long newsId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_TAGS_QUERY);
+            statement = connection.prepareStatement(SQL_GET_NEWS_TAGS_QUERY);
 
             statement.setLong(1, newsId);
             ResultSet resultSet = statement.executeQuery();
@@ -207,6 +220,7 @@ public class TagDAOImpl implements TagDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }

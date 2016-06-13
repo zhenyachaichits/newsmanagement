@@ -31,7 +31,6 @@ import static org.junit.Assert.*;
 @DatabaseSetup(value = "/data/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
 @DatabaseTearDown(value = "/data/user-data.xml", type = DatabaseOperation.DELETE_ALL)
 public class UserDAOTest {
-
     private static final String TEST_USER_NAME = "Test";
     private static final String TEST_LOGIN = "test_user";
     private static final String TEST_PASSWORD = "test";
@@ -66,6 +65,7 @@ public class UserDAOTest {
     @Test
     public void testFind() throws Exception {
         User user = dao.find(TEST_ID);
+
         assertNotNull(user);
     }
 
@@ -74,12 +74,14 @@ public class UserDAOTest {
             assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testDelete() throws Exception {
         boolean result = dao.delete(TEST_ID);
+
         assertFalse(result);
     }
 
     @Test
     public void testAll() throws Exception {
-        List<User> userList = dao.all();
+        List<User> userList = dao.findAll();
+
         assertEquals(TEST_LIST_SIZE, userList.size());
     }
 }

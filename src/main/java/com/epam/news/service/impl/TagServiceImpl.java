@@ -1,11 +1,12 @@
 package com.epam.news.service.impl;
 
-import com.epam.news.persistence.TagDAO;
-import com.epam.news.persistence.exception.DAOException;
 import com.epam.news.domain.Tag;
+import com.epam.news.exception.DAOException;
+import com.epam.news.exception.ServiceException;
+import com.epam.news.persistence.TagDAO;
 import com.epam.news.service.TagService;
-import com.epam.news.service.exception.ServiceException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import java.util.List;
 @Service
 public class TagServiceImpl implements TagService {
 
-    private static final Logger LOG = Logger.getLogger(TagServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(TagServiceImpl.class);
 
     @Autowired
     private TagDAO dao;
@@ -96,18 +97,18 @@ public class TagServiceImpl implements TagService {
     }
 
     /**
-     * Get all tags
+     * Get findAll tags
      *
-     * @return list of all tags
+     * @return list of findAll tags
      * @throws ServiceException if DAOException was thrown
      */
     @Override
-    public List<Tag> all() throws ServiceException {
+    public List<Tag> findAll() throws ServiceException {
         try {
-            return dao.all();
+            return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: all()", e);
-            throw new ServiceException("Couldn't execute getting all tags service", e);
+            LOG.error("Error in method: findAll()", e);
+            throw new ServiceException("Couldn't execute getting findAll tags service", e);
         }
     }
 

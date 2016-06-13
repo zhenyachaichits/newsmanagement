@@ -1,6 +1,6 @@
 package com.epam.news.service;
 
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.ServiceException;
 
 import java.util.List;
 
@@ -49,10 +49,10 @@ public interface EntityService<K, T> {
     boolean delete(K domain) throws ServiceException;
 
     /**
-     * Get all entities.
+     * Get findAll entities.
      *
      * @return the list of entities
      * @throws ServiceException the dao exception
      */
-    List<T> all() throws ServiceException;
+    List<T> findAll() throws ServiceException;
 }

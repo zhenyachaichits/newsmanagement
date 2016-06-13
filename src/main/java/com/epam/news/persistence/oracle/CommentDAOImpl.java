@@ -2,10 +2,10 @@ package com.epam.news.persistence.oracle;
 
 import com.epam.news.domain.Comment;
 import com.epam.news.persistence.CommentDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.CommentProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -48,10 +48,11 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public Comment add(Comment comment) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             String[] generatedKeyName = {CommentProcessor.COMMENT_ID_KEY};
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_COMMENT_QUERY, generatedKeyName);
+            statement = connection.prepareStatement(SQL_ADD_COMMENT_QUERY, generatedKeyName);
 
             statement.setLong(1, comment.getNewsId());
             statement.setString(2, comment.getCommentText());
@@ -67,6 +68,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new comment", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -81,9 +83,10 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public Comment find(Long commentId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_COMMENT_BY_ID_QUERY);
+            statement = connection.prepareStatement(SQL_FIND_COMMENT_BY_ID_QUERY);
 
             statement.setLong(1, commentId);
             ResultSet resultSet = statement.executeQuery();
@@ -92,6 +95,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find comment by id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -106,9 +110,10 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public boolean update(Comment comment) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_COMMENT_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_COMMENT_QUERY);
 
             statement.setString(1, comment.getCommentText());
             statement.setLong(2, comment.getCommentId());
@@ -117,6 +122,7 @@ public class CommentDAOImpl implements CommentDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update comment text", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -131,44 +137,48 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public boolean delete(Long commentId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_COMMENT_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_COMMENT_QUERY);
 
             statement.setLong(1, commentId);
             return statement.execute();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete comment with id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all comments
+     * Get findAll comments
      *
      * @return list of comments
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<Comment> all() throws DAOException {
+    public List<Comment> findAll() throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_COMMENTS_QUERY);
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get all comments", e);
+            throw new DAOException("Couldn't get findAll comments", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all news' comments
+     * Get findAll news' comments
      *
      * @param newsId news id
      * @return list of comments
@@ -177,17 +187,19 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> getNewsComments(long newsId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_COMMENTS_QUERY);
+            statement = connection.prepareStatement(SQL_GET_NEWS_COMMENTS_QUERY);
 
             statement.setLong(1, newsId);
             ResultSet resultSet = statement.executeQuery();
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get all news comments", e);
+            throw new DAOException("Couldn't get findAll news comments", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }

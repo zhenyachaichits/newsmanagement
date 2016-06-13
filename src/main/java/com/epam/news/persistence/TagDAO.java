@@ -1,7 +1,7 @@
 package com.epam.news.persistence;
 
 import com.epam.news.domain.Tag;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface TagDAO extends EntityDAO<Long, Tag> {
     void addNewsTag(long newsId, long tagId) throws DAOException;
 
     /**
-     * Gets all news' tags.
+     * Gets findAll news' tags.
      *
      * @param newsId the news id
      * @return the list of tags

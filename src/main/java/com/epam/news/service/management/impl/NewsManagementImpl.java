@@ -7,7 +7,7 @@ import com.epam.news.domain.to.NewsTO;
 import com.epam.news.service.AuthorService;
 import com.epam.news.service.NewsService;
 import com.epam.news.service.TagService;
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.ServiceException;
 import com.epam.news.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

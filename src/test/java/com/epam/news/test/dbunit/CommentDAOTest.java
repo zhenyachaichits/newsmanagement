@@ -8,6 +8,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,23 +34,26 @@ import static org.junit.Assert.*;
 @DatabaseTearDown(value = "/data/comment-data.xml", type = DatabaseOperation.DELETE_ALL)
 public class CommentDAOTest {
     private static final String TEST_COMMENT_TEXT = "test short text";
-    private static final Timestamp TEST_CREATION_DATE;
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
-    static {
-        TEST_CREATION_DATE = new Timestamp(System.currentTimeMillis());
-    }
+
+    private static Timestamp testCreationDate;
 
     @Autowired
     private CommentDAO dao;
+
+    @Before
+    public void init() {
+        testCreationDate = new Timestamp(System.currentTimeMillis());
+    }
 
     @Test
     public void testAdd() throws Exception {
         Comment comment = new Comment();
         comment.setNewsId(TEST_ID);
         comment.setCommentText(TEST_COMMENT_TEXT);
-        comment.setCreationDate(TEST_CREATION_DATE);
+        comment.setCreationDate(testCreationDate);
 
         assertNotNull(dao.add(comment));
     }
@@ -60,7 +64,7 @@ public class CommentDAOTest {
         comment.setCommentId(TEST_ID);
         comment.setNewsId(TEST_ID);
         comment.setCommentText(TEST_COMMENT_TEXT);
-        comment.setCreationDate(TEST_CREATION_DATE);
+        comment.setCreationDate(testCreationDate);
 
         assertTrue(dao.update(comment));
     }
@@ -81,7 +85,7 @@ public class CommentDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<Comment> newsList = dao.all();
+        List<Comment> newsList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, newsList.size());
     }
 }

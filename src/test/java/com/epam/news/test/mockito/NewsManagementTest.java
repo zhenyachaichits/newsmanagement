@@ -7,7 +7,7 @@ import com.epam.news.domain.to.NewsTO;
 import com.epam.news.persistence.AuthorDAO;
 import com.epam.news.persistence.NewsDAO;
 import com.epam.news.persistence.TagDAO;
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.ServiceException;
 import com.epam.news.service.impl.AuthorServiceImpl;
 import com.epam.news.service.impl.NewsServiceImpl;
 import com.epam.news.service.impl.TagServiceImpl;

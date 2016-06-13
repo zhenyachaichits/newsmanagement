@@ -35,8 +35,8 @@ public class UserServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        when(dao.all()).thenReturn(new ArrayList<>());
-        List<User> result = service.all();
+        when(dao.findAll()).thenReturn(new ArrayList<>());
+        List<User> result = service.findAll();
 
         assertNotNull(result);
     }

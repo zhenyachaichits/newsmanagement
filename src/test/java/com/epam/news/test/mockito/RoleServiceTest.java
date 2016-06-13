@@ -35,8 +35,8 @@ public class RoleServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        when(dao.all()).thenReturn(new ArrayList<>());
-        List<Role> result = service.all();
+        when(dao.findAll()).thenReturn(new ArrayList<>());
+        List<Role> result = service.findAll();
 
         assertNotNull(result);
     }

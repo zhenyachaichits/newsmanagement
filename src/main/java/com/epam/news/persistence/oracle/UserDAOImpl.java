@@ -1,10 +1,10 @@
 package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.UserDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.UserProcessor;
 import com.epam.news.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +46,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User add(User user) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             String[] generatedKeyName = {UserProcessor.USER_ID_KEY};
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_USER_QUERY, generatedKeyName);
+            statement = connection.prepareStatement(SQL_ADD_USER_QUERY, generatedKeyName);
 
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getLogin());
@@ -65,6 +66,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new user", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -79,9 +81,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User find(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID_QUERY);
+            statement = connection.prepareStatement(SQL_FIND_USER_BY_ID_QUERY);
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -90,6 +93,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find user by id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -104,9 +108,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean update(User user) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_USER_QUERY);
 
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getLogin());
@@ -117,6 +122,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update user", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -131,38 +137,42 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_USER_QUERY);
 
             statement.setLong(1, id);
             return statement.execute();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete user with id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all users
+     * Get findAll users
      *
      * @return list of users
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<User> all() throws DAOException {
+    public List<User> findAll() throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_USERS_QUERY);
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get all users", e);
+            throw new DAOException("Couldn't get findAll users", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }

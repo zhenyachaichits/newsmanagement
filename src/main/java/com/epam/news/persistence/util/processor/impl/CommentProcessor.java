@@ -2,7 +2,7 @@ package com.epam.news.persistence.util.processor.impl;
 
 import com.epam.news.domain.Comment;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;

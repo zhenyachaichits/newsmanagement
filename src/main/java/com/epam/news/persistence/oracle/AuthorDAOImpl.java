@@ -2,10 +2,10 @@ package com.epam.news.persistence.oracle;
 
 import com.epam.news.domain.Author;
 import com.epam.news.persistence.AuthorDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.AuthorProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -51,10 +51,11 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public Author add(Author author) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             String[] generatedKeyName = {AuthorProcessor.AUTHOR_ID_KEY};
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_AUTHOR_QUERY, generatedKeyName);
+            statement = connection.prepareStatement(SQL_ADD_AUTHOR_QUERY, generatedKeyName);
 
             statement.setString(1, author.getAuthorName());
             statement.setTimestamp(2, author.getExpiredDate());
@@ -69,6 +70,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new author", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -83,9 +85,10 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public Author find(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_AUTHOR_BY_ID_QUERY);
+            statement = connection.prepareStatement(SQL_FIND_AUTHOR_BY_ID_QUERY);
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -94,6 +97,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find author by id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -108,9 +112,10 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public boolean update(Author author) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_AUTHOR_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_AUTHOR_QUERY);
 
             statement.setString(1, author.getAuthorName());
             statement.setTimestamp(2, author.getExpiredDate());
@@ -120,6 +125,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update author", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -134,38 +140,42 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_AUTHOR_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_AUTHOR_QUERY);
 
             statement.setLong(1, id);
             return statement.execute();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete author with id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all authors
+     * Get findAll authors
      *
      * @return list of authors
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<Author> all() throws DAOException {
+    public List<Author> findAll() throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_AUTHORS_QUERY);
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get all authors", e);
+            throw new DAOException("Couldn't get findAll authors", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -180,9 +190,10 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public void addNewsAuthor(long newsId, long authorId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_NEWS_AUTHOR_QUERY);
+            statement = connection.prepareStatement(SQL_ADD_NEWS_AUTHOR_QUERY);
 
             statement.setLong(1, newsId);
             statement.setLong(2, authorId);
@@ -190,12 +201,13 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add news author", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all authors for news entry
+     * Get findAll authors for news entry
      *
      * @param newsId the news id
      * @return list of authors
@@ -204,9 +216,10 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public List<Author> getNewsAuthors(long newsId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_AUTHORS_QUERY);
+            statement = connection.prepareStatement(SQL_GET_NEWS_AUTHORS_QUERY);
 
             statement.setLong(1, newsId);
             ResultSet resultSet = statement.executeQuery();
@@ -215,6 +228,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }

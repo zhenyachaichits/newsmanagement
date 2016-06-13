@@ -34,8 +34,8 @@ public class CommentServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        when(dao.all()).thenReturn(new ArrayList<>());
-        List<Comment> result = service.all();
+        when(dao.findAll()).thenReturn(new ArrayList<>());
+        List<Comment> result = service.findAll();
 
         assertNotNull(result);
     }

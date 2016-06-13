@@ -16,3 +16,4 @@ hs_err_pid*
 .idea/
 Task-1.iml
 target/
+logs/

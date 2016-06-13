@@ -2,7 +2,7 @@ package com.epam.news.persistence;
 
 import com.epam.news.domain.News;
 import com.epam.news.domain.criteria.NewsSearchCriteria;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 
 import java.util.List;
 import java.util.Set;
@@ -49,7 +49,7 @@ public interface NewsDAO extends EntityDAO<Long, News> {
     List<News> getNewsOrderedByCommentsNumber() throws DAOException;
 
     /**
-     * Gets all news count.
+     * Gets findAll news count.
      *
      * @return the news count
      * @throws DAOException the dao exception

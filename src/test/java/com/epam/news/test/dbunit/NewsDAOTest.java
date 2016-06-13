@@ -9,6 +9,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +39,20 @@ public class NewsDAOTest {
     private static final String TEST_TITLE = "Test title";
     private static final String TEST_SHORT_TEXT = "test short text";
     private static final String TEST_FULL_TEXT = "test full text";
-    private static final Timestamp TEST_CREATION_DATE;
-    private static final Timestamp TEST_MODIFICATION_DATE;
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
-    static {
-        TEST_CREATION_DATE = new Timestamp(System.currentTimeMillis());
-        TEST_MODIFICATION_DATE = new Timestamp(System.currentTimeMillis());
-    }
+    private static Timestamp testCreationDate;
+    private static Timestamp testModificationDate;
 
     @Autowired
     private NewsDAO dao;
+
+    @Before
+    public void init() {
+        testCreationDate = new Timestamp(System.currentTimeMillis());
+        testModificationDate = new Timestamp(System.currentTimeMillis());
+    }
 
     @Test
     public void testAdd() throws Exception {
@@ -57,8 +60,8 @@ public class NewsDAOTest {
         news.setTitle(TEST_TITLE);
         news.setShortText(TEST_SHORT_TEXT);
         news.setFullText(TEST_FULL_TEXT);
-        news.setCreationDate(TEST_CREATION_DATE);
-        news.setModificationDate(TEST_MODIFICATION_DATE);
+        news.setCreationDate(testCreationDate);
+        news.setModificationDate(testModificationDate);
 
         assertNotNull(dao.add(news));
     }
@@ -70,8 +73,8 @@ public class NewsDAOTest {
         news.setTitle(TEST_TITLE);
         news.setShortText(TEST_SHORT_TEXT);
         news.setFullText(TEST_FULL_TEXT);
-        news.setCreationDate(TEST_CREATION_DATE);
-        news.setModificationDate(TEST_MODIFICATION_DATE);
+        news.setCreationDate(testCreationDate);
+        news.setModificationDate(testModificationDate);
 
         assertTrue(dao.update(news));
     }
@@ -92,7 +95,7 @@ public class NewsDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<News> newsList = dao.all();
+        List<News> newsList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, newsList.size());
     }
 

@@ -2,10 +2,11 @@ package com.epam.news.service.impl;
 
 import com.epam.news.domain.Author;
 import com.epam.news.persistence.AuthorDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.service.AuthorService;
-import com.epam.news.service.exception.ServiceException;
-import org.apache.log4j.Logger;
+import com.epam.news.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
-    private static final Logger LOG = Logger.getLogger(AuthorServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AuthorServiceImpl.class);
 
     @Autowired
     private AuthorDAO dao;
@@ -96,18 +97,18 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     /**
-     * Get all authors
+     * Get findAll authors
      *
      * @return list of authors
      * @throws ServiceException if DAOException was thrown
      */
     @Override
-    public List<Author> all() throws ServiceException {
+    public List<Author> findAll() throws ServiceException {
         try {
-            return dao.all();
+            return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: all()", e);
-            throw new ServiceException("Couldn't execute getting all authors service", e);
+            LOG.error("Error in method: findAll()", e);
+            throw new ServiceException("Couldn't execute getting findAll authors service", e);
         }
     }
 
@@ -130,7 +131,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     /**
-     * Get all authors for selected news entry
+     * Get findAll authors for selected news entry
      *
      * @param newsId the news id
      * @return list of authors

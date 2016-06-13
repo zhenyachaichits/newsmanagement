@@ -3,10 +3,10 @@ package com.epam.news.persistence.oracle;
 import com.epam.news.domain.News;
 import com.epam.news.domain.criteria.NewsSearchCriteria;
 import com.epam.news.persistence.NewsDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.persistence.util.processor.impl.NewsProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -65,10 +65,11 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public News add(News news) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             String[] generatedKeyName = {NewsProcessor.NEWS_ID_KEY};
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_NEWS_QUERY, generatedKeyName);
+            statement = connection.prepareStatement(SQL_ADD_NEWS_QUERY, generatedKeyName);
 
             statement.setString(1, news.getTitle());
             statement.setString(2, news.getShortText());
@@ -86,6 +87,7 @@ public class NewsDAOImpl implements NewsDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new news", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -100,9 +102,10 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public News find(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_NEWS_BY_ID_QUERY);
+            statement = connection.prepareStatement(SQL_FIND_NEWS_BY_ID_QUERY);
 
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -111,6 +114,7 @@ public class NewsDAOImpl implements NewsDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find news by id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -125,9 +129,10 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public boolean update(News news) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_NEWS_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_NEWS_QUERY);
 
             statement.setString(1, news.getTitle());
             statement.setString(2, news.getShortText());
@@ -139,6 +144,7 @@ public class NewsDAOImpl implements NewsDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update news text", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -153,31 +159,33 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ROLE_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_ROLE_QUERY);
 
             statement.setLong(1, id);
             return statement.execute();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete news with id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all news
+     * Get findAll news
      *
      * @return list of news
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<News> all() throws DAOException {
+    public List<News> findAll() throws DAOException {
         try {
             return getNewsList(SQL_GET_ALL_NEWS_QUERY);
         } catch (DAOException e) {
-            throw new DAOException("Couldn't get all news", e);
+            throw new DAOException("Couldn't get findAll news", e);
         }
     }
 
@@ -223,9 +231,10 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public List<News> getNewsByCriteria(NewsSearchCriteria criteria) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_NEWS_BY_SEARCH_CRITERIA_QUERY);
+            statement = connection.prepareStatement(SQL_GET_NEWS_BY_SEARCH_CRITERIA_QUERY);
 
             statement.setString(1, StringUtils.collectionToCommaDelimitedString(criteria.getAuthorIdSet()));
             statement.setString(2, StringUtils.collectionToCommaDelimitedString(criteria.getTagIdSet()));
@@ -236,6 +245,7 @@ public class NewsDAOImpl implements NewsDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get news by criteria", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -256,7 +266,7 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     /**
-     * Get all news count
+     * Get findAll news count
      *
      * @return news count
      * @throws DAOException if SQLException thrown
@@ -264,9 +274,10 @@ public class NewsDAOImpl implements NewsDAO {
     @Override
     public int getNewsCount() throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_NEWS_COUNT_QUERY);
 
@@ -276,17 +287,19 @@ public class NewsDAOImpl implements NewsDAO {
                 throw new DAOException("Count was not found. Result set is empty");
             }
         } catch (SQLException e) {
-            throw new DAOException("Couldn't get all news count", e);
+            throw new DAOException("Couldn't get findAll news count", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     private List<News> getByIdSet(String query, Set<Long> idSet) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
 
             statement.setString(1, StringUtils.collectionToCommaDelimitedString(idSet));
 
@@ -296,15 +309,17 @@ public class NewsDAOImpl implements NewsDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get news by id set", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     private List<News> getNewsList(String query) throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -312,6 +327,7 @@ public class NewsDAOImpl implements NewsDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get news list", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }

@@ -1,10 +1,10 @@
 package com.epam.news.persistence.oracle;
 
 import com.epam.news.persistence.RoleDAO;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 import com.epam.news.persistence.util.DAOUtil;
 import com.epam.news.persistence.util.processor.EntityProcessor;
-import com.epam.news.persistence.util.processor.exception.EntityProcessorException;
+import com.epam.news.exception.EntityProcessorException;
 import com.epam.news.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -41,9 +41,10 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role add(Role role) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_ROLE_QUERY);
+            statement = connection.prepareStatement(SQL_ADD_ROLE_QUERY);
 
             statement.setLong(1, role.getUserId());
             statement.setString(2, role.getRoleName());
@@ -53,6 +54,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't add new role", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -67,9 +69,10 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role find(Long userId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_ROLE_BY_USER_ID);
+            statement = connection.prepareStatement(SQL_FIND_ROLE_BY_USER_ID);
 
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -78,6 +81,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't find role by id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -92,9 +96,10 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public boolean update(Role role) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ROLE_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_ROLE_QUERY);
 
             statement.setString(1, role.getRoleName());
             statement.setLong(2, role.getUserId());
@@ -103,6 +108,7 @@ public class RoleDAOImpl implements RoleDAO {
         } catch (SQLException e) {
             throw new DAOException("Couldn't update role", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
@@ -117,38 +123,42 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public boolean delete(Long userId) throws DAOException {
         Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ROLE_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_ROLE_QUERY);
 
             statement.setLong(1, userId);
             return statement.execute();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete role with user id", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }
 
     /**
-     * Get all user roles
+     * Get findAll user roles
      *
      * @return list of roles
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<Role> all() throws DAOException {
+    public List<Role> findAll() throws DAOException {
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL_ROLES_QUERY);
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get all roles", e);
+            throw new DAOException("Couldn't get findAll roles", e);
         } finally {
+            DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
         }
     }

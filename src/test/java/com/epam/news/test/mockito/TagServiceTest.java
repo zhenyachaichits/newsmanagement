@@ -2,8 +2,8 @@ package com.epam.news.test.mockito;
 
 import com.epam.news.domain.Tag;
 import com.epam.news.persistence.TagDAO;
-import com.epam.news.persistence.exception.DAOException;
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.DAOException;
+import com.epam.news.exception.ServiceException;
 import com.epam.news.service.impl.TagServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +38,8 @@ public class TagServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        when(dao.all()).thenReturn(new ArrayList<>());
-        List<Tag> result = service.all();
+        when(dao.findAll()).thenReturn(new ArrayList<>());
+        List<Tag> result = service.findAll();
 
         assertNotNull(result);
     }

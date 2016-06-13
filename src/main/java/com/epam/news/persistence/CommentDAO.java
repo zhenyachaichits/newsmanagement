@@ -1,7 +1,7 @@
 package com.epam.news.persistence;
 
 import com.epam.news.domain.Comment;
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 
 import java.util.List;
 

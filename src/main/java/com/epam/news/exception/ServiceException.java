@@ -1,4 +1,4 @@
-package com.epam.news.service.exception;
+package com.epam.news.exception;
 
 
 /**

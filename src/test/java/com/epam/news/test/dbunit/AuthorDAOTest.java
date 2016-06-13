@@ -8,6 +8,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +34,24 @@ import static org.junit.Assert.*;
 @DatabaseTearDown(value = "/data/author-data.xml", type = DatabaseOperation.DELETE_ALL)
 public class AuthorDAOTest {
     private static final String TEST_AUTHOR_NAME = "Author";
-    private static final Timestamp TEST_EXPIRED_DATE;
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
-    static {
-        TEST_EXPIRED_DATE = new Timestamp(System.currentTimeMillis() / 2);
-    }
+    private static Timestamp testExpiredDate;
 
     @Autowired
     private AuthorDAO dao;
+
+    @Before
+    public void init() {
+        testExpiredDate = new Timestamp(System.currentTimeMillis());
+    }
 
     @Test
     public void testAdd() throws Exception {
         Author author = new Author();
         author.setAuthorName(TEST_AUTHOR_NAME);
-        author.setExpiredDate(TEST_EXPIRED_DATE);
+        author.setExpiredDate(testExpiredDate);
 
         assertNotNull(dao.add(author));
     }
@@ -58,7 +61,7 @@ public class AuthorDAOTest {
         Author author = new Author();
         author.setAuthorId(TEST_ID);
         author.setAuthorName(TEST_AUTHOR_NAME);
-        author.setExpiredDate(TEST_EXPIRED_DATE);
+        author.setExpiredDate(testExpiredDate);
 
         assertTrue(dao.update(author));
     }
@@ -79,7 +82,7 @@ public class AuthorDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<Author> newsList = dao.all();
+        List<Author> newsList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, newsList.size());
     }
 }

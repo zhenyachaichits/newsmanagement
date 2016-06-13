@@ -1,7 +1,7 @@
 package com.epam.news.service;
 
 import com.epam.news.domain.Comment;
-import com.epam.news.service.exception.ServiceException;
+import com.epam.news.exception.ServiceException;
 
 import java.util.List;
 

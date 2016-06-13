@@ -1,6 +1,6 @@
 package com.epam.news.persistence;
 
-import com.epam.news.persistence.exception.DAOException;
+import com.epam.news.exception.DAOException;
 
 import java.util.List;
 
@@ -49,11 +49,11 @@ public interface EntityDAO<K, T> {
     boolean delete(K domain) throws DAOException;
 
     /**
-     * Get all entities.
+     * Get findAll entities.
      *
      * @return the list of entities
      * @throws DAOException the dao exception
      */
-    List<T> all() throws DAOException;
+    List<T> findAll() throws DAOException;
 
 }

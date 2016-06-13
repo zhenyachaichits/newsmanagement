@@ -72,7 +72,7 @@ public class RoleDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<Role> roleList = dao.all();
+        List<Role> roleList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, roleList.size());
     }
 }

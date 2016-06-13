@@ -72,7 +72,7 @@ public class TagDAOTest {
 
     @Test
     public void testAll() throws Exception {
-        List<Tag> tagList = dao.all();
+        List<Tag> tagList = dao.findAll();
         assertEquals(TEST_LIST_SIZE, tagList.size());
     }
 }

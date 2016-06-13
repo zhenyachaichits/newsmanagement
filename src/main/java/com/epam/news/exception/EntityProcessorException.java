@@ -1,4 +1,4 @@
-package com.epam.news.persistence.util.processor.exception;
+package com.epam.news.exception;
 
 
 /**
