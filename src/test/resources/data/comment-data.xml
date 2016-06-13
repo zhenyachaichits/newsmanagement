@@ -6,5 +6,5 @@
           creation_date="2016-06-07 03:14:07" modification_date="2016-06-07 03:14:07"/>
 
     <Comments comment_id="1" news_id="1" comment_text="Text" creation_date="2016-06-07 03:14:07"/>
-    <Comments comment_id="2" news_id="2" comment_text="Text1" creation_date="2016-06-07 03:14:07"/>
+    <Comments comment_id="2" news_id="1" comment_text="Text" creation_date="2016-06-07 03:14:07"/>
 </dataset>

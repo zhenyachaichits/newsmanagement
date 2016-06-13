@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
 @DatabaseSetup(value = "/data/comment-data.xml", type = DatabaseOperation.CLEAN_INSERT)
 @DatabaseTearDown(value = "/data/comment-data.xml", type = DatabaseOperation.DELETE_ALL)
 public class CommentDAOTest {
-    private static final String TEST_COMMENT_TEXT = "test short text";
+    private static final String TEST_COMMENT_TEXT = "Text";
     private static final long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
@@ -96,8 +96,6 @@ public class CommentDAOTest {
     }
 
     @Test
-    @ExpectedDatabase(value = "/data/expected/comment-add-expected.xml",
-            assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testAddMultipleComments() throws Exception {
 
         Comment[] comments = new Comment[3];

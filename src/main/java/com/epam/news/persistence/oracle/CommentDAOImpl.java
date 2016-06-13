@@ -238,7 +238,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     /**
-     * Get findAll news' comments
+     * Get findAll news comments
      *
      * @param newsId news id
      * @return list of comments
