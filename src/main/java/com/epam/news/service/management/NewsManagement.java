@@ -8,4 +8,8 @@ import com.epam.news.exception.ServiceException;
  */
 public interface NewsManagement {
     void addNewsData(NewsTO newsData) throws ServiceException;
+
+    NewsTO getNewsData(long newsId) throws ServiceException;
+
+    void deleteNewsData(long newsId) throws ServiceException;
 }

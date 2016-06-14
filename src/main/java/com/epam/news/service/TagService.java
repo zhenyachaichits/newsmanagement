@@ -27,4 +27,12 @@ public interface TagService extends EntityService<Long, Tag> {
      * @throws ServiceException the service exception
      */
     List<Tag> getNewsTags(long newsId) throws ServiceException;
+
+    /**
+     * Delete news tags.
+     *
+     * @param newsId the news id
+     * @throws ServiceException the service exception
+     */
+    void deleteNewsTags(long newsId) throws ServiceException;
 }

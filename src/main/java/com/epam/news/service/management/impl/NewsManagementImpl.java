@@ -4,17 +4,20 @@ import com.epam.news.domain.Author;
 import com.epam.news.domain.News;
 import com.epam.news.domain.Tag;
 import com.epam.news.domain.to.NewsTO;
+import com.epam.news.exception.ServiceException;
 import com.epam.news.service.AuthorService;
 import com.epam.news.service.NewsService;
 import com.epam.news.service.TagService;
-import com.epam.news.exception.ServiceException;
 import com.epam.news.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
+
 /**
- * Created by Yauhen_Chaichyts on 6/3/2016.
+ * The type News management.
  */
 @Service
 public class NewsManagementImpl implements NewsManagement {
@@ -38,6 +41,7 @@ public class NewsManagementImpl implements NewsManagement {
 
         for (Author author : newsData.getAuthors()) {
             author = authorService.add(author);
+
             authorService.addNewsAuthor(newsId, author.getAuthorId());
         }
         for (Tag tag : newsData.getTags()) {
@@ -45,5 +49,21 @@ public class NewsManagementImpl implements NewsManagement {
             tagService.addNewsTag(newsId, tag.getTagId());
         }
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public NewsTO getNewsData(long newsId) throws ServiceException {
+        News news = newsService.find(newsId);
+        return null;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteNewsData(long newsId) throws ServiceException {
+        tagService.deleteNewsTags(newsId);
+        authorService.deleteNewsAuthors(newsId);
+        newsService.delete(newsId);
+    }
+
 
 }

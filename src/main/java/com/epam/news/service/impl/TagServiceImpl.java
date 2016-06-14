@@ -146,4 +146,20 @@ public class TagServiceImpl implements TagService {
             throw new ServiceException("Couldn't execute getting news tags service", e);
         }
     }
+
+    /**
+     * Delete news tags.
+     *
+     * @param newsId the news id
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public void deleteNewsTags(long newsId) throws ServiceException {
+        try {
+            dao.deleteNewsTags(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method deleteNewsTags(long newsId)", e);
+            throw new ServiceException("Couldn't execute deleting news tags service", e);
+        }
+    }
 }

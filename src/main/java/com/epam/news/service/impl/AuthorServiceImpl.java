@@ -146,4 +146,20 @@ public class AuthorServiceImpl implements AuthorService {
             throw new ServiceException("Couldn't execute getting news authors service", e);
         }
     }
+
+    /**
+     * Delete news authors.
+     *
+     * @param newsId the news id
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public void deleteNewsAuthors(long newsId) throws ServiceException {
+        try {
+            dao.deleteNewsAuthors(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method: deleteNewsAuthors(long newsId)", e);
+            throw new ServiceException("Couldn't execute deleting news authors service", e);
+        }
+    }
 }
