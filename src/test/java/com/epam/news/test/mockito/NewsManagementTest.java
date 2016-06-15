@@ -21,7 +21,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.mockito.Mockito.doReturn;
@@ -59,12 +61,12 @@ public class NewsManagementTest {
         News news = new News();
         newsTO.setNews(news);
 
-        Set<Author> authorSet = new HashSet<>();
+        List<Author> authorSet = new ArrayList<>();
         Author author = new Author();
         authorSet.add(author);
         newsTO.setAuthors(authorSet);
 
-        Set<Tag> tagSet = new HashSet<>();
+        List<Tag> tagSet = new ArrayList<>();
         Tag tag = new Tag();
         tagSet.add(tag);
         newsTO.setTags(tagSet);

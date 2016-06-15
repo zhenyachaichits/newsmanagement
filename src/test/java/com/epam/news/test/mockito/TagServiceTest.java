@@ -80,7 +80,7 @@ public class TagServiceTest {
     public void testAddNewsTag() throws Exception {
         doThrow(new DAOException()).when(dao).addNewsTags(TEST_ID, TEST_ID);
 
-        service.addNewsTag(TEST_ID, TEST_ID);
+        service.addNewsTags(TEST_ID, TEST_ID);
     }
 
     @Test

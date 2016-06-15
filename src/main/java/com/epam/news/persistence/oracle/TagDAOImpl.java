@@ -174,6 +174,44 @@ public class TagDAOImpl implements TagDAO {
     }
 
     /**
+     * Add multiple tags.
+     *
+     * @param tags the tags
+     * @return generated id array
+     * @throws DAOException the service exception
+     */
+    @Override
+    public long[] addTags(List<Tag> tags) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            String[] generatedKeyName = {TagProcessor.TAG_ID_KEY};
+            statement = connection.prepareStatement(SQL_ADD_TAG_QUERY, generatedKeyName);
+
+            for (Tag tag : tags) {
+                statement.setString(1, tag.getTagName());
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
+            ResultSet resultSet = statement.getGeneratedKeys();
+
+            long[] idArray = new long[tags.size()];
+            for (int i = 0; i < idArray.length && resultSet.next(); i++) {
+                idArray[i] = resultSet.getLong(1);
+            }
+
+            return idArray;
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't add new tags", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
      * Add news tag to News_Tag table
      *
      * @param newsId the news id

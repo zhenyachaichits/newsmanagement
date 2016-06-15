@@ -20,6 +20,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -55,6 +57,21 @@ public class AuthorDAOTest {
         author.setExpiredDate(testExpiredDate);
 
         assertNotNull(dao.add(author));
+    }
+
+    @Test
+    public void testAddAuthors() throws Exception {
+        Author author = new Author();
+        author.setAuthorName(TEST_AUTHOR_NAME);
+        author.setExpiredDate(testExpiredDate);
+
+        List<Author> authors = new ArrayList<>();
+        authors.add(author);
+        authors.add(author);
+
+        long[] idArray = dao.addAuthors(authors);
+
+        assertNotNull(idArray);
     }
 
     @Test

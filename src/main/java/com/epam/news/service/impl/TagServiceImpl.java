@@ -113,19 +113,36 @@ public class TagServiceImpl implements TagService {
     }
 
     /**
+     * Add multiple tags.
+     *
+     * @param tags the tags
+     * @return generated id array
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public long[] addTags(List<Tag> tags) throws ServiceException {
+        try {
+            return dao.addTags(tags);
+        } catch (DAOException e) {
+            LOG.error("Error in method: addTags(List<Tag> tags)", e);
+            throw new ServiceException("Couldn't add multiple tags", e);
+        }
+    }
+
+    /**
      * Add new tag for news entry
      *
      * @param newsId the news id
-     * @param tagId  the tag id
+     * @param tagIdArray  the tag id
      * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsTag(long newsId, long tagId) throws ServiceException {
+    public void addNewsTags(long newsId, long... tagIdArray) throws ServiceException {
         try {
-            dao.addNewsTags(newsId, tagId);
+            dao.addNewsTags(newsId, tagIdArray);
         } catch (DAOException e) {
-            LOG.error("Error in method: addNewsTags(long newsId, long tagId)", e);
+            LOG.error("Error in method: addNewsTags(long newsId, long tagIdArray)", e);
             throw new ServiceException("Couldn't execute adding news tags service", e);
         }
     }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -175,6 +176,45 @@ public class AuthorDAOImpl implements AuthorDAO {
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get findAll authors", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Add authors array.
+     *
+     * @param authors the authors
+     * @return generated id array
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public long[] addAuthors(List<Author> authors) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            String[] generatedKeyName = {AuthorProcessor.AUTHOR_ID_KEY};
+            statement = connection.prepareStatement(SQL_ADD_AUTHOR_QUERY, generatedKeyName);
+
+            for (Author author : authors) {
+                statement.setString(1, author.getAuthorName());
+                statement.setTimestamp(2, author.getExpiredDate());
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
+            ResultSet resultSet = statement.getGeneratedKeys();
+
+            long[] idArray = new long[authors.size()];
+            for (int i = 0; i < idArray.length && resultSet.next(); i++) {
+                idArray[i] = resultSet.getLong(1);
+            }
+
+            return idArray;
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't add new author", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

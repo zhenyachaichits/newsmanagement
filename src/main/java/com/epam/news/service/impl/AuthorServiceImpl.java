@@ -113,6 +113,23 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     /**
+     * Add authors array.
+     *
+     * @param authors the authors
+     * @return generated id array
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public long[] addAuthors(List<Author> authors) throws ServiceException {
+        try {
+            return dao.addAuthors(authors);
+        } catch (DAOException e) {
+            LOG.error("Error in method: addAuthors(Author... authors)", e);
+            throw new ServiceException("Couldn't execute adding multiple authors service", e);
+        }
+    }
+
+    /**
      * Add author for news entry
      *
      * @param newsId   the news id
@@ -121,7 +138,7 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsAuthor(long newsId, long authorId) throws ServiceException {
+    public void addNewsAuthors(long newsId, long... authorId) throws ServiceException {
         try {
             dao.addNewsAuthors(newsId, authorId);
         } catch (DAOException e) {

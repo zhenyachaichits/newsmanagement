@@ -4,6 +4,7 @@ import com.epam.news.domain.Author;
 import com.epam.news.domain.News;
 import com.epam.news.domain.Tag;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -13,8 +14,8 @@ import java.util.Set;
  */
 public class NewsTO {
     private News news;
-    private Set<Author> authors;
-    private Set<Tag> tags;
+    private List<Author> authors;
+    private List<Tag> tags;
 
     /**
      * Gets news.
@@ -39,7 +40,7 @@ public class NewsTO {
      *
      * @return the authors
      */
-    public Set<Author> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
@@ -48,7 +49,7 @@ public class NewsTO {
      *
      * @param authors the authors
      */
-    public void setAuthors(Set<Author> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
@@ -57,7 +58,7 @@ public class NewsTO {
      *
      * @return the tags
      */
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
@@ -66,7 +67,7 @@ public class NewsTO {
      *
      * @param tags the tags
      */
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

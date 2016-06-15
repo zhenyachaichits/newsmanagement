@@ -10,6 +10,16 @@ import java.util.List;
  * The interface Tag service.
  */
 public interface TagService extends EntityService<Long, Tag> {
+
+    /**
+     * Add multiple tags.
+     *
+     * @param tags the tags
+     * @return generated id array
+     * @throws ServiceException the service exception
+     */
+    long[] addTags(List<Tag> tags) throws ServiceException;
+
     /**
      * Add news tag.
      *
@@ -17,7 +27,7 @@ public interface TagService extends EntityService<Long, Tag> {
      * @param tagId  the tag id
      * @throws ServiceException the service exception
      */
-    void addNewsTag(long newsId, long tagId) throws ServiceException;
+    void addNewsTags(long newsId, long... tagId) throws ServiceException;
 
     /**
      * Gets news tags.

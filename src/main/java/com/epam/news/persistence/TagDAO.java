@@ -10,6 +10,16 @@ import java.util.List;
  * The interface Tag dao.
  */
 public interface TagDAO extends EntityDAO<Long, Tag> {
+
+    /**
+     * Add multiple tags.
+     *
+     * @param tags the tags
+     * @return generated id array
+     * @throws DAOException the service exception
+     */
+    long[] addTags(List<Tag> tags) throws DAOException;
+
     /**
      * Add new news' tag.
      *

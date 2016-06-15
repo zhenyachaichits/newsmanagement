@@ -10,8 +10,19 @@ import java.util.List;
  * The interface Author dao.
  */
 public interface AuthorDAO extends EntityDAO<Long, Author> {
+
+
     /**
-     * Add new news' author data.
+     * Add authors array.
+     *
+     * @param authors the authors
+     * @return generated id array
+     * @throws DAOException the dao exception
+     */
+    long[] addAuthors(List<Author> authors) throws DAOException;
+
+    /**
+     * Add new news author data.
      *
      * @param newsId        the news id
      * @param authorIdArray the author id array

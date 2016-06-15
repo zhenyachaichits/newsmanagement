@@ -9,11 +9,13 @@ import com.epam.news.service.AuthorService;
 import com.epam.news.service.NewsService;
 import com.epam.news.service.TagService;
 import com.epam.news.service.management.NewsManagement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -21,6 +23,8 @@ import java.util.Set;
  */
 @Service
 public class NewsManagementImpl implements NewsManagement {
+
+    private static final Logger LOG = LogManager.getLogger(NewsManagementImpl.class);
 
     @Autowired
     private NewsService newsService;
@@ -32,37 +36,56 @@ public class NewsManagementImpl implements NewsManagement {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addNewsData(NewsTO newsData) throws ServiceException {
-        if (newsData.getAuthors() == null || newsData.getTags() == null || newsData.getNews() == null) {
-            throw new ServiceException("Invalid data");
-        }
+        try {
+            if (newsData.getAuthors() == null || newsData.getTags() == null || newsData.getNews() == null) {
+                throw new ServiceException("Invalid data");
+            }
 
-        News news = newsService.add(newsData.getNews());
-        long newsId = news.getNewsId();
+            News news = newsService.add(newsData.getNews());
+            long newsId = news.getNewsId();
 
-        for (Author author : newsData.getAuthors()) {
-            author = authorService.add(author);
+            long[] authorIdArray = authorService.addAuthors(newsData.getAuthors());
+            authorService.addNewsAuthors(newsId, authorIdArray);
 
-            authorService.addNewsAuthor(newsId, author.getAuthorId());
-        }
-        for (Tag tag : newsData.getTags()) {
-            tag = tagService.add(tag);
-            tagService.addNewsTag(newsId, tag.getTagId());
+            long[] tagIdArray = tagService.addTags(newsData.getTags());
+            tagService.addNewsTags(newsId, tagIdArray);
+        } catch (ServiceException e) {
+            LOG.error("Error in method: addNewsData(NewsTO newsData)", e);
+            throw new ServiceException("Couldn't add news data by one transaction", e);
         }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public NewsTO getNewsData(long newsId) throws ServiceException {
-        News news = newsService.find(newsId);
-        return null;
+        try {
+            News news = newsService.find(newsId);
+            List<Author> authors = authorService.getNewsAuthors(newsId);
+            List<Tag> tags = tagService.getNewsTags(newsId);
+
+            NewsTO newsData = new NewsTO();
+            newsData.setNews(news);
+            newsData.setAuthors(authors);
+            newsData.setTags(tags);
+
+            return newsData;
+        } catch (ServiceException e) {
+            LOG.error("Error in method: getNewsData(long newsId)", e);
+            throw new ServiceException("Couldn't get news data by one transaction", e);
+        }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteNewsData(long newsId) throws ServiceException {
-        tagService.deleteNewsTags(newsId);
-        authorService.deleteNewsAuthors(newsId);
-        newsService.delete(newsId);
+        try {
+            tagService.deleteNewsTags(newsId);
+            authorService.deleteNewsAuthors(newsId);
+            newsService.delete(newsId);
+        } catch (ServiceException e) {
+            LOG.error("Error in method: deleteNewsData(long newsId)", e);
+            throw new ServiceException("Couldn't delete news data by one transaction", e);
+        }
     }
 
 

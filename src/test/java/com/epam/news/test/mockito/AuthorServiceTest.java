@@ -80,7 +80,7 @@ public class AuthorServiceTest {
     public void testAddNewsAuthor() throws Exception {
         doThrow(new DAOException()).when(dao).addNewsAuthors(TEST_ID, TEST_ID);
 
-        service.addNewsAuthor(TEST_ID, TEST_ID);
+        service.addNewsAuthors(TEST_ID, TEST_ID);
     }
 
     @Test
