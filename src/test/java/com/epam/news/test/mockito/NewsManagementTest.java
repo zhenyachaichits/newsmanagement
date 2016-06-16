@@ -4,10 +4,10 @@ import com.epam.news.domain.Author;
 import com.epam.news.domain.News;
 import com.epam.news.domain.Tag;
 import com.epam.news.domain.to.NewsTO;
+import com.epam.news.exception.ServiceException;
 import com.epam.news.persistence.AuthorDAO;
 import com.epam.news.persistence.NewsDAO;
 import com.epam.news.persistence.TagDAO;
-import com.epam.news.exception.ServiceException;
 import com.epam.news.service.impl.AuthorServiceImpl;
 import com.epam.news.service.impl.NewsServiceImpl;
 import com.epam.news.service.impl.TagServiceImpl;
@@ -22,15 +22,16 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NewsManagementTest {
+
+    private static final Long TEST_ID = 1L;
 
     @Mock
     private NewsDAO newsDAO;
@@ -55,33 +56,6 @@ public class NewsManagementTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void testAdd() throws Exception {
-        NewsTO newsTO = new NewsTO();
-        News news = new News();
-        newsTO.setNews(news);
-
-        List<Author> authorSet = new ArrayList<>();
-        Author author = new Author();
-        authorSet.add(author);
-        newsTO.setAuthors(authorSet);
-
-        List<Tag> tagSet = new ArrayList<>();
-        Tag tag = new Tag();
-        tagSet.add(tag);
-        newsTO.setTags(tagSet);
-
-        when(newsDAO.add(news)).thenReturn(news);
-        when(authorDAO.add(author)).thenReturn(author);
-        when(tagDAO.add(tag)).thenReturn(tag);
-
-        doReturn(news).when(newsService).add(news);
-        doReturn(author).when(authorService).add(author);
-        doReturn(tag).when(tagService).add(tag);
-
-        newsManagementService.addNewsData(newsTO);
-    }
-
     @Test(expected = ServiceException.class)
     public void testAddError() throws Exception {
         NewsTO newsTO = new NewsTO();
@@ -89,4 +63,32 @@ public class NewsManagementTest {
         newsManagementService.addNewsData(newsTO);
     }
 
+    @Test
+    public void testGet() throws Exception {
+        NewsTO newsTO = new NewsTO();
+        News news = new News();
+        newsTO.setNews(news);
+
+        List<Author> authorList = new ArrayList<>();
+        Author author = new Author();
+        authorList.add(author);
+        newsTO.setAuthors(authorList);
+
+        List<Tag> tagList = new ArrayList<>();
+        Tag tag = new Tag();
+        tagList.add(tag);
+        newsTO.setTags(tagList);
+
+        when(newsDAO.find(TEST_ID)).thenReturn(news);
+        when(authorDAO.getNewsAuthors(TEST_ID)).thenReturn(authorList);
+        when(tagDAO.getNewsTags(TEST_ID)).thenReturn(tagList);
+
+        doReturn(news).when(newsService).find(TEST_ID);
+        doReturn(authorList).when(authorService).getNewsAuthors(TEST_ID);
+        doReturn(tagList).when(tagService).getNewsTags(TEST_ID);
+
+        NewsTO result = newsManagementService.getNewsData(TEST_ID);
+
+        assertEquals(newsTO, result);
+    }
 }

@@ -87,6 +87,4 @@ public class NewsManagementImpl implements NewsManagement {
             throw new ServiceException("Couldn't delete news data by one transaction", e);
         }
     }
-
-
 }
