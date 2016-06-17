@@ -18,6 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -46,6 +47,18 @@ public class TagDAOTest {
 
         tag = dao.add(tag);
         assertNotNull(tag);
+    }
+
+    @Test
+    public void testAddTags() throws Exception {
+        Tag tag = new Tag();
+        tag.setTagName(TEST_TAG_NAME);
+
+        List<Tag> tags = new ArrayList<>();
+        tags.add(tag);
+        tags.add(tag);
+
+        assertNotNull(dao.addTags(tags));
     }
 
     @Test
