@@ -1,4 +1,4 @@
-package com.epam.news.admin;
+package com.epam.news.admin.controller;
 
 import com.epam.news.common.domain.News;
 import com.epam.news.common.exception.ServiceException;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Controller
-@RequestMapping("/hello")
+@RequestMapping("/news")
 public class NewsController {
 
     @Autowired
