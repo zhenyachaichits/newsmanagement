@@ -3,6 +3,7 @@ package com.epam.news.common.service.management.impl;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.News;
 import com.epam.news.common.domain.Tag;
+import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.AuthorService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,33 +39,26 @@ public class NewsManagementImpl implements NewsManagement {
     @Transactional(rollbackFor = Exception.class)
     public void addNewsData(NewsTO newsData) throws ServiceException {
         try {
-            if (newsData.getAuthors() == null || newsData.getTags() == null || newsData.getNews() == null) {
-                throw new ServiceException("Invalid data");
-            }
-
             News news = newsService.add(newsData.getNews());
             long newsId = news.getNewsId();
 
-            long[] authorIdArray = authorService.addAuthors(newsData.getAuthors());
-            authorService.addNewsAuthors(newsId, authorIdArray);
-
-            long[] tagIdArray = tagService.addTags(newsData.getTags());
-            tagService.addNewsTags(newsId, tagIdArray);
-        } catch (ServiceException e) {
-            LOG.error("Error in method: addNewsData(NewsTO newsData)", e);
+            authorService.addNewsAuthors(newsId, newsData.getAuthorIdList());
+            tagService.addNewsTags(newsId, newsData.getTagIdList());
+        } catch (Exception e) {
+            LOG.error("Error in method: addNewsData(NewsDetailsTO newsData)", e);
             throw new ServiceException("Couldn't add news data by one transaction", e);
         }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public NewsTO getNewsData(long newsId) throws ServiceException {
+    public NewsDetailsTO getNewsData(long newsId) throws ServiceException {
         try {
             News news = newsService.find(newsId);
             List<Author> authors = authorService.getNewsAuthors(newsId);
             List<Tag> tags = tagService.getNewsTags(newsId);
 
-            NewsTO newsData = new NewsTO();
+            NewsDetailsTO newsData = new NewsDetailsTO();
             newsData.setNews(news);
             newsData.setAuthors(authors);
             newsData.setTags(tags);
@@ -85,6 +80,32 @@ public class NewsManagementImpl implements NewsManagement {
         } catch (ServiceException e) {
             LOG.error("Error in method: deleteNewsData(long newsId)", e);
             throw new ServiceException("Couldn't delete news data by one transaction", e);
+        }
+    }
+
+    @Override
+    public List<NewsDetailsTO> findAllNewsData() throws ServiceException {
+        try {
+            List<News> allNews = newsService.findAll();
+            List<NewsDetailsTO> newsDetailsList = new ArrayList<>(allNews.size());
+
+            for (News news : allNews) {
+                NewsDetailsTO newsDetails = new NewsDetailsTO();
+                newsDetails.setNews(news);
+
+                List<Tag> tags = tagService.getNewsTags(news.getNewsId());
+                newsDetails.setTags(tags);
+
+                List<Author> authors = authorService.getNewsAuthors(news.getNewsId());
+                newsDetails.setAuthors(authors);
+
+                newsDetailsList.add(newsDetails);
+            }
+
+            return newsDetailsList;
+        } catch (ServiceException e) {
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't find all news data by one transaction", e);
         }
     }
 

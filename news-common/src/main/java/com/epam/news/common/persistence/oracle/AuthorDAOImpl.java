@@ -157,7 +157,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     /**
-     * Get findAll authors
+     * Get findAllNewsData authors
      *
      * @return list of authors
      * @throws DAOException if SQLException or EntityProcessorException thrown
@@ -174,7 +174,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get findAll authors", e);
+            throw new DAOException("Couldn't get findAllNewsData authors", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -224,18 +224,18 @@ public class AuthorDAOImpl implements AuthorDAO {
      * Add news author to News_Author table
      *
      * @param newsId   the news id
-     * @param authorIdArray the author id array
+     * @param authorIdList the author id array
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void addNewsAuthors(long newsId, long... authorIdArray) throws DAOException {
+    public void addNewsAuthors(long newsId, List<Long> authorIdList) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_ADD_NEWS_AUTHOR_QUERY);
 
-            for (long authorId : authorIdArray) {
+            for (long authorId : authorIdList) {
                 statement.setLong(1, newsId);
                 statement.setLong(2, authorId);
                 statement.addBatch();

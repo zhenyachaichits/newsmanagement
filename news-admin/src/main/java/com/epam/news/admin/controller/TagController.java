@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.support.StringMultipartFileEditor;
 
 import java.util.List;
 
@@ -21,9 +20,8 @@ import java.util.List;
 @RequestMapping("/tags")
 public class TagController {
 
-    private static final String PAGE_NAME = "tags-management";
-
-    private static final Logger LOG = LogManager.getLogger(TagController.class);
+    private static final String FORWARD_PAGE_NAME = "tagsManagement";
+    private static final String REDIRECT_TAGS_VALUE = "redirect:/tags";
 
     @Autowired
     private TagService service;
@@ -40,7 +38,7 @@ public class TagController {
             throw new ControllerException("Unable to find all tags", e);
         }
 
-        return PAGE_NAME;
+        return FORWARD_PAGE_NAME;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -48,33 +46,32 @@ public class TagController {
         try {
             service.add(tagData);
         } catch (ServiceException e) {
-            LOG.error("Error in adding tag operation", e);
             throw new ControllerException();
         }
 
-        return "redirect:/tags";
+        return REDIRECT_TAGS_VALUE;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String editTag(Tag tagData) {
+    public String updateTag(Tag tagData) throws ControllerException {
         try {
             service.update(tagData);
         } catch (ServiceException e) {
-            LOG.error("Error in editing tag operation", e);
+            throw new ControllerException("Unable to update tag data", e);
         }
 
-        return "redirect:/tags";
+        return REDIRECT_TAGS_VALUE;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deleteTag(Tag tagData) {
+    public String deleteTag(Tag tagData) throws ControllerException {
         try {
             service.delete(tagData.getTagId());
         } catch (ServiceException e) {
-            LOG.error("Error in deleting tag operation", e);
+            throw new ControllerException("Unable to delete tag", e);
         }
 
-        return "redirect:/tags";
+        return REDIRECT_TAGS_VALUE;
     }
 
 }

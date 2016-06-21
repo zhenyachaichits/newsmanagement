@@ -1,8 +1,7 @@
 package com.epam.news.admin.controller;
 
-import com.epam.news.common.domain.News;
+import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.exception.ServiceException;
-import com.epam.news.common.service.NewsService;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,22 +15,24 @@ import java.util.List;
 @RequestMapping("/news")
 public class NewsController {
 
+    private static final String FORWARD_VIEW_PAGE_NAME = "newsView";
+    private static final String FORWARD_MANAGEMENT_PAGE_NAME = "newsManagement";
+    private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
+
     @Autowired
-    private NewsService service;
+    private NewsManagement management;
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String addNews(ModelMap model) {
+    public String viewNews(ModelMap model) {
         try {
-            List<News> newsList = service.findAll();
-            model.addAttribute("news", newsList);
+            List<NewsDetailsTO> newsList = management.findAllNewsData();
+            model.addAttribute("newsData", newsList);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
 
-        return "hello";
+        return FORWARD_VIEW_PAGE_NAME;
     }
-
-
 
 }

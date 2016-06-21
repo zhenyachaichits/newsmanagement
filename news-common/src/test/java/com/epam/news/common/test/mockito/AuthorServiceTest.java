@@ -76,13 +76,6 @@ public class AuthorServiceTest {
         assertTrue(service.delete(TEST_ID));
     }
 
-    @Test(expected = ServiceException.class)
-    public void testAddNewsAuthor() throws Exception {
-        doThrow(new DAOException()).when(dao).addNewsAuthors(TEST_ID, TEST_ID);
-
-        service.addNewsAuthors(TEST_ID, TEST_ID);
-    }
-
     @Test
     public void testGetNewsAuthors() throws Exception {
         when(dao.getNewsAuthors(TEST_ID)).thenReturn(new ArrayList<>());

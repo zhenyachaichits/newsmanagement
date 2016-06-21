@@ -76,18 +76,4 @@ public class TagServiceTest {
         assertTrue(service.delete(TEST_ID));
     }
 
-    @Test(expected = ServiceException.class)
-    public void testAddNewsTag() throws Exception {
-        doThrow(new DAOException()).when(dao).addNewsTags(TEST_ID, TEST_ID);
-
-        service.addNewsTags(TEST_ID, TEST_ID);
-    }
-
-    @Test
-    public void testGetNewsTag() throws Exception {
-        when(dao.getNewsTags(TEST_ID)).thenReturn(new ArrayList<>());
-        List<Tag> result = service.getNewsTags(TEST_ID);
-
-        assertNotNull(result);
-    }
 }

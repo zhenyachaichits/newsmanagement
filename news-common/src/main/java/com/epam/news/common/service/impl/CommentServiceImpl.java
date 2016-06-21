@@ -97,9 +97,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Get findAll comments
+     * Get findAllNewsData comments
      *
-     * @return the list of findAll comments
+     * @return the list of findAllNewsData comments
      * @throws ServiceException if DAOException was thrown
      */
     @Override
@@ -107,8 +107,8 @@ public class CommentServiceImpl implements CommentService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: findAll()", e);
-            throw new ServiceException("Couldn't execute getting findAll comments service", e);
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData comments service", e);
         }
     }
 

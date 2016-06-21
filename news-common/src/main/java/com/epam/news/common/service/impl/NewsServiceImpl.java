@@ -106,7 +106,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     /**
-     * Get findAll news
+     * Get findAllNewsData news
      *
      * @return the list of news
      * @throws ServiceException if DAOException was thrown
@@ -116,8 +116,8 @@ public class NewsServiceImpl implements NewsService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method:  findAll()", e);
-            throw new ServiceException("Couldn't execute getting findAll news service", e);
+            LOG.error("Error in method:  findAllNewsData()", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData news service", e);
         }
     }
 
@@ -149,7 +149,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     /**
-     * Get findAll news in order of news' comments number
+     * Get findAllNewsData news in order of news' comments number
      *
      * @return list of news ordered by comments amount
      * @throws ServiceException if DAOException was thrown
@@ -160,7 +160,7 @@ public class NewsServiceImpl implements NewsService {
             return dao.getNewsOrderedByCommentsNumber();
         } catch (DAOException e) {
             LOG.error("Error in method: getNewsOrderedByCommentsNumber()", e);
-            throw new ServiceException("Couldn't execute getting findAll news ordered by comments service", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData news ordered by comments service", e);
         }
     }
 

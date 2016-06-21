@@ -153,7 +153,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     /**
-     * Get findAll users
+     * Get findAllNewsData users
      *
      * @return list of users
      * @throws DAOException if SQLException or EntityProcessorException thrown
@@ -170,7 +170,7 @@ public class UserDAOImpl implements UserDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get findAll users", e);
+            throw new DAOException("Couldn't get findAllNewsData users", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

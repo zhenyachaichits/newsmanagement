@@ -2,19 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html>
-<head>
-    <title>Authors Management</title>
-</head>
-<body>
 <div align="center">
     <table>
         <tr>
             <th>Authors</th>
         </tr>
         <c:forEach items="${authors}" var="author">
-            <fmt:formatDate pattern="yyyy-MM-dd"
-                            value="${author.expiredDate}" var="date"/>
+            <fmt:formatDate pattern="yyyy-MM-dd" value="${author.expiredDate}" var="date"/>
             <tr>
                 <td>
                     <form:form modelAttribute="authorData" method="post" enctype="utf8">
@@ -36,5 +30,3 @@
         <form:button> Add </form:button>
     </form:form>
 </div>
-</body>
-</html>

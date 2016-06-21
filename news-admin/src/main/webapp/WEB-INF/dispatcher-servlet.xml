@@ -12,11 +12,15 @@
 
     <mvc:annotation-driven />
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass"
-                  value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/layouts.xml</value>
+                <value>/WEB-INF/tiles/views.xml</value>
+            </list>
+        </property>
     </bean>
 
 </beans>

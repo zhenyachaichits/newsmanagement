@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="index" extends="pageTemplate">
+        <put-attribute name="body" value="index.jsp"/>
+    </definition>
+
+    <definition name="authorsManagement" extends="pageTemplate">
+        <put-attribute name="title" value="Authors Management"/>
+        <put-attribute name="body" value="/WEB-INF/views/authors-management.jsp"/>
+    </definition>
+
+    <definition name="tagsManagement" extends="pageTemplate">
+        <put-attribute name="title" value="Tags Management"/>
+        <put-attribute name="body" value="/WEB-INF/views/tags-management.jsp"/>
+    </definition>
+
+    <definition name="newsView" extends="pageTemplate">
+        <put-attribute name="title" value="News Management"/>
+        <put-attribute name="body" value="/WEB-INF/views/news-view.jsp"/>
+    </definition>
+
+    <definition name="newsManagement" extends="pageTemplate">
+        <put-attribute name="title" value="News Management"/>
+        <put-attribute name="body" value="/WEB-INF/views/news-management.jsp"/>
+    </definition>
+
+    <definition name="error" extends="pageTemplate">
+        <put-attribute name="title" value="Error"/>
+        <put-attribute name="body" value="/WEB-INF/views/error.jsp"/>
+    </definition>
+
+</tiles-definitions>

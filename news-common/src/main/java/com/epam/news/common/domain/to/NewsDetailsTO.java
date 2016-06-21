@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * The type News transfer object.
- * Contains findAll the information about news entry, its authors and tags.
+ * Contains findAllNewsData the information about news entry, its authors and tags.
  */
 public class NewsDetailsTO {
     private News news;

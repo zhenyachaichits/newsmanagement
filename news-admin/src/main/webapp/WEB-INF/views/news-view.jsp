@@ -1,16 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Yauhen_Chaichyts
-  Date: 6/21/2016
-  Time: 12:24 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<div align="center">
+    <c:forEach items="${newsData}" var="newsEntry">
+        <p><a href="/news">${newsEntry.news.title}</a></p>
+        <p>${newsEntry.news.shortText}</p>
+    </c:forEach>
+</div>
