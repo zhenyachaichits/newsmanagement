@@ -10,8 +10,6 @@
 
     <context:component-scan base-package="com.epam.news" />
 
-    <mvc:annotation-driven />
-
     <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
 
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
@@ -23,4 +21,6 @@
         </property>
     </bean>
 
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:annotation-driven />
 </beans>

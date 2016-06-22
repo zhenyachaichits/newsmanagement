@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div align="center">
     <c:forEach items="${newsData}" var="newsEntry">
-        <p><a href="/news">${newsEntry.news.title}</a></p>
+        <p><a href="/newsManagement/${newsEntry.news.newsId}" class="title">${newsEntry.news.title}</a></p>
         <p>${newsEntry.news.shortText}</p>
     </c:forEach>
 </div>

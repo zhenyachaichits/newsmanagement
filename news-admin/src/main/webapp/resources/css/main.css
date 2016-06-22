@@ -1,0 +1,248 @@
+* {
+    outline: none;
+    font-family: 'Oswald', 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    color: #464547;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    border: none;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(234, 234, 234, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(170, 170, 170, 0.7);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    position: relative;
+}
+
+header {
+    z-index: 2;
+    height: 80px;
+    background-color: #2a8fa4;
+    box-shadow: 0 4px 6px 0 rgba(12, 12, 12, 0.12);
+    width: 100%;
+}
+
+header > div {
+    padding: 15px 15px;
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.logo {
+    transition: color 0.7s ease;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 30px;
+    margin: 15px;
+}
+
+.logo > i.material-icons {
+    font-size: 30px;
+    margin-right: 10px;
+    color: #464547;
+}
+
+.logo:hover {
+    color: #464547;
+}
+
+menu {
+    margin-top: 80px;
+    padding-left: 0;
+    padding-bottom: 30px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    box-shadow: 7px 1px 5px -4px rgba(0, 0, 0, 0.29);
+    background-color: rgba(173, 172, 174, 0.22);
+}
+
+menu > div.section {
+    border-bottom: solid 1px rgba(68, 67, 69, 0.2);
+    padding: 25px 20px;
+}
+
+.page-link {
+    text-align: center;
+    color: rgb(120, 120, 120);
+    transition: color 0.3s ease;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 300;
+}
+
+.page-link > i.material-icons {
+    color: rgb(120, 120, 120);
+    font-size: 23px;
+}
+
+.page-link:hover {
+    color: #2a8fa4;
+}
+
+.page-link.active {
+    color: #2a8fa4;
+}
+
+main {
+    position: relative;
+    padding-bottom: 40px;
+    margin-left: 200px;
+    margin-top: 30px;
+}
+
+a.title {
+    color: #2c2b2d;
+    text-decoration: none;
+    font-size: 35px;
+    font-weight: 300;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    height: 25px;
+    width: 100%;
+    color: rgba(186, 186, 186, 0.36);
+    background-color: #c9c7ca;
+    box-shadow: 1px -6px 5px -4px rgba(0, 0, 0, 0.12);
+}
+
+footer > p {
+    margin: 0;
+    color: rgba(101, 101, 101, 0.62);
+    text-align: center;
+}
+
+button {
+    border: none;
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: 300;
+    background-color: #7f993a;
+    transition: background-color 0.3s ease;
+    color: rgb(255, 255, 255);
+}
+
+button:hover {
+    background-color: #b6d042;
+}
+
+button.delete {
+    background-color: #993e40;
+}
+
+button.delete:hover {
+    background-color: #dd5759
+}
+
+button.edit {
+    background-color: #65737a;
+}
+
+button.edit:hover {
+    background-color: #a0b7be;
+}
+
+button.small {
+    height: 25px;
+    width: 75px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+button.medium {
+    height: 33px;
+    width: 100px;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+input {
+    border: solid 1px rgba(225, 224, 226, 0.93);
+    padding: 8px;
+    transition: background-color 0.3s ease;
+    background-color: #f8f7f9;
+    height: 50px;
+    width: 200px;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+input:focus {
+    background-color: #f0eff1;
+}
+
+input.small {
+    height: 25px;
+    width: 150px;
+    font-size: 12px;
+}
+
+input.medium {
+    height: 33px;
+    width: 150px;
+    font-size: 17px;
+}
+
+.add-panel {
+    margin: 25px;
+    padding: 2%;
+    transition: background-color 0.3s ease;
+    background-color: rgba(181, 180, 182, 0.12);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    height: 5%;
+    min-height: 60px;
+}
+
+.add-panel:hover {
+    background-color: rgba(181, 180, 182, 0.18);
+}
+
+.content-panel {
+    margin: 10px 40px;
+    padding: 3%;
+    transition: background-color 0.3s ease;
+    background-color: rgba(206, 205, 207, 0.12);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+.content-panel:hover {
+    background-color: rgba(206, 205, 207, 0.24);
+}
+
+h1.title {
+    margin: 15px;
+    color: #3b3a3c;
+    text-decoration: none;
+    font-size: 35px;
+    font-weight: 300;
+}

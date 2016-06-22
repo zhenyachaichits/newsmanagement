@@ -12,8 +12,8 @@
                     <form:form modelAttribute="tagData" method="post" enctype="utf8">
                         <form:input path="tagName" value="${author.tagName}" />
                         <form:input path="tagId" value="${author.tagId}" type="hidden" />
-                        <form:button formaction="tags/update" > Update </form:button>
-                        <form:button formaction="tags/delete"> Delete </form:button>
+                        <form:button formaction="tags/update" class="small"> UPDATE </form:button>
+                        <form:button formaction="tags/delete" class="small delete"> DELETE </form:button>
                     </form:form>
                 </td>
             </tr>
@@ -23,6 +23,6 @@
 <div align="center">
     <form:form modelAttribute="tagData" action="/tags/add" method="post" enctype="utf8">
         <form:input path="tagName"/>
-        <form:button> Add </form:button>
+        <form:button class="small"> ADD </form:button>
     </form:form>
 </div>

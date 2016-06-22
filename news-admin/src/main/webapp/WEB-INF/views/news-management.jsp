@@ -18,6 +18,6 @@
                 <form:options items="${authors}" itemValue="authorId" itemLabel="authorName"/>
             </form:select>
         </c:if>
-        <form:button> Save </form:button>
+        <form:button> SAVE </form:button>
     </form:form>
 </div>
