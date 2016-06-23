@@ -4,7 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div align="center">
     <c:forEach items="${newsData}" var="newsEntry">
-        <p><a href="/newsManagement/${newsEntry.news.newsId}" class="title">${newsEntry.news.title}</a></p>
-        <p>${newsEntry.news.shortText}</p>
+        <div class="content-panel">
+            <p><a href="/newsManagement/${newsEntry.news.newsId}" class="title">${newsEntry.news.title}</a>
+                <c:if test="${not empty(newsEntry.authors)}">
+                    <i>(by
+                        <c:forEach items="${newsEntry.authors}" var="author">
+                            ${author.authorName},
+                        </c:forEach>
+                        )</i>
+                </c:if>
+            </p>
+            <p>${newsEntry.news.shortText}</p>
+        </div>
     </c:forEach>
 </div>

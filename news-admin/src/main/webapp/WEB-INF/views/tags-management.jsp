@@ -2,27 +2,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div align="center">
-    <table>
-        <tr>
-            <th>Tags</th>
-        </tr>
-        <c:forEach items="${tags}" var="author">
-            <tr>
-                <td>
-                    <form:form modelAttribute="tagData" method="post" enctype="utf8">
-                        <form:input path="tagName" value="${author.tagName}" />
-                        <form:input path="tagId" value="${author.tagId}" type="hidden" />
-                        <form:button formaction="tags/update" class="small"> UPDATE </form:button>
-                        <form:button formaction="tags/delete" class="small delete"> DELETE </form:button>
-                    </form:form>
-                </td>
-            </tr>
+
+    <div class="add-panel" align="center">
+        <form:form modelAttribute="tagData" action="/tags/add" method="post" enctype="utf8">
+            <form:input path="tagName" placeholder="Tag name"/>
+            <form:button> ADD </form:button>
+        </form:form>
+    </div>
+
+    <div class="content-panel" align="center">
+        <h1 class="title">ALL TAGS</h1>
+        <c:forEach items="${tags}" var="author" varStatus="loop">
+            <form:form modelAttribute="tagData" method="post" enctype="utf8" name="${loop.index}">
+                <form:input path="tagName" value="${author.tagName}" cssClass="medium" readonly="true"/>
+                <form:input path="tagId" value="${author.tagId}" cssClass="medium" type="hidden"/>
+                <form:button type="button" class="medium edit" name="${loop.index}"> EDIT </form:button>
+                <form:button formaction="tags/update" class="medium update" name="${loop.index}" hidden="true">
+                    UPDATE
+                </form:button>
+                <form:button formaction="tags/delete" class="medium delete" name="${loop.index}" hidden="true">
+                    DELETE
+                </form:button>
+            </form:form>
         </c:forEach>
-    </table>
-</div>
-<div align="center">
-    <form:form modelAttribute="tagData" action="/tags/add" method="post" enctype="utf8">
-        <form:input path="tagName"/>
-        <form:button class="small"> ADD </form:button>
-    </form:form>
+    </div>
 </div>

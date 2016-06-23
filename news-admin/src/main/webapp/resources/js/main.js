@@ -6,18 +6,16 @@ $(window).scroll(function () {
 
 $(document).ready(function(){
     var path = window.location.pathname;
-
-    alert(path);
-
-    $(".page-link[href=" + path + "]").addClass("active");
-
-    alert($(".page-link[href=" + path + "]").attr("href"))
+    $(".page-link[href='" + path + "']").addClass("active");
 });
 
+
+var nameValue;
 $(document).click(function () {
     $(".edit").show("fast");
     $(".update").hide("fast");
     $(".delete").hide("fast");
+    $("form[name=" + nameValue + "]").children("input").prop('readonly', true);
 });
 
 $(".edit").click(function (e) {
@@ -32,7 +30,8 @@ $("input").click(function (e) {
 
 $(".edit").click(function () {
     $(this).hide("fast");
-    var nameValue = $(this).attr("name");
+    nameValue = $(this).attr("name");
     $(".update[name=" + nameValue + "]").show("fast");
     $(".delete[name=" + nameValue + "]").show("fast");
+    $("form[name=" + nameValue + "]").children().prop('readonly', false);
 });
