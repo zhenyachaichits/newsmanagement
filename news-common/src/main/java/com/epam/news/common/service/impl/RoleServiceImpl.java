@@ -97,9 +97,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * Get findAll users roles
+     * Get findAllNewsData users roles
      *
-     * @return list of findAll user's roles
+     * @return list of findAllNewsData user's roles
      * @throws ServiceException if DAOException was thrown
      */
     @Override
@@ -107,8 +107,8 @@ public class RoleServiceImpl implements RoleService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: findAll()", e);
-            throw new ServiceException("Couldn't execute getting findAll roles service", e);
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData roles service", e);
         }
     }
 }

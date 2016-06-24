@@ -149,7 +149,7 @@ public class TagDAOImpl implements TagDAO {
     }
 
     /**
-     * Get findAll tag
+     * Get findAllNewsData tag
      *
      * @return list of tags
      * @throws DAOException if SQLException or EntityProcessorException thrown
@@ -166,7 +166,7 @@ public class TagDAOImpl implements TagDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get findAll tags", e);
+            throw new DAOException("Couldn't get findAllNewsData tags", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -215,18 +215,18 @@ public class TagDAOImpl implements TagDAO {
      * Add news tag to News_Tag table
      *
      * @param newsId the news id
-     * @param tagIdArray the tag id array
+     * @param tagIdList the tag id array
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void addNewsTags(long newsId, long... tagIdArray) throws DAOException {
+    public void addNewsTags(long newsId, List<Long> tagIdList) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_ADD_NEWS_TAG_QUERY);
 
-            for (long tagId : tagIdArray) {
+            for (long tagId : tagIdList) {
                 statement.setLong(1, newsId);
                 statement.setLong(2, tagId);
                 statement.addBatch();
@@ -242,7 +242,7 @@ public class TagDAOImpl implements TagDAO {
     }
 
     /**
-     * Get findAll tags for news entry
+     * Get findAllNewsData tags for news entry
      *
      * @param newsId the news id
      * @return list of tags

@@ -213,7 +213,7 @@ public class CommentDAOImpl implements CommentDAO {
 
 
     /**
-     * Get findAll comments
+     * Get findAllNewsData comments
      *
      * @return list of comments
      * @throws DAOException if SQLException or EntityProcessorException thrown
@@ -230,7 +230,7 @@ public class CommentDAOImpl implements CommentDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get findAll comments", e);
+            throw new DAOException("Couldn't get findAllNewsData comments", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -238,7 +238,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     /**
-     * Get findAll news comments
+     * Get findAllNewsData news comments
      *
      * @param newsId news id
      * @return list of comments
@@ -257,7 +257,7 @@ public class CommentDAOImpl implements CommentDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get findAll news comments", e);
+            throw new DAOException("Couldn't get findAllNewsData news comments", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

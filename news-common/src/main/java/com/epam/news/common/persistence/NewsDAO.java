@@ -49,7 +49,7 @@ public interface NewsDAO extends EntityDAO<Long, News> {
     List<News> getNewsOrderedByCommentsNumber() throws DAOException;
 
     /**
-     * Gets findAll news count.
+     * Gets findAllNewsData news count.
      *
      * @return the news count
      * @throws DAOException the dao exception

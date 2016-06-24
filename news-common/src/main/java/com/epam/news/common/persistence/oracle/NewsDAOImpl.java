@@ -175,7 +175,7 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     /**
-     * Get findAll news
+     * Get findAllNewsData news
      *
      * @return list of news
      * @throws DAOException if SQLException or EntityProcessorException thrown
@@ -185,7 +185,7 @@ public class NewsDAOImpl implements NewsDAO {
         try {
             return getNewsList(SQL_GET_ALL_NEWS_QUERY);
         } catch (DAOException e) {
-            throw new DAOException("Couldn't get findAll news", e);
+            throw new DAOException("Couldn't get findAllNewsData news", e);
         }
     }
 
@@ -266,7 +266,7 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     /**
-     * Get findAll news count
+     * Get findAllNewsData news count
      *
      * @return news count
      * @throws DAOException if SQLException thrown
@@ -287,7 +287,7 @@ public class NewsDAOImpl implements NewsDAO {
                 throw new DAOException("Count was not found. Result set is empty");
             }
         } catch (SQLException e) {
-            throw new DAOException("Couldn't get findAll news count", e);
+            throw new DAOException("Couldn't get findAllNewsData news count", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

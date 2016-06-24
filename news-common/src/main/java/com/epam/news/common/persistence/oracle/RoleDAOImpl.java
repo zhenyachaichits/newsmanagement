@@ -139,7 +139,7 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     /**
-     * Get findAll user roles
+     * Get findAllNewsData user roles
      *
      * @return list of roles
      * @throws DAOException if SQLException or EntityProcessorException thrown
@@ -156,7 +156,7 @@ public class RoleDAOImpl implements RoleDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
-            throw new DAOException("Couldn't get findAll roles", e);
+            throw new DAOException("Couldn't get findAllNewsData roles", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

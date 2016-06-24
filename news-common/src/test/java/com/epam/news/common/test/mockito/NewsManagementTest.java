@@ -3,6 +3,7 @@ package com.epam.news.common.test.mockito;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.News;
 import com.epam.news.common.domain.Tag;
+import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.persistence.AuthorDAO;
 import com.epam.news.common.persistence.NewsDAO;
@@ -59,15 +60,13 @@ public class NewsManagementTest {
         News news = new News();
         newsTO.setNews(news);
 
-        List<Author> authorSet = new ArrayList<>();
+        List<Long> authorIdList = new ArrayList<>();
         Author author = new Author();
-        authorSet.add(author);
-        newsTO.setAuthors(authorSet);
+        newsTO.setAuthorIdList(authorIdList);
 
-        List<Tag> tagSet = new ArrayList<>();
+        List<Long> tagIdList = new ArrayList<>();
         Tag tag = new Tag();
-        tagSet.add(tag);
-        newsTO.setTags(tagSet);
+        newsTO.setTagIdList(tagIdList);
 
         when(newsDAO.add(news)).thenReturn(news);
         when(authorDAO.add(author)).thenReturn(author);

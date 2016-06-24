@@ -49,7 +49,7 @@ public interface EntityDAO<K, T> {
     boolean delete(K domain) throws DAOException;
 
     /**
-     * Get findAll entities.
+     * Get findAllNewsData entities.
      *
      * @return the list of entities
      * @throws DAOException the dao exception

@@ -24,13 +24,13 @@ public interface TagDAO extends EntityDAO<Long, Tag> {
      * Add new news' tag.
      *
      * @param newsId the news id
-     * @param tagId  the tag id
+     * @param tagIdList  the tag id
      * @throws DAOException the dao exception
      */
-    void addNewsTags(long newsId, long... tagId) throws DAOException;
+    void addNewsTags(long newsId, List<Long> tagIdList) throws DAOException;
 
     /**
-     * Gets findAll news' tags.
+     * Gets findAllNewsData news' tags.
      *
      * @param newsId the news id
      * @return the list of tags

@@ -49,7 +49,7 @@ public interface EntityService<K, T> {
     boolean delete(K domain) throws ServiceException;
 
     /**
-     * Get findAll entities.
+     * Get findAllNewsData entities.
      *
      * @return the list of entities
      * @throws ServiceException the dao exception

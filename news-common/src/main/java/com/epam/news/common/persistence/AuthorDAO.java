@@ -25,10 +25,10 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * Add new news author data.
      *
      * @param newsId        the news id
-     * @param authorIdArray the author id array
+     * @param authorIdList the author id array
      * @throws DAOException the dao exception
      */
-    void addNewsAuthors(long newsId, long... authorIdArray) throws DAOException;
+    void addNewsAuthors(long newsId, List<Long> authorIdList) throws DAOException;
 
     /**
      * Gets the list of news' authors.

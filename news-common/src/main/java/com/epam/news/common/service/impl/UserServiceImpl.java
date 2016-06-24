@@ -97,9 +97,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Get findAll users data
+     * Get findAllNewsData users data
      *
-     * @return list of findAll users
+     * @return list of findAllNewsData users
      * @throws ServiceException if DAOException was thrown
      */
     @Override
@@ -107,8 +107,8 @@ public class UserServiceImpl implements UserService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: findAll()", e);
-            throw new ServiceException("Couldn't execute getting findAll users service", e);
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData users service", e);
         }
     }
 }

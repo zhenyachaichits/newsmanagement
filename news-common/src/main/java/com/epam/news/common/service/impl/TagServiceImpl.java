@@ -97,9 +97,9 @@ public class TagServiceImpl implements TagService {
     }
 
     /**
-     * Get findAll tags
+     * Get findAllNewsData tags
      *
-     * @return list of findAll tags
+     * @return list of findAllNewsData tags
      * @throws ServiceException if DAOException was thrown
      */
     @Override
@@ -107,8 +107,8 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: findAll()", e);
-            throw new ServiceException("Couldn't execute getting findAll tags service", e);
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData tags service", e);
         }
     }
 
@@ -133,16 +133,16 @@ public class TagServiceImpl implements TagService {
      * Add new tag for news entry
      *
      * @param newsId the news id
-     * @param tagIdArray  the tag id
+     * @param tagIdList  the tag id
      * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsTags(long newsId, long... tagIdArray) throws ServiceException {
+    public void addNewsTags(long newsId, List<Long> tagIdList) throws ServiceException {
         try {
-            dao.addNewsTags(newsId, tagIdArray);
+            dao.addNewsTags(newsId, tagIdList);
         } catch (DAOException e) {
-            LOG.error("Error in method: addNewsTags(long newsId, long tagIdArray)", e);
+            LOG.error("Error in method: addNewsTags(long newsId, long tagIdList)", e);
             throw new ServiceException("Couldn't execute adding news tags service", e);
         }
     }

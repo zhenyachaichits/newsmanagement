@@ -97,7 +97,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     /**
-     * Get findAll authors
+     * Get findAllNewsData authors
      *
      * @return list of authors
      * @throws ServiceException if DAOException was thrown
@@ -107,8 +107,8 @@ public class AuthorServiceImpl implements AuthorService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            LOG.error("Error in method: findAll()", e);
-            throw new ServiceException("Couldn't execute getting findAll authors service", e);
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't execute getting findAllNewsData authors service", e);
         }
     }
 
@@ -133,22 +133,22 @@ public class AuthorServiceImpl implements AuthorService {
      * Add author for news entry
      *
      * @param newsId   the news id
-     * @param authorId the author id
+     * @param authorIdList the author id
      * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsAuthors(long newsId, long... authorId) throws ServiceException {
+    public void addNewsAuthors(long newsId, List<Long> authorIdList) throws ServiceException {
         try {
-            dao.addNewsAuthors(newsId, authorId);
+            dao.addNewsAuthors(newsId, authorIdList);
         } catch (DAOException e) {
-            LOG.error("Error in method: addNewsAuthors(long newsId, long authorId)", e);
+            LOG.error("Error in method: addNewsAuthors(long newsId, long authorIdList)", e);
             throw new ServiceException("Couldn't execute adding news author service", e);
         }
     }
 
     /**
-     * Get findAll authors for selected news entry
+     * Get findAllNewsData authors for selected news entry
      *
      * @param newsId the news id
      * @return list of authors

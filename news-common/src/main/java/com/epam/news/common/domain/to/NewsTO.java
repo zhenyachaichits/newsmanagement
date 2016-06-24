@@ -1,73 +1,39 @@
 package com.epam.news.common.domain.to;
 
-import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.News;
-import com.epam.news.common.domain.Tag;
 
 import java.util.List;
 
-
 /**
- * The type News transfer object.
- * Contains findAll the information about news entry, its authors and tags.
+ * Created by Yauhen_Chaichyts on 6/21/2016.
  */
 public class NewsTO {
     private News news;
-    private List<Author> authors;
-    private List<Tag> tags;
+    private List<Long> authorIdList;
+    private List<Long> tagIdList;
 
-    /**
-     * Gets news.
-     *
-     * @return the news
-     */
     public News getNews() {
         return news;
     }
 
-    /**
-     * Sets news.
-     *
-     * @param news the news
-     */
     public void setNews(News news) {
         this.news = news;
     }
 
-    /**
-     * Gets authors.
-     *
-     * @return the authors
-     */
-    public List<Author> getAuthors() {
-        return authors;
+    public List<Long> getAuthorIdList() {
+        return authorIdList;
     }
 
-    /**
-     * Sets authors.
-     *
-     * @param authors the authors
-     */
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setAuthorIdList(List<Long> authorIdList) {
+        this.authorIdList = authorIdList;
     }
 
-    /**
-     * Gets tags.
-     *
-     * @return the tags
-     */
-    public List<Tag> getTags() {
-        return tags;
+    public List<Long> getTagIdList() {
+        return tagIdList;
     }
 
-    /**
-     * Sets tags.
-     *
-     * @param tags the tags
-     */
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setTagIdList(List<Long> tagIdList) {
+        this.tagIdList = tagIdList;
     }
 
     @Override
@@ -78,16 +44,17 @@ public class NewsTO {
         NewsTO newsTO = (NewsTO) o;
 
         if (news != null ? !news.equals(newsTO.news) : newsTO.news != null) return false;
-        if (authors != null ? !authors.equals(newsTO.authors) : newsTO.authors != null) return false;
-        return tags != null ? tags.equals(newsTO.tags) : newsTO.tags == null;
+        if (authorIdList != null ? !authorIdList.equals(newsTO.authorIdList) : newsTO.authorIdList != null)
+            return false;
+        return tagIdList != null ? tagIdList.equals(newsTO.tagIdList) : newsTO.tagIdList == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = news != null ? news.hashCode() : 0;
-        result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (authorIdList != null ? authorIdList.hashCode() : 0);
+        result = 31 * result + (tagIdList != null ? tagIdList.hashCode() : 0);
         return result;
     }
 }

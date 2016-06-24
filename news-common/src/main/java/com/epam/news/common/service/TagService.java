@@ -24,10 +24,10 @@ public interface TagService extends EntityService<Long, Tag> {
      * Add news tag.
      *
      * @param newsId the news id
-     * @param tagId  the tag id
+     * @param tagIdList  the tag id
      * @throws ServiceException the service exception
      */
-    void addNewsTags(long newsId, long... tagId) throws ServiceException;
+    void addNewsTags(long newsId, List<Long> tagIdList) throws ServiceException;
 
     /**
      * Gets news tags.
