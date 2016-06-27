@@ -5,8 +5,6 @@ import com.epam.news.admin.util.DateEditorSupport;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.AuthorService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,7 +20,7 @@ import java.util.List;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    private static final String FORWARD_PAGE_NAME = "authorsManagement";
+    private static final String PAGE_NAME = "authorsManagement";
     private static final String REDIRECT_AUTHORS_VALUE = "redirect:/authors";
 
     private static final String MODEL_AUTHORS_ATTRIBUTE = "authors";
@@ -47,7 +45,7 @@ public class AuthorController {
         } catch (ServiceException e) {
             throw new ControllerException("Unable to find all authors", e);
         }
-        return FORWARD_PAGE_NAME;
+        return PAGE_NAME;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

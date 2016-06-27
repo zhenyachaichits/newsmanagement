@@ -16,7 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,8 +23,9 @@ import java.util.List;
 @RequestMapping("/newsManagement")
 public class NewsManagementController {
 
-    private static final String FORWARD_PAGE_NAME = "newsManagement";
+    private static final String NEWS_MANAGEMENT_PAGE_NAME = "newsManagement";
     private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
+
 
     @Autowired
     private TagService tagService;
@@ -48,7 +48,7 @@ public class NewsManagementController {
             throw new ControllerException("Unable to load management data", e);
         }
 
-        return FORWARD_PAGE_NAME;
+        return NEWS_MANAGEMENT_PAGE_NAME;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -76,7 +76,7 @@ public class NewsManagementController {
              throw new ControllerException("Unable to show news management data");
          }
 
-         return FORWARD_PAGE_NAME;
+         return NEWS_MANAGEMENT_PAGE_NAME;
      }
 
 }

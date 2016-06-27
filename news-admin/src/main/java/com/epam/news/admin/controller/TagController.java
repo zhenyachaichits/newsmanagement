@@ -4,15 +4,12 @@ import com.epam.news.admin.exception.ControllerException;
 import com.epam.news.common.domain.Tag;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.TagService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.support.StringMultipartFileEditor;
 
 import java.util.List;
 
@@ -20,8 +17,11 @@ import java.util.List;
 @RequestMapping("/tags")
 public class TagController {
 
-    private static final String FORWARD_PAGE_NAME = "tagsManagement";
+    private static final String TAGS_MANAGEMENT_PAGE_NAME = "tagsManagement";
     private static final String REDIRECT_TAGS_VALUE = "redirect:/tags";
+
+    private static final String MODEL_TAGS_ATTRIBUTE = "tags";
+    private static final String MODEL_TAG_DATA_ATTRIBUTE = "tagData";
 
     @Autowired
     private TagService service;
@@ -32,13 +32,13 @@ public class TagController {
             Tag tag = new Tag();
             List<Tag> tags = service.findAll();
 
-            model.addAttribute("tags", tags);
-            model.addAttribute("tagData", tag);
+            model.addAttribute(MODEL_TAGS_ATTRIBUTE, tags);
+            model.addAttribute(MODEL_TAG_DATA_ATTRIBUTE, tag);
         } catch (ServiceException e) {
             throw new ControllerException("Unable to find all tags", e);
         }
 
-        return FORWARD_PAGE_NAME;
+        return TAGS_MANAGEMENT_PAGE_NAME;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

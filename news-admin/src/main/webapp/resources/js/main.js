@@ -4,18 +4,19 @@ $(window).scroll(function () {
     else sticky.removeClass('fixed');
 });
 
-$(document).ready(function(){
+$(document).ready(function () {
     var path = window.location.pathname;
     $(".page-link[href='" + path + "']").addClass("active");
+    var newText = $('.news-author').html().replace(/\s+/g, " ").replace(", )", ")");
+    $('.news-author').html(newText);
 });
 
 
-var nameValue;
 $(document).click(function () {
     $(".edit").show("fast");
     $(".update").hide("fast");
     $(".delete").hide("fast");
-    $("form[name=" + nameValue + "]").children("input").prop('readonly', true);
+    $("form").children("input").prop('readonly', true);
 });
 
 $(".edit").click(function (e) {
@@ -30,7 +31,7 @@ $("input").click(function (e) {
 
 $(".edit").click(function () {
     $(this).hide("fast");
-    nameValue = $(this).attr("name");
+    var nameValue = $(this).attr("name");
     $(".update[name=" + nameValue + "]").show("fast");
     $(".delete[name=" + nameValue + "]").show("fast");
     $("form[name=" + nameValue + "]").children().prop('readonly', false);

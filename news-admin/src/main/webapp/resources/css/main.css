@@ -116,10 +116,10 @@ main {
 }
 
 a.title {
+    color: #205e73;
     align-content: flex-start;
-    color: #2c2b2d;
     text-decoration: none;
-    font-size: 35px;
+    font-size: 33px;
     font-weight: 300;
 }
 
@@ -286,4 +286,31 @@ h1.title {
     text-decoration: none;
     font-size: 35px;
     font-weight: 300;
+}
+
+div.holder {
+    width: 100%;
+    display: inline-block;
+}
+
+div.news-title {
+    color: #205e73;
+    display: inline-block;
+    float: left;
+}
+
+div.news-date {
+    color: rgba(186, 186, 186, 1);
+    font-weight: 300;
+    font-size: 25px;
+    display: inline-block;
+    float: right;
+}
+
+div.news-author {
+    color: rgb(71, 71, 71);
+    font-weight: 300;
+    font-size: 20px;
+    display: inline-block;
+    float: left;
 }
