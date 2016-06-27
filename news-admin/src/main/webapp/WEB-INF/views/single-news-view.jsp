@@ -38,9 +38,11 @@
         <div class="holder">
             <div class="news-comment-content">
                     ${comment.commentText}
+                <a href="/news/deleteComment" class="option delete-icon"><i class="material-icons">delete</i></a>
             </div>
 
-            <fmt:formatDate pattern="yyyy-MM-dd" value="${comment.creationDate}" var="commentCreationDate"/>
+            <fmt:formatDate pattern="yyyy-MM-dd 'at' hh:mm a" value="${comment.creationDate}"
+                            var="commentCreationDate"/>
             <div class="news-comment-date">${commentCreationDate}</div>
         </div>
     </c:forEach>
@@ -48,6 +50,6 @@
     <form:form modelAttribute="commentData" action="addComment.do" method="post" enctype="utf8">
         <form:textarea path="commentText" cssClass="comment-text"/>
         <form:hidden path="newsId" value="${newsData.news.newsId}"/>
-        <form:button class="medium"> POST </form:button>
+        <form:button class="medium add-comment"> POST </form:button>
     </form:form>
 </div>

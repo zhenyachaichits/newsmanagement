@@ -382,6 +382,12 @@ textarea.comment-text {
     margin-top: 20px;
     margin-bottom: 20px;
     min-height: 40px;
-    min-width: 67%;
-    max-width: 67%;
+    min-width: 65%;
+    max-width: 65%;
+}
+.delete-icon > i.material-icons {
+    padding: 0;
+    font-size: 25px;
+    text-decoration: none;
+    color: #949395;
 }

@@ -67,7 +67,4 @@ public class NewsController {
         return REDIRECT_NEWS_VALUE;
     }
 
-
-
-
 }
