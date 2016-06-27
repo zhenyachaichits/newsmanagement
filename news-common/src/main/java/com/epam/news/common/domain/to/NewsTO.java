@@ -1,8 +1,6 @@
 package com.epam.news.common.domain.to;
 
-import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.News;
-import com.epam.news.common.domain.Tag;
 
 import java.util.List;
 
