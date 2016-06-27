@@ -18,14 +18,14 @@
         <c:forEach items="${authors}" var="author" varStatus="loop">
             <fmt:formatDate pattern="yyyy-MM-dd" value="${author.expiredDate}" var="date"/>
 
-            <form:form modelAttribute="authorData" method="post" enctype="utf8" name="${loop.index}">
+            <form:form modelAttribute="authorData" action="authors/update" method="post" enctype="utf8" name="${loop.index}">
                 <form:input path="authorName" value="${author.authorName}" cssClass="medium"
                             placeholder="Author name" readonly="true"/>
                 <form:input path="expiredDate" type="date" value="${date}" cssClass="medium"
                             placeholder="Expiration date" readonly="true"/>
-                <form:input path="authorId" name="id" value="${author.authorId}" type="hidden"/>
+                <form:hidden path="authorId" value="${author.authorId}" />
                 <form:button type="button" class="medium edit" name="${loop.index}"> EDIT </form:button>
-                <form:button formaction="authors/update" class="medium update" name="${loop.index}" hidden="true">
+                <form:button class="medium update" name="${loop.index}" hidden="true">
                     UPDATE
                 </form:button>
                 <form:button formaction="authors/delete" class="medium delete" name="${loop.index}" hidden="true">

@@ -252,7 +252,6 @@ select {
     border: none;
     box-shadow: none;
     background: transparent;
-    background-image: none;
     -webkit-appearance: none;
 }
 
@@ -293,13 +292,13 @@ div.holder {
     display: inline-block;
 }
 
-div.news-title {
+.news-title {
     color: #205e73;
     display: inline-block;
     float: left;
 }
 
-div.news-date {
+.news-date {
     color: rgba(186, 186, 186, 1);
     font-weight: 300;
     font-size: 25px;
@@ -307,10 +306,82 @@ div.news-date {
     float: right;
 }
 
-div.news-author {
+.news-author {
     color: rgb(71, 71, 71);
     font-weight: 300;
     font-size: 20px;
     display: inline-block;
     float: left;
+}
+
+.news-content {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.news-tags {
+    color: #2a8ca5;
+    font-weight: 300;
+    font-size: 20px;
+    display: inline-block;
+    float: left;
+}
+
+.news-comment-count {
+    color: rgb(131, 131, 131);
+    font-weight: 300;
+    font-size: 20px;
+    display: inline-block;
+    float: right;
+}
+
+.news-comments-title {
+    margin-top: 15px;
+    color: rgb(193, 193, 193);
+    font-weight: 300;
+    font-size: 25px;
+    border-bottom: solid 3px rgb(201, 201, 201);
+}
+
+.news-comment-content {
+    padding: 20px;
+    width: 60%;
+    margin-top: 20px;
+    background-color: rgba(162, 162, 162, 0.26);
+    border-radius: 2px;
+    font-weight: 300;
+    border: solid 1px rgb(201, 201, 201);
+    display: inline-block;
+}
+
+.news-comment-date {
+    color: rgb(201, 201, 201);
+    font-weight: 300;
+    font-size: 18px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    display: inline-block;
+}
+
+.option {
+    display: inline-block;
+    float: right;
+    color: #464547;
+}
+
+.option > i.material-icons {
+    padding: 12px;
+    font-size: 30px;
+    text-decoration: none;
+    color: #949395;
+}
+
+textarea.comment-text {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 40px;
+    min-width: 67%;
+    max-width: 67%;
 }

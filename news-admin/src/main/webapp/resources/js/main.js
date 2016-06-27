@@ -16,7 +16,8 @@ $(document).click(function () {
     $(".edit").show("fast");
     $(".update").hide("fast");
     $(".delete").hide("fast");
-    $("form").children("input").prop('readonly', true);
+    $("form[action='tags/update']").children("input").prop('readonly', true);
+    $("form[action='authors/update']").children("input").prop('readonly', true);
 });
 
 $(".edit").click(function (e) {
