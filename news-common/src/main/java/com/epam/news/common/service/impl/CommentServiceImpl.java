@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -36,6 +37,9 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(rollbackFor = Exception.class)
     public Comment add(Comment comment) throws ServiceException {
         try {
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            comment.setCreationDate(currentTime);
+
             return dao.add(comment);
         } catch (DAOException e) {
             LOG.error("Error in method: add(Comment comment)", e);
