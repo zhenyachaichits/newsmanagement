@@ -4,6 +4,11 @@ $(window).scroll(function () {
     else sticky.removeClass('fixed');
 });
 
+$(window).on("resize", function () {
+    var panelHeight = $(".navigate").outerHeight();
+    $(".navigate").outerHeight(panelHeight + 15);
+}).resize();
+
 $(document).ready(function () {
     var path = window.location.pathname;
     $(".page-link[href='" + path + "']").addClass("active");

@@ -21,6 +21,7 @@
 
                 <form:button formaction="/newsManagement/add"> SAVE </form:button>
             </c:if>
+
             <c:if test="${newsData.news.title ne null}">
                 <form:button formaction="/newsManagement/update"> UPDATE </form:button>
             </c:if>

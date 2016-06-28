@@ -3,7 +3,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<div class="content-panel">
+
+<div class="navigate previous">
+    <i class="material-icons">navigate_before</i>
+</div>
+
+
+<div class="navigate next">
+    <i class="material-icons">navigate_next</i>
+</div>
+
+<div class="content-panel news-holder">
+
     <div class="holder">
         <div class="news-title">
             <a href="/news/${newsData.news.newsId}" class="title">${newsData.news.title}</a>

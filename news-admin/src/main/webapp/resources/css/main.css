@@ -391,3 +391,33 @@ textarea.comment-text {
     text-decoration: none;
     color: #949395;
 }
+
+.navigate {
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    transition: background-color 0.2s ease;
+    background-color: rgba(254, 253, 255, 0);
+    padding: 5px;
+}
+
+.navigate > i.material-icons {
+    top: 49%;
+    position: relative;
+    font-size: 30px;
+    color: #6a696b;
+}
+
+.previous {
+    top: 0;
+    left: 0;
+}
+
+.next {
+    top: 0;
+    right: 0;
+}
+
+.navigate:hover {
+    background-color: rgba(228, 227, 229, 0.36);
+}
