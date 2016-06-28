@@ -49,14 +49,12 @@ public class NewsDAOImpl implements NewsDAO {
             "INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID INNER JOIN NEWS_AUTHOR " +
             "ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID WHERE NEWS_AUTHOR.AUTHOR_ID IN (?) AND NEWS_TAG.TAG_ID IN (?)";
     private static final String SQL_GET_NEWS_COUNT_QUERY = "SELECT COUNT(*) AS COUNT FROM NEWS";
-    private static final String SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY = "SELECT NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, " +
-            "CREATION_DATE, MODIFICATION_DATE FROM news WHERE NEWS_ID = (SELECT PREVIOUS FROM " +
+    private static final String SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY = "SELECT PREVIOUS FROM " +
             "(SELECT LAG(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
-            "WHERE NEWS_ID = ?)";
-    private static final String SQL_GET_NEXT_NEWS_BY_ID_QUERY = "SELECT NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, " +
-            "CREATION_DATE, MODIFICATION_DATE FROM news WHERE NEWS_ID = (SELECT PREVIOUS FROM " +
-            "(SELECT LAG(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
-            "WHERE NEWS_ID = ?)";
+            "WHERE NEWS_ID = ?";
+    private static final String SQL_GET_NEXT_NEWS_BY_ID_QUERY = "SELECT PREVIOUS FROM " +
+            "(SELECT LEAD(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
+            "WHERE NEWS_ID = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -109,7 +107,22 @@ public class NewsDAOImpl implements NewsDAO {
      */
     @Override
     public News find(Long id) throws DAOException {
-        return getNews(id, SQL_FIND_NEWS_BY_ID_QUERY);
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_FIND_NEWS_BY_ID_QUERY);
+
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            return entityProcessor.toEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't find news by id", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
     }
 
     /**
@@ -294,7 +307,7 @@ public class NewsDAOImpl implements NewsDAO {
      * @return the previous news
      */
     @Override
-    public News getPreviousNews(long newsId) throws DAOException {
+    public long getPreviousNews(long newsId) throws DAOException {
         return getNews(newsId, SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY);
     }
 
@@ -305,7 +318,7 @@ public class NewsDAOImpl implements NewsDAO {
      * @return the next news
      */
     @Override
-    public News getNextNews(long newsId) throws DAOException {
+    public long getNextNews(long newsId) throws DAOException {
         return getNews(newsId, SQL_GET_NEXT_NEWS_BY_ID_QUERY);
     }
 
@@ -347,7 +360,7 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    private News getNews(long newsId, String query) throws DAOException {
+    private long getNews(long newsId, String query) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -357,8 +370,8 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setLong(1, newsId);
             ResultSet resultSet = statement.executeQuery();
 
-            return entityProcessor.toEntity(resultSet);
-        } catch (SQLException | EntityProcessorException e) {
+            return resultSet.getLong(1);
+        } catch (SQLException e) {
             throw new DAOException("Couldn't find news by id", e);
         } finally {
             DAOUtil.closeStatement(statement);
