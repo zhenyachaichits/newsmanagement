@@ -103,12 +103,16 @@ public class NewsManagementImpl implements NewsManagement {
         List<Author> authors = authorService.getNewsAuthors(newsId);
         List<Tag> tags = tagService.getNewsTags(newsId);
         List<Comment> comments = commentService.getNewsComments(newsId);
+        long nextNewsId = newsService.getNextNews(newsId);
+        long previousNewsId = newsService.getPreviousNews(newsId);
 
         NewsDetailsTO newsData = new NewsDetailsTO();
         newsData.setNews(news);
         newsData.setAuthors(authors);
         newsData.setTags(tags);
         newsData.setComments(comments);
+        newsData.setNextNewsId(nextNewsId);
+        newsData.setPreviousNewsId(previousNewsId);
 
         return newsData;
     }
