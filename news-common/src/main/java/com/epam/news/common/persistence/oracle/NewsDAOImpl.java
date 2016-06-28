@@ -52,7 +52,7 @@ public class NewsDAOImpl implements NewsDAO {
     private static final String SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY = "SELECT PREVIOUS FROM " +
             "(SELECT LAG(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
             "WHERE NEWS_ID = ?";
-    private static final String SQL_GET_NEXT_NEWS_BY_ID_QUERY = "SELECT PREVIOUS FROM " +
+    private static final String SQL_GET_NEXT_NEWS_BY_ID_QUERY = "SELECT NEXT FROM " +
             "(SELECT LEAD(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
             "WHERE NEWS_ID = ?";
 
@@ -370,8 +370,12 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setLong(1, newsId);
             ResultSet resultSet = statement.executeQuery();
 
+            if (!resultSet.next()) {
+                throw new DAOException("Result set is empty");
+            }
+
             return resultSet.getLong(1);
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             throw new DAOException("Couldn't find news by id", e);
         } finally {
             DAOUtil.closeStatement(statement);
