@@ -62,7 +62,7 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      * @param newsId the news id
      * @return the previous news
      */
-    News getPreviousNews(long newsId) throws DAOException;
+    long getPreviousNews(long newsId) throws DAOException;
 
     /**
      * Gets next news.
@@ -70,5 +70,5 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      * @param newsId the news id
      * @return the next news
      */
-    News getNextNews(long newsId) throws DAOException;
+    long getNextNews(long newsId) throws DAOException;
 }

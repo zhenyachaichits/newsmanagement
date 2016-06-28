@@ -187,7 +187,7 @@ public class NewsServiceImpl implements NewsService {
      * @return the previous news
      */
     @Override
-    public News getPreviousNews(long newsId) throws ServiceException {
+    public long getPreviousNews(long newsId) throws ServiceException {
         try {
             return dao.getPreviousNews(newsId);
         } catch (DAOException e) {
@@ -203,7 +203,7 @@ public class NewsServiceImpl implements NewsService {
      * @return the next news
      */
     @Override
-    public News getNextNews(long newsId) throws ServiceException {
+    public long getNextNews(long newsId) throws ServiceException {
         try {
             return dao.getNextNews(newsId);
         } catch (DAOException e) {
