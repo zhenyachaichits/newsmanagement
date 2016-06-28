@@ -55,4 +55,20 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      * @throws DAOException the dao exception
      */
     int getNewsCount() throws DAOException;
+
+    /**
+     * Gets previous news.
+     *
+     * @param newsId the news id
+     * @return the previous news
+     */
+    News getPreviousNews(long newsId) throws DAOException;
+
+    /**
+     * Gets next news.
+     *
+     * @param newsId the news id
+     * @return the next news
+     */
+    News getNextNews(long newsId) throws DAOException;
 }

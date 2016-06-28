@@ -179,4 +179,36 @@ public class NewsServiceImpl implements NewsService {
             throw new ServiceException("Couldn't execute news counting service", e);
         }
     }
+
+    /**
+     * Gets previous news.
+     *
+     * @param newsId the news id
+     * @return the previous news
+     */
+    @Override
+    public News getPreviousNews(long newsId) throws ServiceException {
+        try {
+            return dao.getPreviousNews(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getPreviousNews(newsId)", e);
+            throw new ServiceException("Couldn't execute getting previous news  service", e);
+        }
+    }
+
+    /**
+     * Gets next news.
+     *
+     * @param newsId the news id
+     * @return the next news
+     */
+    @Override
+    public News getNextNews(long newsId) throws ServiceException {
+        try {
+            return dao.getNextNews(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getNextNews(newsId)", e);
+            throw new ServiceException("Couldn't execute getting next news service", e);
+        }
+    }
 }
