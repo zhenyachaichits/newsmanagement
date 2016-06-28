@@ -396,6 +396,7 @@ textarea.comment-text {
     width: 30px;
     height: 100%;
     position: absolute;
+    text-decoration: none;
     transition: background-color 0.2s ease;
     background-color: rgba(254, 253, 255, 0);
     padding: 5px;

@@ -4,14 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="navigate previous">
+<a href="/news/${newsData.previousNewsId}" class="navigate previous">
     <i class="material-icons">navigate_before</i>
-</div>
+</a>
 
 
-<div class="navigate next">
+<a href="/news/$${newsData.nextNewsId}" class="navigate next">
     <i class="material-icons">navigate_next</i>
-</div>
+</a>
 
 <div class="content-panel news-holder">
 
