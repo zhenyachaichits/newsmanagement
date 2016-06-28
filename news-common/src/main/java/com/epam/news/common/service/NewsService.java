@@ -36,4 +36,20 @@ public interface NewsService extends EntityService<Long, News> {
      * @throws ServiceException the service exception
      */
     int getNewsCount() throws ServiceException;
+
+    /**
+     * Gets previous news.
+     *
+     * @param newsId the news id
+     * @return the previous news
+     */
+    News getPreviousNews(long newsId) throws ServiceException;
+
+    /**
+     * Gets next news.
+     *
+     * @param newsId the news id
+     * @return the next news
+     */
+    News getNextNews(long newsId) throws ServiceException;
 }
