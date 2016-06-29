@@ -12,7 +12,7 @@
         <property name="location" value="database.config.properties"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
@@ -26,5 +26,10 @@
     </bean>
 
     <context:component-scan base-package="com.epam.news"/>
+
+    <bean id="paginationProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:pagination.config.properties"/>
+    </bean>
 
 </beans>
