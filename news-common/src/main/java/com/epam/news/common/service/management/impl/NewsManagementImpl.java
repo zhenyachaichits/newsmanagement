@@ -12,6 +12,7 @@ import com.epam.news.common.service.CommentService;
 import com.epam.news.common.service.NewsService;
 import com.epam.news.common.service.TagService;
 import com.epam.news.common.service.management.NewsManagement;
+import com.epam.news.common.service.util.pagination.NewsPaginationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class NewsManagementImpl implements NewsManagement {
     private TagService tagService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private NewsPaginationUtil paginationUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -98,6 +101,39 @@ public class NewsManagementImpl implements NewsManagement {
         }
     }
 
+    @Override
+    public List<NewsDetailsTO> getNewsForPage(int pageNumber) throws ServiceException {
+        try {
+            int newsOnPage = paginationUtil.getNewsOnPageNumber();
+
+            List<News> newsForPage = newsService.getNewsForPage(pageNumber, newsOnPage);
+            List<NewsDetailsTO> newsDetailsList = new ArrayList<>(newsForPage.size());
+
+            for (News news : newsForPage) {
+                NewsDetailsTO newsDetails = fillInNewsDetails(news);
+                newsDetailsList.add(newsDetails);
+            }
+
+            return newsDetailsList;
+        } catch (ServiceException e) {
+            LOG.error("Error in method: findAllNewsData()", e);
+            throw new ServiceException("Couldn't find all news data by one transaction", e);
+        }
+    }
+
+    @Override
+    public int getPagesCount() throws ServiceException {
+        try {
+            int allNewsCount = newsService.getNewsCount();
+            int pagesCount = paginationUtil.countPages(allNewsCount);
+
+            return pagesCount;
+        } catch (ServiceException e) {
+            LOG.error("Error in method: getPagesCount()", e);
+            throw new ServiceException("Couldn't get pages count", e);
+        }
+    }
+
     private NewsDetailsTO fillInNewsDetails(News news) throws ServiceException {
         long newsId = news.getNewsId();
         List<Author> authors = authorService.getNewsAuthors(newsId);
@@ -116,6 +152,4 @@ public class NewsManagementImpl implements NewsManagement {
 
         return newsData;
     }
-
-
 }

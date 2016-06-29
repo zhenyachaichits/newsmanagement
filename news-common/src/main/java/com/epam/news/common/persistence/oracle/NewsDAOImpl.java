@@ -53,8 +53,13 @@ public class NewsDAOImpl implements NewsDAO {
             "(SELECT LAG(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
             "WHERE NEWS_ID = ?";
     private static final String SQL_GET_NEXT_NEWS_BY_ID_QUERY = "SELECT NEXT FROM " +
-            "(SELECT LEAD(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
+            "(SELECT LEAD(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS NEXT, NEWS_ID FROM NEWS) " +
             "WHERE NEWS_ID = ?";
+    private static final String SQL_GET_NEWS_FOR_PAGE_QUERY = "SELECT NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, " +
+            "CREATION_DATE, MODIFICATION_DATE FROM (SELECT ROWNUM AS ROW_NUM, NEWS_ID, TITLE, SHORT_TEXT, " +
+            "FULL_TEXT, CREATION_DATE, MODIFICATION_DATE FROM ( SELECT NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, " +
+            "CREATION_DATE, MODIFICATION_DATE FROM NEWS ORDER BY MODIFICATION_DATE DESC)) " +
+            "WHERE ROWNUM <= ? AND ROW_NUM > (? - 1) * ?";
 
     @Autowired
     private DataSource dataSource;
@@ -308,7 +313,7 @@ public class NewsDAOImpl implements NewsDAO {
      */
     @Override
     public long getPreviousNews(long newsId) throws DAOException {
-        return getNews(newsId, SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY);
+        return getSelectedNews(newsId, SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY);
     }
 
     /**
@@ -319,7 +324,37 @@ public class NewsDAOImpl implements NewsDAO {
      */
     @Override
     public long getNextNews(long newsId) throws DAOException {
-        return getNews(newsId, SQL_GET_NEXT_NEWS_BY_ID_QUERY);
+        return getSelectedNews(newsId, SQL_GET_NEXT_NEWS_BY_ID_QUERY);
+    }
+
+    /**
+     * Gets news for page.
+     *
+     * @param pageNumber the page number
+     * @param newsOnPage the news on page
+     * @return the news for page
+     */
+    @Override
+    public List<News> getNewsForPage(int pageNumber, int newsOnPage) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_GET_NEWS_FOR_PAGE_QUERY);
+
+            statement.setInt(1, newsOnPage);
+            statement.setInt(2, pageNumber);
+            statement.setInt(3, newsOnPage);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            return entityProcessor.toEntityList(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get news list", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
     }
 
     private List<News> getByIdSet(String query, Set<Long> idSet) throws DAOException {
@@ -360,7 +395,7 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    private long getNews(long newsId, String query) throws DAOException {
+    private long getSelectedNews(long newsId, String query) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {

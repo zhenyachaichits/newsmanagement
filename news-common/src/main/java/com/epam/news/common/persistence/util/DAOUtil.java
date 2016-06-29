@@ -17,8 +17,6 @@ public final class DAOUtil {
 
     private static final Logger LOG = LogManager.getLogger(DAOUtil.class);
 
-
-
     public static void closeStatement(Statement statement) {
         if (statement != null) {
             try {
