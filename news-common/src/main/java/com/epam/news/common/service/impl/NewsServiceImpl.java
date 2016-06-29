@@ -6,6 +6,7 @@ import com.epam.news.common.exception.DAOException;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.persistence.NewsDAO;
 import com.epam.news.common.service.NewsService;
+import com.epam.news.common.util.pagination.NewsPaginationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
 
     private static final Logger LOG = LogManager.getLogger(NewsServiceImpl.class);
-
 
     @Autowired
     private NewsDAO dao;
@@ -209,6 +209,22 @@ public class NewsServiceImpl implements NewsService {
         } catch (DAOException e) {
             LOG.error("Error in method: getNextNews(newsId)", e);
             throw new ServiceException("Couldn't execute getting next news service", e);
+        }
+    }
+
+    /**
+     * Gets news for page.
+     *
+     * @param pageNumber the page number
+     * @return the news for page
+     */
+    @Override
+    public List<News> getNewsForPage(int pageNumber, int newsOnPage) throws ServiceException {
+        try {
+            return dao.getNewsForPage(pageNumber, newsOnPage);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getNewsForPage(pageNumber)", e);
+            throw new ServiceException("Couldn't execute getting news for page service", e);
         }
     }
 }
