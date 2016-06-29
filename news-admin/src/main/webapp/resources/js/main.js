@@ -3,11 +3,26 @@ $(window).scroll(function () {
     if (scroll >= 10) sticky.addClass('fixed');
     else sticky.removeClass('fixed');
 });
+//
+//$(window).on("resize", function () {
+//    var panelHeight = $(".navigate").outerHeight();
+//    $(".navigate").outerHeight(panelHeight + 15);
+//}).resize();
 
-$(window).on("resize", function () {
-    var panelHeight = $(".navigate").outerHeight();
-    $(".navigate").outerHeight(panelHeight + 15);
-}).resize();
+$(".show-comments").click(function () {
+    var commentsBtn = $(".show-comments");
+    var state = commentsBtn.html();
+
+    switch (state) {
+        case "SHOW":
+            commentsBtn.html("HIDE");
+            $(".comment-holder").show("fast");
+        case "HIDE":
+            commentsBtn.html("SHOW");
+            $(".comment-holder").hide("fast");
+    }
+});
+
 
 $(document).ready(function () {
     var path = window.location.pathname;

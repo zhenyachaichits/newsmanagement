@@ -4,14 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<a href="/news/${newsData.previousNewsId}" class="navigate previous">
-    <i class="material-icons">navigate_before</i>
-</a>
+<c:if test="${newsData.previousNewsId ne 0}">
+    <a href="/news/${newsData.previousNewsId}" class="navigate previous">
+        <i class="material-icons">navigate_before</i>
+    </a>
+</c:if>
 
-
-<a href="/news/$${newsData.nextNewsId}" class="navigate next">
-    <i class="material-icons">navigate_next</i>
-</a>
+<c:if test="${newsData.nextNewsId ne 0}">
+    <a href="/news/${newsData.nextNewsId}" class="navigate next">
+        <i class="material-icons">navigate_next</i>
+    </a>
+</c:if>
 
 <div class="content-panel news-holder">
 
@@ -43,10 +46,11 @@
 
     <div class="news-comments-title">
         Comments(${fn:length(newsData.comments)})
+        <button class="edit show-comments small">SHOW</button>
     </div>
 
     <c:forEach items="${newsData.comments}" var="comment">
-        <div class="holder">
+        <div class="holder comment-holder" hidden>
             <div class="news-comment-content">
                     ${comment.commentText}
                 <a href="/news/deleteComment" class="option delete-icon"><i class="material-icons">delete</i></a>
