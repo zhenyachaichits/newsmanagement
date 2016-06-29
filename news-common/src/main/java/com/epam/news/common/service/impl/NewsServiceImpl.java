@@ -6,7 +6,6 @@ import com.epam.news.common.exception.DAOException;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.persistence.NewsDAO;
 import com.epam.news.common.service.NewsService;
-import com.epam.news.common.util.pagination.NewsPaginationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

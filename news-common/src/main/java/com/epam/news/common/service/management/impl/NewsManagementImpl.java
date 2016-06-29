@@ -12,7 +12,7 @@ import com.epam.news.common.service.CommentService;
 import com.epam.news.common.service.NewsService;
 import com.epam.news.common.service.TagService;
 import com.epam.news.common.service.management.NewsManagement;
-import com.epam.news.common.util.pagination.NewsPaginationUtil;
+import com.epam.news.common.service.util.pagination.NewsPaginationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

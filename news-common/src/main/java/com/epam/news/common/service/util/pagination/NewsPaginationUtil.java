@@ -40,5 +40,4 @@ public class NewsPaginationUtil {
     public int countPages(int newsCount) {
         return (int) Math.ceil(newsCount / newsOnPage);
     }
-
 }
