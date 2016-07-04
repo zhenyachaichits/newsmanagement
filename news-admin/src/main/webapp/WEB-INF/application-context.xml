@@ -18,4 +18,9 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
+    <bean id="paginationProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:pagination.config.properties"/>
+    </bean>
+
 </beans>

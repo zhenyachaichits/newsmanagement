@@ -12,11 +12,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/news")
+@RequestMapping(value = {"/news", "/"})
 public class NewsController {
 
     private static final String VIEW_ALL_NEWS_PAGE_NAME = "allNewsView";
@@ -29,10 +30,14 @@ public class NewsController {
     private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String viewAllNews(ModelMap model) throws ControllerException {
+    public String viewAllNews(@RequestParam(defaultValue = "1") int pageNum, ModelMap model) throws ControllerException {
         try {
-            List<NewsDetailsTO> newsList = management.findAllNewsData();
+            List<NewsDetailsTO> newsList = management.getNewsForPage(pageNum);
+            int pagesCount = management.getPagesCount();
+
             model.addAttribute("newsData", newsList);
+            model.addAttribute("pagesCount", pagesCount);
+
         } catch (ServiceException e) {
             throw new ControllerException("Unable to load all news data", e);
         }
@@ -56,7 +61,7 @@ public class NewsController {
     }
 
 
-    @RequestMapping(value = "/addComment.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/addComment", method = RequestMethod.POST)
     public String addNewsComment(Comment commentData) throws ControllerException {
         try {
             commentService.add(commentData);
