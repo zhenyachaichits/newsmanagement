@@ -30,7 +30,8 @@ public class NewsController {
     private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String viewAllNews(@RequestParam(defaultValue = "1") int pageNum, ModelMap model) throws ControllerException {
+    public String viewAllNews(@RequestParam(defaultValue = "1") int pageNum,
+                              ModelMap model) throws ControllerException {
         try {
             List<NewsDetailsTO> newsList = management.getNewsForPage(pageNum);
             int pagesCount = management.getPagesCount();
@@ -66,7 +67,18 @@ public class NewsController {
         try {
             commentService.add(commentData);
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to add new comment data", e);
+            throw new ControllerException("Unable to add news comment data", e);
+        }
+
+        return REDIRECT_NEWS_VALUE;
+    }
+
+    @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
+    public String deleteNewsComment(@RequestParam Long id) throws ControllerException {
+        try {
+            commentService.delete(id);
+        } catch (ServiceException e) {
+            throw new ControllerException("Unable to delete news comment data", e);
         }
 
         return REDIRECT_NEWS_VALUE;

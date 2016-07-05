@@ -51,9 +51,13 @@
 
     <c:forEach items="${newsData.comments}" var="comment">
         <div class="holder comment-holder" hidden>
+
             <div class="news-comment-content">
                     ${comment.commentText}
-                <a href="/news/deleteComment" class="option delete-icon"><i class="material-icons">delete</i></a>
+                        <form class="tst" action="/deleteComment.do" method="post" hidden>
+                            <input type="hidden" name="id" value="${comment.commentId}"/>
+                        </form>
+                        <a href="" onclick="$(this).closest('.tst').submit()" class="option delete-icon"><i class="material-icons">delete</i></a>
             </div>
 
             <fmt:formatDate pattern="yyyy-MM-dd 'at' hh:mm a" value="${comment.creationDate}"
