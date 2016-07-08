@@ -41,7 +41,7 @@ public class CommentDAOImpl implements CommentDAO {
     /**
      * Add single comment record to database
      *
-     * @param comment to add
+     * @param comment to save
      * @return added author with generated id
      * @throws DAOException if SQLException thrown
      */
@@ -66,7 +66,7 @@ public class CommentDAOImpl implements CommentDAO {
 
             return comment;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new comment", e);
+            throw new DAOException("Couldn't save new comment", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -97,7 +97,7 @@ public class CommentDAOImpl implements CommentDAO {
 
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new comment", e);
+            throw new DAOException("Couldn't save new comment", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * The type News.
  */
 public class News {
-    private long newsId;
+    private Long newsId;
     private String title;
     private String shortText;
     private String fullText;
@@ -19,7 +19,7 @@ public class News {
      *
      * @return the news id
      */
-    public long getNewsId() {
+    public Long getNewsId() {
         return newsId;
     }
 
@@ -28,7 +28,7 @@ public class News {
      *
      * @param newsId the news id
      */
-    public void setNewsId(long newsId) {
+    public void setNewsId(Long newsId) {
         this.newsId = newsId;
     }
 

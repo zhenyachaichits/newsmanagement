@@ -5,7 +5,7 @@ package com.epam.news.common.domain;
  * The type Role. Contains information about user access level
  */
 public class Role {
-    private long userId;
+    private Long userId;
     private String roleName;
 
     /**
@@ -13,7 +13,7 @@ public class Role {
      *
      * @return the user id
      */
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -22,7 +22,7 @@ public class Role {
      *
      * @param userId the user id
      */
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

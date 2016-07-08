@@ -3,7 +3,6 @@ package com.epam.news.common.test.mockito;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.News;
 import com.epam.news.common.domain.Tag;
-import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.persistence.AuthorDAO;
 import com.epam.news.common.persistence.NewsDAO;
@@ -72,9 +71,9 @@ public class NewsManagementTest {
         when(authorDAO.add(author)).thenReturn(author);
         when(tagDAO.add(tag)).thenReturn(tag);
 
-        doReturn(news).when(newsService).add(news);
-        doReturn(author).when(authorService).add(author);
-        doReturn(tag).when(tagService).add(tag);
+        doReturn(news).when(newsService).save(news);
+        doReturn(author).when(authorService).save(author);
+        doReturn(tag).when(tagService).save(tag);
 
         newsManagementService.addNewsData(newsTO);
     }

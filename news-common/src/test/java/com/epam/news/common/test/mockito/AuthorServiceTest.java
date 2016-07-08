@@ -2,8 +2,6 @@ package com.epam.news.common.test.mockito;
 
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.persistence.AuthorDAO;
-import com.epam.news.common.exception.DAOException;
-import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.impl.AuthorServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +54,7 @@ public class AuthorServiceTest {
     public void testAdd() throws Exception {
         Author author = new Author();
         when(dao.add(any())).thenReturn(author);
-        Author result = service.add(any());
+        Author result = service.save(any());
 
         assertEquals(author, result);
     }
@@ -66,7 +64,7 @@ public class AuthorServiceTest {
         Author author = new Author();
         when(dao.update(author)).thenReturn(Boolean.TRUE);
 
-        assertTrue(service.update(author));
+        assertEquals(service.save(author), author);
     }
 
     @Test

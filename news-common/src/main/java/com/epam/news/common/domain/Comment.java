@@ -7,8 +7,8 @@ import java.sql.Timestamp;
  * The type Comment.
  */
 public class Comment {
-    private long commentId;
-    private long newsId;
+    private Long commentId;
+    private Long newsId;
     private String commentText;
     private Timestamp creationDate;
 
@@ -17,7 +17,7 @@ public class Comment {
      *
      * @return the comment id
      */
-    public long getCommentId() {
+    public Long getCommentId() {
         return commentId;
     }
 
@@ -26,7 +26,7 @@ public class Comment {
      *
      * @param commentId the comment id
      */
-    public void setCommentId(long commentId) {
+    public void setCommentId(Long commentId) {
         this.commentId = commentId;
     }
 
@@ -35,7 +35,7 @@ public class Comment {
      *
      * @return the news id
      */
-    public long getNewsId() {
+    public Long getNewsId() {
         return newsId;
     }
 
@@ -44,7 +44,7 @@ public class Comment {
      *
      * @param newsId the news id
      */
-    public void setNewsId(long newsId) {
+    public void setNewsId(Long newsId) {
         this.newsId = newsId;
     }
 

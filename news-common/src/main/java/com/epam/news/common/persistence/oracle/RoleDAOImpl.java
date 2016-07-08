@@ -34,7 +34,7 @@ public class RoleDAOImpl implements RoleDAO {
     /**
      * Add new user role record to database
      *
-     * @param role to add
+     * @param role to save
      * @return added role
      * @throws DAOException if SQLException thrown
      */
@@ -52,7 +52,7 @@ public class RoleDAOImpl implements RoleDAO {
 
             return role;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new role", e);
+            throw new DAOException("Couldn't save new role", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

@@ -53,7 +53,7 @@ public class RoleServiceTest {
     public void testAdd() throws Exception {
         Role role = new Role();
         when(dao.add(any())).thenReturn(role);
-        Role result = service.add(any());
+        Role result = service.save(any());
 
         assertEquals(role, result);
     }

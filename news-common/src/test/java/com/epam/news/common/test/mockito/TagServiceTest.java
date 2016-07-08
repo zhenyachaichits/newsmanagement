@@ -2,8 +2,6 @@ package com.epam.news.common.test.mockito;
 
 import com.epam.news.common.domain.Tag;
 import com.epam.news.common.persistence.TagDAO;
-import com.epam.news.common.exception.DAOException;
-import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.impl.TagServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +54,7 @@ public class TagServiceTest {
     public void testAdd() throws Exception {
         Tag tag = new Tag();
         when(dao.add(any())).thenReturn(tag);
-        Tag result = service.add(any());
+        Tag result = service.save(any());
 
         assertEquals(tag, result);
     }
@@ -66,7 +64,7 @@ public class TagServiceTest {
         Tag tag = new Tag();
         when(dao.update(tag)).thenReturn(Boolean.TRUE);
 
-        assertTrue(service.update(tag));
+        assertEquals(service.save(tag), tag);
     }
 
     @Test

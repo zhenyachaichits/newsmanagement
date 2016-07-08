@@ -34,11 +34,17 @@ public class TagServiceImpl implements TagService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Tag add(Tag tag) throws ServiceException {
+    public Tag save(Tag tag) throws ServiceException {
         try {
-            return dao.add(tag);
+            if(tag.getTagId() == null) {
+                return dao.add(tag);
+            } else if (!dao.update(tag)){
+                throw new ServiceException("Couldn't update data");
+            }
+
+            return tag;
         } catch (DAOException e) {
-            LOG.error("Error in method: add(Tag tag)", e);
+            LOG.error("Error in method: save(Tag tag)", e);
             throw new ServiceException("Couldn't execute tag adding service", e);
         }
     }
@@ -57,24 +63,6 @@ public class TagServiceImpl implements TagService {
         } catch (DAOException e) {
             LOG.error("Error in method: find(Long id)", e);
             throw new ServiceException("Couldn't execute tag finding service", e);
-        }
-    }
-
-    /**
-     * Update tag data
-     *
-     * @param tag tag data
-     * @return true in case of success
-     * @throws ServiceException if DAOException was thrown
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean update(Tag tag) throws ServiceException {
-        try {
-            return dao.update(tag);
-        } catch (DAOException e) {
-            LOG.error("Error in method: update(Tag tag)", e);
-            throw new ServiceException("Couldn't execute tag updating service", e);
         }
     }
 
@@ -125,7 +113,7 @@ public class TagServiceImpl implements TagService {
             return dao.addTags(tags);
         } catch (DAOException e) {
             LOG.error("Error in method: addTags(List<Tag> tags)", e);
-            throw new ServiceException("Couldn't add multiple tags", e);
+            throw new ServiceException("Couldn't save multiple tags", e);
         }
     }
 

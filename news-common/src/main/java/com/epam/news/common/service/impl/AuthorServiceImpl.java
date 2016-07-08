@@ -34,12 +34,18 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Author add(Author author) throws ServiceException {
+    public Author save(Author author) throws ServiceException {
         try {
-            return dao.add(author);
+            if (author.getAuthorId() == null) {
+                return dao.add(author);
+            } else if (!dao.update(author)){
+                throw new ServiceException("Couldn't update data");
+            }
+
+            return author;
         } catch (DAOException e) {
-            LOG.error("Error in method: add(Author author)", e);
-            throw new ServiceException("Couldn't execute adding author service", e);
+            LOG.error("Error in method: save(Author author)", e);
+            throw new ServiceException("Couldn't execute saving author service", e);
         }
     }
 
@@ -57,24 +63,6 @@ public class AuthorServiceImpl implements AuthorService {
         } catch (DAOException e) {
             LOG.error("Error in method: find(Long id)", e);
             throw new ServiceException("Couldn't execute author finding service", e);
-        }
-    }
-
-    /**
-     * Update author data
-     *
-     * @param author author to be updated
-     * @return true in case of success, else false
-     * @throws ServiceException if DAOException was thrown
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean update(Author author) throws ServiceException {
-        try {
-            return dao.update(author);
-        } catch (DAOException e) {
-            LOG.error("Error in method: update(Author author)", e);
-            throw new ServiceException("Couldn't execute author updating service", e);
         }
     }
 

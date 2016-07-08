@@ -5,7 +5,7 @@ package com.epam.news.common.domain;
  * The type User.
  */
 public class User {
-    private long userId;
+    private Long userId;
     private String userName;
     private String login;
     private String password;
@@ -15,7 +15,7 @@ public class User {
      *
      * @return the user id
      */
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
