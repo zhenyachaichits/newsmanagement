@@ -12,6 +12,7 @@
     <link href='https://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="${mainCSS}" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -32,7 +33,6 @@
     <tiles:insertAttribute name="footer"/>
 </footer>
 
-<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 <spring:url value="/resources/js/main.js" var="mainJS"/>
 <script src="${mainJS}" type="text/javascript"></script>
 

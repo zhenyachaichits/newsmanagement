@@ -51,7 +51,7 @@ public class NewsManagementController {
         return NEWS_MANAGEMENT_PAGE_NAME;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String addNews(NewsTO newsData) throws ControllerException {
         try {
             manager.addNewsData(newsData);

@@ -46,11 +46,13 @@
 
     <div class="news-comments-title">
         Comments(${fn:length(newsData.comments)})
-        <button class="edit show-comments small">SHOW</button>
+        <c:if test="${fn:length(newsData.comments) > 0}">
+            <button class="edit show-comments small"><i class="material-icons">expand_more</i></button>
+        </c:if>
     </div>
 
     <c:forEach items="${newsData.comments}" var="comment">
-        <div class="holder comment-holder" hidden>
+        <div class="holder comment-holder">
 
             <div class="news-comment-content">
                     ${comment.commentText}
@@ -66,7 +68,7 @@
         </div>
     </c:forEach>
 
-    <form:form modelAttribute="commentData" action="addComment.do" method="post" enctype="utf8">
+    <form:form cssClass="holder comment-holder" modelAttribute="commentData" action="addComment.do" method="post" enctype="utf8">
         <form:textarea path="commentText" cssClass="comment-text"/>
         <form:hidden path="newsId" value="${newsData.news.newsId}"/>
         <form:button class="medium add-comment"> POST </form:button>

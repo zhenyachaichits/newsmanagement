@@ -33,7 +33,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(@ModelAttribute("user") User user) {
         try {
-            service.add(user);
+            service.save(user);
         } catch (ServiceException e) {
             LOG.error("Error in register operation", e);
         }

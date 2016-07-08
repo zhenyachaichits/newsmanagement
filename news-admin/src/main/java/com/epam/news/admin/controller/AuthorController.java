@@ -48,23 +48,12 @@ public class AuthorController {
         return PAGE_NAME;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String addAuthor(Author authorData) throws ControllerException {
         try {
-            service.add(authorData);
+            service.save(authorData);
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to add author", e);
-        }
-
-        return REDIRECT_AUTHORS_VALUE;
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateAuthor(Author authorData) throws ControllerException {
-        try {
-            service.update(authorData);
-        } catch (ServiceException e) {
-            throw new ControllerException("Unable to update author", e);
+            throw new ControllerException("Unable to save author", e);
         }
 
         return REDIRECT_AUTHORS_VALUE;

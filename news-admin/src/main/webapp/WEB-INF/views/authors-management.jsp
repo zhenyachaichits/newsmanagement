@@ -2,11 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div align="center">
 
     <div class="add-panel" align="center">
-        <form:form modelAttribute="authorData" action="/authors/add" method="post" enctype="utf8">
+        <form:form modelAttribute="authorData" action="/authors/save" method="post" enctype="utf8">
             <form:input path="authorName" placeholder="Author name"/>
             <form:input path="expiredDate" type="date" placeholder="Expiration date"/>
             <form:button> ADD </form:button>
@@ -18,7 +19,7 @@
         <c:forEach items="${authors}" var="author" varStatus="loop">
             <fmt:formatDate pattern="yyyy-MM-dd" value="${author.expiredDate}" var="date"/>
 
-            <form:form modelAttribute="authorData" action="authors/update" method="post" enctype="utf8" name="${loop.index}">
+            <form:form modelAttribute="authorData" action="authors/save" method="post" enctype="utf8" name="${loop.index}">
                 <form:input path="authorName" value="${author.authorName}" cssClass="medium"
                             placeholder="Author name" readonly="true"/>
                 <form:input path="expiredDate" type="date" value="${date}" cssClass="medium"
@@ -34,4 +35,7 @@
             </form:form>
         </c:forEach>
     </div>
+
+    <spring:url value="/resources/js/management-tools.js" var="managementJS"/>
+    <script src="${managementJS}" type="text/javascript"></script>
 </div>

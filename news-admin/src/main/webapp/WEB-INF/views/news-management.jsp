@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div align="center">
     <div class="content-panel">
@@ -18,13 +19,9 @@
                     <form:option value="-" label="Please Select" disabled="true"/>
                     <form:options items="${authors}" itemValue="authorId" itemLabel="authorName"/>
                 </form:select>
-
-                <form:button formaction="/newsManagement/add"> SAVE </form:button>
             </c:if>
 
-            <c:if test="${newsData.news.title ne null}">
-                <form:button formaction="/newsManagement/update"> UPDATE </form:button>
-            </c:if>
+            <form:button formaction="/newsManagement/save"> SAVE </form:button>
         </form:form>
     </div>
 </div>

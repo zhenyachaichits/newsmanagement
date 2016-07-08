@@ -41,23 +41,12 @@ public class TagController {
         return TAGS_MANAGEMENT_PAGE_NAME;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addTag(Tag tagData, BindingResult result, ModelMap mode) throws ControllerException {
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String addTag(Tag tagData) throws ControllerException {
         try {
-            service.add(tagData);
+            service.save(tagData);
         } catch (ServiceException e) {
             throw new ControllerException();
-        }
-
-        return REDIRECT_TAGS_VALUE;
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateTag(Tag tagData) throws ControllerException {
-        try {
-            service.update(tagData);
-        } catch (ServiceException e) {
-            throw new ControllerException("Unable to update tag data", e);
         }
 
         return REDIRECT_TAGS_VALUE;

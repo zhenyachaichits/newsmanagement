@@ -3,23 +3,24 @@ $(window).scroll(function () {
     if (scroll >= 10) sticky.addClass('fixed');
     else sticky.removeClass('fixed');
 });
-//
-//$(window).on("resize", function () {
-//    var panelHeight = $(".navigate").outerHeight();
-//    $(".navigate").outerHeight(panelHeight + 15);
-//}).resize();
+
 
 $(".show-comments").click(function () {
-    var commentsBtn = $(".show-comments");
+    var showTag = '<i class="material-icons">expand_more</i>';
+    var hideTag = '<i class="material-icons">expand_less</i>';
+
+    var commentsBtn = $(this);
     var state = commentsBtn.html();
 
     switch (state) {
-        case "SHOW":
-            commentsBtn.html("HIDE");
+        case showTag:
+            commentsBtn.html(hideTag);
             $(".comment-holder").show("fast");
-        case "HIDE":
-            commentsBtn.html("SHOW");
+            break;
+        case hideTag:
+            commentsBtn.html(showTag);
             $(".comment-holder").hide("fast");
+            break;
     }
 });
 
@@ -31,29 +32,3 @@ $(document).ready(function () {
     $('.news-author').html(newText);
 });
 
-
-$(document).click(function () {
-    $(".edit").show("fast");
-    $(".update").hide("fast");
-    $(".delete").hide("fast");
-    $("form[action='tags/update']").children("input").prop('readonly', true);
-    $("form[action='authors/update']").children("input").prop('readonly', true);
-});
-
-$(".edit").click(function (e) {
-    e.stopPropagation();
-    return false;
-});
-
-$("input").click(function (e) {
-    e.stopPropagation();
-    return false;
-});
-
-$(".edit").click(function () {
-    $(this).hide("fast");
-    var nameValue = $(this).attr("name");
-    $(".update[name=" + nameValue + "]").show("fast");
-    $(".delete[name=" + nameValue + "]").show("fast");
-    $("form[name=" + nameValue + "]").children().prop('readonly', false);
-});

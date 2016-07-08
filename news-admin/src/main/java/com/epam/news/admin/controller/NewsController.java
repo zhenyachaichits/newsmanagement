@@ -65,7 +65,7 @@ public class NewsController {
     @RequestMapping(value = "/addComment", method = RequestMethod.POST)
     public String addNewsComment(Comment commentData) throws ControllerException {
         try {
-            commentService.add(commentData);
+            commentService.save(commentData);
         } catch (ServiceException e) {
             throw new ControllerException("Unable to add news comment data", e);
         }
