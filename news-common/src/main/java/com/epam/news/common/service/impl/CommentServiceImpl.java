@@ -35,14 +35,19 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Comment add(Comment comment) throws ServiceException {
+    public Comment save(Comment comment) throws ServiceException {
         try {
-            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            comment.setCreationDate(currentTime);
+            if (comment.getCommentId() == null) {
+                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+                comment.setCreationDate(currentTime);
+                return dao.add(comment);
+            } else if (!dao.update(comment)){
+                throw new ServiceException("Couldn't update data");
+            }
 
-            return dao.add(comment);
+            return comment;
         } catch (DAOException e) {
-            LOG.error("Error in method: add(Comment comment)", e);
+            LOG.error("Error in method: save(Comment comment)", e);
             throw new ServiceException("Couldn't execute comment adding service", e);
         }
     }
@@ -61,24 +66,6 @@ public class CommentServiceImpl implements CommentService {
         } catch (DAOException e) {
             LOG.error("Error in method: find(Long commentId)", e);
             throw new ServiceException("Couldn't execute comment finding by id service", e);
-        }
-    }
-
-    /**
-     * Update comment data
-     *
-     * @param comment comment data
-     * @return true in case of success
-     * @throws ServiceException if DAOException was thrown
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean update(Comment comment) throws ServiceException {
-        try {
-            return dao.update(comment);
-        } catch (DAOException e) {
-            LOG.error("Error in method: update(Comment comment)", e);
-            throw new ServiceException("Couldn't execute comment updating service", e);
         }
     }
 

@@ -69,7 +69,7 @@ public class NewsDAOImpl implements NewsDAO {
     /**
      * Add new news record to database
      *
-     * @param news to add
+     * @param news to save
      * @return added news with generated id
      * @throws DAOException if SQLException thrown
      */
@@ -96,7 +96,7 @@ public class NewsDAOImpl implements NewsDAO {
 
             return news;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new news", e);
+            throw new DAOException("Couldn't save new news", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

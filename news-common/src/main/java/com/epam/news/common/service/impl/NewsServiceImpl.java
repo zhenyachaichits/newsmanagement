@@ -35,15 +35,20 @@ public class NewsServiceImpl implements NewsService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public News add(News news) throws ServiceException {
+    public News save(News news) throws ServiceException {
         try {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            news.setCreationDate(currentTime);
-            news.setModificationDate(currentTime);
+            if (news.getNewsId() == null) {
+                news.setCreationDate(currentTime);
+                news.setModificationDate(currentTime);
+                return dao.add(news);
+            } else if (!dao.update(news)){
+                throw new ServiceException("Couldn't update data");
+            }
 
-            return dao.add(news);
+            return news;
         } catch (DAOException e) {
-            LOG.error("Error in method: add(News news)", e);
+            LOG.error("Error in method: save(News news)", e);
             throw new ServiceException("Couldn't execute news adding service", e);
         }
     }
@@ -62,27 +67,6 @@ public class NewsServiceImpl implements NewsService {
         } catch (DAOException e) {
             LOG.error("Error in method: find(Long id)", e);
             throw new ServiceException("Couldn't execute news finding service", e);
-        }
-    }
-
-    /**
-     * Update news data
-     *
-     * @param news news data to be updated
-     * @return true in case of success
-     * @throws ServiceException if DAOException was thrown
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean update(News news) throws ServiceException {
-        try {
-            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            news.setModificationDate(currentTime);
-
-            return dao.update(news);
-        } catch (DAOException e) {
-            LOG.error("Error in method: update(News news)", e);
-            throw new ServiceException("Couldn't execute news updating service", e);
         }
     }
 

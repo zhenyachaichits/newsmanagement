@@ -34,11 +34,11 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Role add(Role role) throws ServiceException {
+    public Role save(Role role) throws ServiceException {
         try {
             return dao.add(role);
         } catch (DAOException e) {
-            LOG.error("Error in method: add(Role role)", e);
+            LOG.error("Error in method: save(Role role)", e);
             throw new ServiceException("Couldn't execute role adding service", e);
         }
     }

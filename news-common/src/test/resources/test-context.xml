@@ -44,5 +44,10 @@
             <property name="schema" value="${jdbc.schema}"/>
         </bean>
 
+        <bean id="paginationProperties"
+              class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+            <property name="location" value="classpath:pagination.config.properties"/>
+        </bean>
+
     </beans>
 </beans>

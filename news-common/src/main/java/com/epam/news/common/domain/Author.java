@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * The type Author.
  */
 public class Author {
-    private long authorId;
+    private Long authorId;
     private String authorName;
     private Timestamp expiredDate;
 
@@ -16,7 +16,7 @@ public class Author {
      *
      * @return the author id
      */
-    public long getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
@@ -25,7 +25,7 @@ public class Author {
      *
      * @param authorId the author id
      */
-    public void setAuthorId(long authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
 

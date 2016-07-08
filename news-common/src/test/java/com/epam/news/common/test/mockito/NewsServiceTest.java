@@ -56,7 +56,7 @@ public class NewsServiceTest {
     public void testAdd() throws Exception {
         News news = new News();
         when(dao.add(news)).thenReturn(news);
-        News result = service.add(news);
+        News result = service.save(news);
 
         assertEquals(news, result);
     }
@@ -66,7 +66,7 @@ public class NewsServiceTest {
         News news = new News();
         when(dao.update(news)).thenReturn(Boolean.TRUE);
 
-        assertTrue(service.update(news));
+        assertEquals(service.save(news), news);
     }
 
     @Test
