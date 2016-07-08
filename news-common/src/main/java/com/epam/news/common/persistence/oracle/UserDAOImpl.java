@@ -38,11 +38,11 @@ public class UserDAOImpl implements UserDAO {
     /**
      * Add new user record to database
      *
-     * @param user to add
+     * @param user to save
      * @return added user
      * @throws DAOException if SQLException thrown
      */
-    // TODO: 5/30/2016 add password encryption
+    // TODO: 5/30/2016 save password encryption
     @Override
     public User add(User user) throws DAOException {
         Connection connection = null;
@@ -64,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
 
             return user;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new user", e);
+            throw new DAOException("Couldn't save new user", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

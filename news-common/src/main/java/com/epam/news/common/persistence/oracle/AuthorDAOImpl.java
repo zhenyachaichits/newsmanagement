@@ -45,7 +45,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     /**
      * Add new author to database
      *
-     * @param author to add
+     * @param author to save
      * @return added author with generated id
      * @throws DAOException if SQLException thrown
      */
@@ -69,7 +69,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
             return author;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new author", e);
+            throw new DAOException("Couldn't save new author", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -213,7 +213,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
             return idArray;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new author", e);
+            throw new DAOException("Couldn't save new author", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -243,7 +243,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add news author", e);
+            throw new DAOException("Couldn't save news author", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

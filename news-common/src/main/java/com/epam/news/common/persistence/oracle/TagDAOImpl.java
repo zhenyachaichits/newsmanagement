@@ -39,7 +39,7 @@ public class TagDAOImpl implements TagDAO {
     /**
      * Add new tag to database
      *
-     * @param tag to add
+     * @param tag to save
      * @return added tag with generated id
      * @throws DAOException if SQLException thrown
      */
@@ -62,7 +62,7 @@ public class TagDAOImpl implements TagDAO {
 
             return tag;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new tag", e);
+            throw new DAOException("Couldn't save new tag", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -204,7 +204,7 @@ public class TagDAOImpl implements TagDAO {
 
             return idArray;
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add new tags", e);
+            throw new DAOException("Couldn't save new tags", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
@@ -234,7 +234,7 @@ public class TagDAOImpl implements TagDAO {
 
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException("Couldn't add news author", e);
+            throw new DAOException("Couldn't save news author", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

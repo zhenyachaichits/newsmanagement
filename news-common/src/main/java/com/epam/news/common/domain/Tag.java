@@ -5,7 +5,7 @@ package com.epam.news.common.domain;
  * The type Tag.
  */
 public class Tag {
-    private long tagId;
+    private Long tagId;
     private String tagName;
 
     /**
@@ -13,7 +13,7 @@ public class Tag {
      *
      * @return the tag id
      */
-    public long getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
@@ -22,7 +22,7 @@ public class Tag {
      *
      * @param tagId the tag id
      */
-    public void setTagId(long tagId) {
+    public void setTagId(Long tagId) {
         this.tagId = tagId;
     }
 

@@ -101,7 +101,7 @@ public class CommentDAOTest {
         Comment[] comments = new Comment[3];
         for (int i = 0; i < 3; i++) {
             Comment comment = new Comment();
-            comment.setCommentId(i + 1);
+            comment.setCommentId((long) (i + 1));
             comment.setNewsId(TEST_ID);
             comment.setCommentText(TEST_COMMENT_TEXT);
             comment.setCreationDate(testDate);

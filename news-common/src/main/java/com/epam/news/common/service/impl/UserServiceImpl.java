@@ -34,11 +34,17 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public User add(User user) throws ServiceException {
+    public User save(User user) throws ServiceException {
         try {
-            return dao.add(user);
+            if (user.getUserId() == null) {
+                return dao.add(user);
+            } else if (!dao.update(user)){
+                throw new ServiceException("Couldn't update data");
+            }
+
+            return user;
         } catch (DAOException e) {
-            LOG.error("Error in method: add(User user)", e);
+            LOG.error("Error in method: save(User user)", e);
             throw new ServiceException("Couldn't execute adding new user service", e);
         }
     }
@@ -57,24 +63,6 @@ public class UserServiceImpl implements UserService {
         } catch (DAOException e) {
             LOG.error("Error in method: find(Long id)", e);
             throw new ServiceException("Couldn't execute user finding service", e);
-        }
-    }
-
-    /**
-     * Update user data
-     *
-     * @param user user data
-     * @return true in case of success
-     * @throws ServiceException if DAOException was thrown
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean update(User user) throws ServiceException {
-        try {
-            return dao.update(user);
-        } catch (DAOException e) {
-            LOG.error("Error in method: update(User user)", e);
-            throw new ServiceException("Couldn't execute user updating service", e);
         }
     }
 

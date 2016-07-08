@@ -19,7 +19,7 @@ public interface EntityService<K, T> {
      * @return added entity
      * @throws ServiceException the dao exception
      */
-    T add(T entity) throws ServiceException;
+    T save(T entity) throws ServiceException;
 
     /**
      * Find entity by domain.
@@ -30,22 +30,6 @@ public interface EntityService<K, T> {
      */
     T find(K domain) throws ServiceException;
 
-    /**
-     * Update entity.
-     *
-     * @param entity the entity
-     * @return true if operation successfully completed
-     * @throws ServiceException the dao exception
-     */
-    boolean update(T entity) throws ServiceException;
-
-    /**
-     * Delete entity from data source by domain.
-     *
-     * @param domain the domain
-     * @return true if operation successfully completed
-     * @throws ServiceException the dao exception
-     */
     boolean delete(K domain) throws ServiceException;
 
     /**
