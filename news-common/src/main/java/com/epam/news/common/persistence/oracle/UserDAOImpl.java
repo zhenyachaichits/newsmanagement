@@ -26,6 +26,8 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_GET_ALL_USERS_QUERY = "SELECT USER_ID, USER_NAME, LOGIN, PASSWORD FROM USERS";
     private static final String SQL_FIND_USER_BY_ID_QUERY = "SELECT USER_ID, USER_NAME, LOGIN, PASSWORD FROM USERS " +
             "WHERE USER_ID = ?";
+    private static final String SQL_FIND_USER_BY_LOGIN_QUERY = "SELECT USER_ID, USER_NAME, LOGIN, PASSWORD FROM USERS " +
+            "WHERE LOGIN = ?";
     private static final String SQL_UPDATE_USER_QUERY = "UPDATE USERS SET USER_NAME = ?, LOGIN = ?, PASSWORD = ? " +
             "WHERE USER_ID = ?";
     private static final String SQL_DELETE_USER_QUERY = "DELETE FROM USERS WHERE USER_ID = ?";
@@ -171,6 +173,27 @@ public class UserDAOImpl implements UserDAO {
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
             throw new DAOException("Couldn't get findAllNewsData users", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public User getUserByLogin(String login) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN_QUERY);
+
+            statement.setString(1, login);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            return entityProcessor.toEntity(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't delete user with id", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
