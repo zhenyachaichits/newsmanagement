@@ -99,4 +99,14 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Couldn't execute getting findAllNewsData users service", e);
         }
     }
+
+    @Override
+    public User getUserByLogin(String login) throws ServiceException {
+        try {
+            return dao.getUserByLogin(login);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getUserByLogin(login)", e);
+            throw new ServiceException("Couldn't execute getting user by login service", e);
+        }
+    }
 }
