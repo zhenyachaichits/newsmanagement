@@ -33,8 +33,9 @@ import static org.junit.Assert.*;
 public class UserDAOTest {
     private static final String TEST_USER_NAME = "Test";
     private static final String TEST_LOGIN = "test_user";
+    private static final String TEST_FOUND_LOGIN = "test1";
     private static final String TEST_PASSWORD = "test";
-    private static final long TEST_ID = 2L;
+    private static final Long TEST_ID = 2L;
     private static final int TEST_LIST_SIZE = 2;
 
     @Autowired
@@ -83,5 +84,12 @@ public class UserDAOTest {
         List<User> userList = dao.findAll();
 
         assertEquals(TEST_LIST_SIZE, userList.size());
+    }
+
+    @Test
+    public void testFindByLogin() throws Exception {
+        User user = dao.getUserByLogin(TEST_FOUND_LOGIN);
+
+        assertEquals(TEST_ID, user.getUserId());
     }
 }
