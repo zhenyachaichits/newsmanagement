@@ -47,7 +47,7 @@
     <div class="news-comments-title">
         Comments(${fn:length(newsData.comments)})
         <c:if test="${fn:length(newsData.comments) > 0}">
-            <button class="edit show-comments small"><i class="material-icons">expand_more</i></button>
+            <button class="edit show-comments small"><i class="material-icons">expand_less</i></button>
         </c:if>
     </div>
 

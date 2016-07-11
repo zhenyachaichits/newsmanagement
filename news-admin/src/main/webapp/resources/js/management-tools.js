@@ -17,7 +17,7 @@ $("input").click(function (e) {
     return false;
 });
 
-$(".edit").click(function () {
+$(".editor").click(function () {
     $(this).hide("fast");
     var nameValue = $(this).attr("name");
     $(".update[name=" + nameValue + "]").show("fast");

@@ -232,6 +232,10 @@ textarea {
     font-weight: 300;
 }
 
+textarea:focus {
+    background-color: #f0eff1;
+}
+
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -423,9 +427,7 @@ textarea.comment-text {
 .navigate:hover {
     background-color: rgba(228, 227, 229, 0.31);
 }
-.holder.comment-holder {
-    display: none;
-}
+
 
 button.show-comments {
     width: 20px;
@@ -435,4 +437,27 @@ button.show-comments {
 
 button.show-comments:hover {
     background: transparent;
+}
+
+.logout-holder {
+    display: inline-block;
+    float: right;
+}
+
+.username-holder {
+    margin: 12px;
+    display: inline-block;
+    float: right;
+    font-weight: 300;
+    color: rgb(255, 255, 255);
+}
+
+.small.logout {
+    margin-top: 12px;
+    background-color: #548198;
+    border-radius: 15px;
+}
+
+.logout:hover {
+    background-color: #345669;
 }

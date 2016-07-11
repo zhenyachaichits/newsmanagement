@@ -25,7 +25,7 @@
                 <form:input path="expiredDate" type="date" value="${date}" cssClass="medium"
                             placeholder="Expiration date" readonly="true"/>
                 <form:hidden path="authorId" value="${author.authorId}" />
-                <form:button type="button" class="medium edit" name="${loop.index}"> EDIT </form:button>
+                <form:button type="button" class="medium edit editor" name="${loop.index}"> EDIT </form:button>
                 <form:button class="medium update" name="${loop.index}" hidden="true">
                     UPDATE
                 </form:button>

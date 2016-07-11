@@ -17,7 +17,7 @@
             <form:form modelAttribute="tagData" action="tags/save" method="post" enctype="utf8" name="${loop.index}">
                 <form:input path="tagName" value="${author.tagName}" cssClass="medium" readonly="true"/>
                 <form:hidden path="tagId" value="${author.tagId}" cssClass="medium"/>
-                <form:button type="button" class="medium edit" name="${loop.index}"> EDIT </form:button>
+                <form:button type="button" class="medium edit editor" name="${loop.index}"> EDIT </form:button>
                 <form:button class="medium update" name="${loop.index}" hidden="true">
                     UPDATE
                 </form:button>

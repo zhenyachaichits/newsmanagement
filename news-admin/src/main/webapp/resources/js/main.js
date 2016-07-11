@@ -27,6 +27,9 @@ $(".show-comments").click(function () {
 
 $(document).ready(function () {
     var path = window.location.pathname;
+    if (path === "/") {
+        path= "/news";
+    }
     $(".page-link[href='" + path + "']").addClass("active");
     var newText = $('.news-author').html().replace(/\s+/g, " ").replace(", )", ")");
     $('.news-author').html(newText);

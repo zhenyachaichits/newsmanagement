@@ -17,13 +17,7 @@
     <tiles:insertAttribute name="header"/>
 </header>
 
-<menu>
-    <tiles:insertAttribute name="menu"/>
-</menu>
-
-<main>
-    <tiles:insertAttribute name="body"/>
-</main>
+<tiles:insertAttribute name="body"/>
 
 <footer>
     <tiles:insertAttribute name="footer"/>

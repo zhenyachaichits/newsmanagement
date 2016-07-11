@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = {"/news", "/"})
+@RequestMapping(value = {"/", "/news"})
 public class NewsController {
 
     private static final String VIEW_ALL_NEWS_PAGE_NAME = "allNewsView";
@@ -63,14 +64,17 @@ public class NewsController {
 
 
     @RequestMapping(value = "/addComment", method = RequestMethod.POST)
-    public String addNewsComment(Comment commentData) throws ControllerException {
+    public String addNewsComment(Comment commentData, HttpServletRequest request) throws ControllerException {
         try {
             commentService.save(commentData);
         } catch (ServiceException e) {
             throw new ControllerException("Unable to add news comment data", e);
         }
 
-        return REDIRECT_NEWS_VALUE;
+        // TODO: 7/11/2016 REFACTOR
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
+        //return REDIRECT_NEWS_VALUE;
     }
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)

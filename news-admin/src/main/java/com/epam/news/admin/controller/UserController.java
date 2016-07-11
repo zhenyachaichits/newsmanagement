@@ -14,31 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
-    private static final Logger LOG = LogManager.getLogger(UserController.class);
+    private static final String LOGIN_PAGE_NAME = "login";
+    private static final String REDIRECT_LOGIN_VALUE = "redirect:/login";
 
-    @Autowired
-    private UserService service;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String viewRegistration(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-
-        return "create-user";
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String viewLoginPage(ModelMap model) {
+        return LOGIN_PAGE_NAME;
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String createUser(@ModelAttribute("user") User user) {
-        try {
-            service.save(user);
-        } catch (ServiceException e) {
-            LOG.error("Error in register operation", e);
-        }
-        return "hello";
-    }
-
 
 }
