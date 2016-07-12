@@ -51,14 +51,14 @@ public class Tag {
 
         Tag tag = (Tag) o;
 
-        if (tagId != tag.tagId) return false;
+        if (tagId != null ? !tagId.equals(tag.tagId) : tag.tagId != null) return false;
         return tagName != null ? tagName.equals(tag.tagName) : tag.tagName == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (tagId ^ (tagId >>> 32));
+        int result = tagId != null ? tagId.hashCode() : 0;
         result = 31 * result + (tagName != null ? tagName.hashCode() : 0);
         return result;
     }

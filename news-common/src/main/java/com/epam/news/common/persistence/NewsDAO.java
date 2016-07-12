@@ -80,6 +80,16 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      * @param pageNumber the page number
      * @param newsOnPage the news on page
      * @return the news for page
+     * @throws DAOException the dao exception
      */
     List<News> getNewsForPage(int pageNumber, int newsOnPage) throws DAOException;
+
+
+    /**
+     * Delete news.
+     *
+     * @param newsIds the news ids
+     * @throws DAOException the dao exception
+     */
+    void deleteNews(Long... newsIds) throws DAOException;
 }

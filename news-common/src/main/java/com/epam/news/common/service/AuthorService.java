@@ -27,7 +27,7 @@ public interface AuthorService extends EntityService<Long, Author> {
      * @param authorIdList the author id array
      * @throws ServiceException the service exception
      */
-    void addNewsAuthors(long newsId, List<Long> authorIdList) throws ServiceException;
+    void addNewsAuthors(Long newsId, List<Long> authorIdList) throws ServiceException;
 
     /**
      * Gets news authors list.
@@ -36,7 +36,7 @@ public interface AuthorService extends EntityService<Long, Author> {
      * @return the news authors
      * @throws ServiceException the service exception
      */
-    List<Author> getNewsAuthors(long newsId) throws ServiceException;
+    List<Author> getNewsAuthors(Long newsId) throws ServiceException;
 
     /**
      * Delete news authors.
@@ -44,5 +44,5 @@ public interface AuthorService extends EntityService<Long, Author> {
      * @param newsId the news id
      * @throws ServiceException the service exception
      */
-    void deleteNewsAuthors(long newsId) throws ServiceException;
+    void deleteNewsAuthors(Long... newsId) throws ServiceException;
 }

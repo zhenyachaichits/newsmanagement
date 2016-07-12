@@ -28,7 +28,7 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * @param authorIdList the author id array
      * @throws DAOException the dao exception
      */
-    void addNewsAuthors(long newsId, List<Long> authorIdList) throws DAOException;
+    void addNewsAuthors(Long newsId, List<Long> authorIdList) throws DAOException;
 
     /**
      * Gets the list of news' authors.
@@ -37,7 +37,7 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * @return the news authors list
      * @throws DAOException the dao exception
      */
-    List<Author> getNewsAuthors(long newsId) throws DAOException;
+    List<Author> getNewsAuthors(Long newsId) throws DAOException;
 
 
     /**
@@ -46,5 +46,5 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * @param newsId the news id
      * @throws DAOException the dao exception
      */
-    void deleteNewsAuthors(long newsId) throws DAOException;
+    void deleteNewsAuthors(Long... newsId) throws DAOException;
 }

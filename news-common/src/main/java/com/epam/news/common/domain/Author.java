@@ -72,7 +72,7 @@ public class Author {
 
         Author author = (Author) o;
 
-        if (authorId != author.authorId) return false;
+        if (authorId != null ? !authorId.equals(author.authorId) : author.authorId != null) return false;
         if (authorName != null ? !authorName.equals(author.authorName) : author.authorName != null) return false;
         return expiredDate != null ? expiredDate.equals(author.expiredDate) : author.expiredDate == null;
 
@@ -80,7 +80,7 @@ public class Author {
 
     @Override
     public int hashCode() {
-        int result = (int) (authorId ^ (authorId >>> 32));
+        int result = authorId != null ? authorId.hashCode() : 0;
         result = 31 * result + (authorName != null ? authorName.hashCode() : 0);
         result = 31 * result + (expiredDate != null ? expiredDate.hashCode() : 0);
         return result;

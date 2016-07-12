@@ -110,12 +110,27 @@ public class CommentServiceImpl implements CommentService {
      * @return the list of comments
      */
     @Override
-    public List<Comment> getNewsComments(long newsId) throws ServiceException {
+    public List<Comment> getNewsComments(Long newsId) throws ServiceException {
         try {
             return dao.getNewsComments(newsId);
         } catch (DAOException e) {
             LOG.error("Error in method: getNewsComments(long newsId)", e);
             throw new ServiceException("Couldn't execute getting news comments service", e);
+        }
+    }
+
+    /**
+     * Delete news comments.
+     *
+     * @param newsIds the news ids
+     */
+    @Override
+    public void deleteNewsComments(Long... newsIds) throws ServiceException {
+        try {
+            dao.deleteNewsComments(newsIds);
+        } catch (DAOException e) {
+            LOG.error("Error in method: deleteNewsComments(newsIds)", e);
+            throw new ServiceException("Couldn't execute deleting news comments service", e);
         }
     }
 }

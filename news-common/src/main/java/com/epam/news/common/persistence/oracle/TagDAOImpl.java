@@ -219,7 +219,7 @@ public class TagDAOImpl implements TagDAO {
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void addNewsTags(long newsId, List<Long> tagIdList) throws DAOException {
+    public void addNewsTags(Long newsId, List<Long> tagIdList) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -249,7 +249,7 @@ public class TagDAOImpl implements TagDAO {
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<Tag> getNewsTags(long newsId) throws DAOException {
+    public List<Tag> getNewsTags(Long newsId) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -271,19 +271,23 @@ public class TagDAOImpl implements TagDAO {
     /**
      * Delete news tags.
      *
-     * @param newsId the news id
+     * @param newsIds the news ids
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void deleteNewsTags(long newsId) throws DAOException {
+    public void deleteNewsTags(Long... newsIds) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_DELETE_NEWS_TAGS_QUERY);
 
-            statement.setLong(1, newsId);
-            statement.execute();
+            for (Long newsId : newsIds) {
+                statement.setLong(1, newsId);
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete tags by news id", e);
         } finally {

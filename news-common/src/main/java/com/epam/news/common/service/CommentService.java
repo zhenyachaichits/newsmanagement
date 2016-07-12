@@ -16,6 +16,14 @@ public interface CommentService extends EntityService<Long, Comment> {
      *
      * @param newsId the news id
      * @return the list of comments
+     * @throws ServiceException the service exception
      */
-    List<Comment> getNewsComments(long newsId) throws ServiceException;
+    List<Comment> getNewsComments(Long newsId) throws ServiceException;
+
+    /**
+     * Delete news comments.
+     *
+     * @param newsIds the news ids
+     */
+    void deleteNewsComments(Long... newsIds) throws ServiceException;
 }
