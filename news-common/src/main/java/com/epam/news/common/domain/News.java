@@ -129,7 +129,7 @@ public class News {
 
         News news = (News) o;
 
-        if (newsId != news.newsId) return false;
+        if (newsId != null ? !newsId.equals(news.newsId) : news.newsId != null) return false;
         if (title != null ? !title.equals(news.title) : news.title != null) return false;
         if (shortText != null ? !shortText.equals(news.shortText) : news.shortText != null) return false;
         if (fullText != null ? !fullText.equals(news.fullText) : news.fullText != null) return false;
@@ -140,7 +140,7 @@ public class News {
 
     @Override
     public int hashCode() {
-        int result = (int) (newsId ^ (newsId >>> 32));
+        int result = newsId != null ? newsId.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (shortText != null ? shortText.hashCode() : 0);
         result = 31 * result + (fullText != null ? fullText.hashCode() : 0);

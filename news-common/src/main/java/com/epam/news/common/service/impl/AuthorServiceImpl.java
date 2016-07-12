@@ -126,7 +126,7 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsAuthors(long newsId, List<Long> authorIdList) throws ServiceException {
+    public void addNewsAuthors(Long newsId, List<Long> authorIdList) throws ServiceException {
         try {
             dao.addNewsAuthors(newsId, authorIdList);
         } catch (DAOException e) {
@@ -143,7 +143,7 @@ public class AuthorServiceImpl implements AuthorService {
      * @throws ServiceException if DAOException was thrown
      */
     @Override
-    public List<Author> getNewsAuthors(long newsId) throws ServiceException {
+    public List<Author> getNewsAuthors(Long newsId) throws ServiceException {
         try {
             return dao.getNewsAuthors(newsId);
         } catch (DAOException e) {
@@ -159,7 +159,7 @@ public class AuthorServiceImpl implements AuthorService {
      * @throws ServiceException the service exception
      */
     @Override
-    public void deleteNewsAuthors(long newsId) throws ServiceException {
+    public void deleteNewsAuthors(Long... newsId) throws ServiceException {
         try {
             dao.deleteNewsAuthors(newsId);
         } catch (DAOException e) {

@@ -26,7 +26,15 @@ public interface CommentDAO extends EntityDAO<Long, Comment> {
      * @param commentIdArray the comment id array
      * @throws DAOException in case of error
      */
-    void deleteComments(long... commentIdArray) throws DAOException;
+    void deleteComments(Long... commentIdArray) throws DAOException;
+
+    /**
+     * Delete news comments.
+     *
+     * @param newsIds the news ids
+     * @throws DAOException the dao exception
+     */
+    void deleteNewsComments(Long... newsIds) throws DAOException;
 
     /**
      * Gets news' comments.
@@ -35,5 +43,5 @@ public interface CommentDAO extends EntityDAO<Long, Comment> {
      * @return the list of news' comments
      * @throws DAOException in case of error
      */
-    List<Comment> getNewsComments(long newsId) throws DAOException;
+    List<Comment> getNewsComments(Long newsId) throws DAOException;
 }
