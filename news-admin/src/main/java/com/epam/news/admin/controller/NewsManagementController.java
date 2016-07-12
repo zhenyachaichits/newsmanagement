@@ -84,8 +84,12 @@ public class NewsManagementController {
      }
 
     @RequestMapping(value = "/deleteNews", method = RequestMethod.POST)
-    public String deleteNews(@RequestParam long[] newsIds) {
-
+    public String deleteNews(@RequestParam Long[] newsIds) throws ControllerException {
+        try {
+            manager.deleteNewsData(newsIds);
+        } catch (ServiceException e) {
+            throw new ControllerException("Unable to delete news data");
+        }
 
         return REDIRECT_NEWS_VALUE;
     }
