@@ -71,19 +71,6 @@ public class NewsManagementImpl implements NewsManagement {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteNewsData(long newsId) throws ServiceException {
-        try {
-            tagService.deleteNewsTags(newsId);
-            authorService.deleteNewsAuthors(newsId);
-            newsService.delete(newsId);
-        } catch (ServiceException e) {
-            LOG.error("Error in method: deleteNewsData(long newsId)", e);
-            throw new ServiceException("Couldn't delete news data by one transaction", e);
-        }
-    }
-
-    @Override
     public List<NewsDetailsTO> findAllNewsData() throws ServiceException {
         try {
             List<News> allNews = newsService.findAll();
@@ -137,10 +124,10 @@ public class NewsManagementImpl implements NewsManagement {
     @Override
     public void deleteNewsData(Long... newsIds) throws ServiceException {
         try {
-            newsService.deleteNews(newsIds);
             authorService.deleteNewsAuthors(newsIds);
             tagService.deleteNewsTags(newsIds);
             commentService.deleteNewsComments(newsIds);
+            newsService.deleteNews(newsIds);
 
         } catch (ServiceException e) {
             LOG.error("Error in method: deleteNewsData(newsIds)", e);

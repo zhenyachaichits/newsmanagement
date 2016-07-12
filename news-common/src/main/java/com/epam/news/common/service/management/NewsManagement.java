@@ -14,8 +14,6 @@ public interface NewsManagement {
 
     NewsDetailsTO getNewsData(long newsId) throws ServiceException;
 
-    void deleteNewsData(long newsId) throws ServiceException;
-
     List<NewsDetailsTO> findAllNewsData() throws ServiceException;
 
     List<NewsDetailsTO> getNewsForPage(int pageNumber) throws ServiceException;
