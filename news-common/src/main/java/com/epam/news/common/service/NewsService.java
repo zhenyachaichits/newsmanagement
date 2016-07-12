@@ -59,8 +59,17 @@ public interface NewsService extends EntityService<Long, News> {
      * Gets news for page.
      *
      * @param pageNumber the page number
+     * @param newsOnPage the news on page
      * @return the news for page
+     * @throws ServiceException the service exception
      */
     List<News> getNewsForPage(int pageNumber, int newsOnPage) throws ServiceException;
 
+    /**
+     * Delete news.
+     *
+     * @param newsIds the news ids
+     * @throws ServiceException the service exception
+     */
+    void deleteNews(Long... newsIds) throws ServiceException;
 }

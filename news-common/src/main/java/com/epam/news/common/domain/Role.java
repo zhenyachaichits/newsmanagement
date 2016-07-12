@@ -51,14 +51,14 @@ public class Role {
 
         Role role = (Role) o;
 
-        if (userId != role.userId) return false;
+        if (userId != null ? !userId.equals(role.userId) : role.userId != null) return false;
         return roleName != null ? roleName.equals(role.roleName) : role.roleName == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
         return result;
     }

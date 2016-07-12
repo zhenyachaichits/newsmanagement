@@ -228,7 +228,7 @@ public class AuthorDAOImpl implements AuthorDAO {
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void addNewsAuthors(long newsId, List<Long> authorIdList) throws DAOException {
+    public void addNewsAuthors(Long newsId, List<Long> authorIdList) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -258,7 +258,7 @@ public class AuthorDAOImpl implements AuthorDAO {
      * @throws DAOException if SQLException or EntityProcessorException thrown
      */
     @Override
-    public List<Author> getNewsAuthors(long newsId) throws DAOException {
+    public List<Author> getNewsAuthors(Long newsId) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -280,20 +280,23 @@ public class AuthorDAOImpl implements AuthorDAO {
     /**
      * Delete news authors.
      *
-     * @param newsId the news id
+     * @param newsIds the news id
      * @throws DAOException the dao exception
      */
     @Override
-    public void deleteNewsAuthors(long newsId) throws DAOException {
+    public void deleteNewsAuthors(Long... newsIds) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_DELETE_NEWS_AUTHORS_QUERY);
 
-            statement.setLong(1, newsId);
-            statement.executeQuery();
+            for (Long newsId : newsIds) {
+                statement.setLong(1, newsId);
+                statement.addBatch();
+            }
 
+            statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {

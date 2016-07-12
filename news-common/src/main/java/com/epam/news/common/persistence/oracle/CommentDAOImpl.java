@@ -28,6 +28,7 @@ public class CommentDAOImpl implements CommentDAO {
             "FROM COMMENTS WHERE COMMENT_ID = ?";
     private static final String SQL_UPDATE_COMMENT_QUERY = "UPDATE COMMENTS SET COMMENT_TEXT = ? WHERE COMMENT_ID = ?";
     private static final String SQL_DELETE_COMMENT_QUERY = "DELETE FROM COMMENTS WHERE COMMENT_ID = ?";
+    private static final String SQL_DELETE_NEWS_COMMENT_QUERY = "DELETE FROM COMMENTS WHERE NEWS_ID = ?";
     private static final String SQL_GET_ALL_COMMENTS_QUERY = "SELECT COMMENT_ID, NEWS_ID, COMMENT_TEXT, CREATION_DATE " +
             "FROM COMMENTS";
     private static final String SQL_GET_NEWS_COMMENTS_QUERY = "SELECT COMMENT_ID, NEWS_ID, COMMENT_TEXT, CREATION_DATE " +
@@ -190,15 +191,43 @@ public class CommentDAOImpl implements CommentDAO {
      * @throws DAOException in case of error
      */
     @Override
-    public void deleteComments(long... commentIdArray) throws DAOException {
+    public void deleteComments(Long... commentIdArray) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
             statement = connection.prepareStatement(SQL_DELETE_COMMENT_QUERY);
 
-            for (long commentId : commentIdArray) {
+            for (Long commentId : commentIdArray) {
                 statement.setLong(1, commentId);
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't delete comment with id", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Delete news comments.
+     *
+     * @param newsIds the news ids
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public void deleteNewsComments(Long... newsIds) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_DELETE_NEWS_COMMENT_QUERY );
+
+            for (Long newsId : newsIds) {
+                statement.setLong(1, newsId);
                 statement.addBatch();
             }
 
@@ -245,7 +274,7 @@ public class CommentDAOImpl implements CommentDAO {
      * @throws DAOException
      */
     @Override
-    public List<Comment> getNewsComments(long newsId) throws DAOException {
+    public List<Comment> getNewsComments(Long newsId) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {

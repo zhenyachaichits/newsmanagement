@@ -357,6 +357,34 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
+    /**
+     * Delete news.
+     *
+     * @param newsIds the news ids
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public void deleteNews(Long... newsIds) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_DELETE_ROLE_QUERY);
+
+            for (Long newsId : newsIds) {
+                statement.setLong(1, newsId);
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't delete news with id", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
     private List<News> getByIdSet(String query, Set<Long> idSet) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;

@@ -126,7 +126,7 @@ public class TagServiceImpl implements TagService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsTags(long newsId, List<Long> tagIdList) throws ServiceException {
+    public void addNewsTags(Long newsId, List<Long> tagIdList) throws ServiceException {
         try {
             dao.addNewsTags(newsId, tagIdList);
         } catch (DAOException e) {
@@ -143,7 +143,7 @@ public class TagServiceImpl implements TagService {
      * @throws ServiceException if DAOException was thrown
      */
     @Override
-    public List<Tag> getNewsTags(long newsId) throws ServiceException {
+    public List<Tag> getNewsTags(Long newsId) throws ServiceException {
         try {
             return dao.getNewsTags(newsId);
         } catch (DAOException e) {
@@ -159,7 +159,7 @@ public class TagServiceImpl implements TagService {
      * @throws ServiceException the service exception
      */
     @Override
-    public void deleteNewsTags(long newsId) throws ServiceException {
+    public void deleteNewsTags(Long... newsId) throws ServiceException {
         try {
             dao.deleteNewsTags(newsId);
         } catch (DAOException e) {

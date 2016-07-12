@@ -210,4 +210,21 @@ public class NewsServiceImpl implements NewsService {
             throw new ServiceException("Couldn't execute getting news for page service", e);
         }
     }
+
+    /**
+     * Delete news.
+     *
+     * @param newsIds the news ids
+     * @throws ServiceException the service exception
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteNews(Long... newsIds) throws ServiceException {
+        try {
+            dao.deleteNews(newsIds);
+        } catch (DAOException e) {
+            LOG.error("Error in method:deleteNews(newsIds)", e);
+            throw new ServiceException("Couldn't execute deleting news service", e);
+        }
+    }
 }

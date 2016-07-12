@@ -134,6 +134,20 @@ public class NewsManagementImpl implements NewsManagement {
         }
     }
 
+    @Override
+    public void deleteNewsData(Long... newsIds) throws ServiceException {
+        try {
+            newsService.deleteNews(newsIds);
+            authorService.deleteNewsAuthors(newsIds);
+            tagService.deleteNewsTags(newsIds);
+            commentService.deleteNewsComments(newsIds);
+
+        } catch (ServiceException e) {
+            LOG.error("Error in method: deleteNewsData(newsIds)", e);
+            throw new ServiceException("Couldn't delete news data", e);
+        }
+    }
+
     private NewsDetailsTO fillInNewsDetails(News news) throws ServiceException {
         long newsId = news.getNewsId();
         List<Author> authors = authorService.getNewsAuthors(newsId);
