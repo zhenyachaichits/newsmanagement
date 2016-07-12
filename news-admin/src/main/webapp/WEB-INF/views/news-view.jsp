@@ -4,8 +4,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
+    <div class="delete-box" align="center">
+        <div align="center"><b class="items-count">0</b> items selected</div>
+        <form name="deleteNews" action="newsManagement/deleteNews.do" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <button class="delete-news"><i class="material-icons">delete_sweep</i></button>
+    </div>
+
     <c:forEach items="${newsData}" var="newsEntry">
-        <div class="content-panel">
+        <div class="content-panel news-content-box" id="${newsEntry.news.newsId}">
 
             <div class="holder">
 

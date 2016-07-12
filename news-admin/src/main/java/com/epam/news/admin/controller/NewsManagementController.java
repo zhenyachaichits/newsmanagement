@@ -8,6 +8,7 @@ import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.AuthorService;
+import com.epam.news.common.service.NewsService;
 import com.epam.news.common.service.TagService;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class NewsManagementController {
     private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
 
 
+    @Autowired
+    private NewsService newsService;
     @Autowired
     private TagService tagService;
     @Autowired
@@ -78,5 +82,12 @@ public class NewsManagementController {
 
          return NEWS_MANAGEMENT_PAGE_NAME;
      }
+
+    @RequestMapping(value = "/deleteNews", method = RequestMethod.POST)
+    public String deleteNews(@RequestParam long[] newsIds) {
+
+
+        return REDIRECT_NEWS_VALUE;
+    }
 
 }
