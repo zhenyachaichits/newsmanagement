@@ -420,7 +420,7 @@ textarea.comment-text {
 
 .navigate > i.material-icons {
     top: 49%;
-    position: relative;
+    position: absolute;
     font-size: 30px;
     color: #6a696b;
 }

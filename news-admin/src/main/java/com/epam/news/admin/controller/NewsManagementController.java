@@ -28,9 +28,6 @@ public class NewsManagementController {
     private static final String NEWS_MANAGEMENT_PAGE_NAME = "newsManagement";
     private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
 
-
-    @Autowired
-    private NewsService newsService;
     @Autowired
     private TagService tagService;
     @Autowired
