@@ -1,12 +1,19 @@
 package com.epam.news.admin.controller;
 
 import com.epam.news.admin.exception.ControllerException;
+import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.Comment;
+import com.epam.news.common.domain.Tag;
+import com.epam.news.common.domain.criteria.NewsSearchCriteria;
 import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.exception.ServiceException;
+import com.epam.news.common.service.AuthorService;
 import com.epam.news.common.service.CommentService;
+import com.epam.news.common.service.TagService;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = {"/", "/news"})
+@ComponentScan("com.epam.news.common")
 public class NewsController {
 
     private static final String VIEW_ALL_NEWS_PAGE_NAME = "allNewsView";
@@ -26,17 +36,28 @@ public class NewsController {
     private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
 
     @Autowired
+    private TagService tagService;
+    @Autowired
+    private AuthorService authorService;
+    @Autowired
     private NewsManagement management;
     @Autowired
     private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String viewAllNews(@RequestParam(defaultValue = "1") int pageNum,
+    public String viewAllNews(@RequestParam(defaultValue = "1") int page, NewsSearchCriteria criteria,
                               ModelMap model) throws ControllerException {
         try {
-            List<NewsDetailsTO> newsList = management.getNewsForPage(pageNum);
+            List<NewsDetailsTO> newsList = management.getNewsForPage(page);
             int pagesCount = management.getPagesCount();
 
+            List<Tag> tags = tagService.findAll();
+            List<Author> authors = authorService.findAll();
+
+            model.addAttribute("tags", tags);
+            model.addAttribute("authors", authors);
+            model.addAttribute("searchCriteria", criteria);
+            model.addAttribute("currentPage", page);
             model.addAttribute("newsData", newsList);
             model.addAttribute("pagesCount", pagesCount);
 

@@ -49,7 +49,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String addAuthor(Author authorData) throws ControllerException {
+    public String addAuthor(final Author authorData) throws ControllerException {
         try {
             service.save(authorData);
         } catch (ServiceException e) {

@@ -14,16 +14,18 @@ import java.util.List;
 public final class UserDetailsImpl implements UserDetails {
 
     private User user;
-    private List<GrantedAuthority> authorities = new ArrayList<>();
+    private Role role;
 
 
     public UserDetailsImpl(User userData, Role userRole) {
         user = userData;
-        authorities.add(new SimpleGrantedAuthority(userRole.getRoleName()));
+        role = userRole;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add((GrantedAuthority) () -> role.getRoleName());
         return authorities;
     }
 

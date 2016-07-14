@@ -12,6 +12,26 @@
         <button class="delete-news"><i class="material-icons">delete_sweep</i></button>
     </div>
 
+    <div>
+
+
+
+        <form:form modelAttribute="searchCriteria" action="/news" method="get" name="searchForm"
+                   enctype="utf8">
+            <form:select path="tagIdSet" multiple="true">
+                <form:options items="${tags}" itemValue="tagId" itemLabel="tagName"/>
+            </form:select>
+
+            <form:select path="authorIdSet" multiple="true" cssClass="select-style">
+                <form:options items="${authors}" itemValue="authorId" itemLabel="authorName"/>
+            </form:select>
+
+            <input type="hidden" name="page" value=""/>
+            <form:button class="medium "> SEARCH </form:button>
+        </form:form>
+
+    </div>
+
     <c:forEach items="${newsData}" var="newsEntry">
         <div class="content-panel news-content-box" id="${newsEntry.news.newsId}">
 
@@ -60,4 +80,32 @@
             </div>
         </div>
     </c:forEach>
+
+
+    <div class="pagination-holder">
+        <ul class="pagination">
+            <c:if test="${currentPage != 1}">
+                <li><a href="javascript:submitNewPage(${currentPage - 1})">
+                    <i class="material-icons">navigate_before</i>
+                </a></li>
+            </c:if>
+
+            <c:forEach begin="1" end="${pagesCount}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <li class="pagination-box"><a class="active" href="#">${i}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="pagination-box"><a href="javascript:submitNewPage(${i})">${i}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+
+            <c:if test="${currentPage lt pagesCount}">
+                <li><a href="javascript:submitNewPage(${currentPage + 1})"><i
+                        class="material-icons">navigate_next</i></a></li>
+            </c:if>
+        </ul>
+    </div>
+
 </div>
