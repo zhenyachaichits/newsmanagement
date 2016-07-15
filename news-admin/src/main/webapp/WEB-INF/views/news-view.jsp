@@ -18,11 +18,11 @@
 
         <form:form modelAttribute="searchCriteria" action="/news" method="get" name="searchForm"
                    enctype="utf8">
-            <form:select path="tagIdSet" multiple="true">
+            <form:select path="tagIdSet" multiple="1">
                 <form:options items="${tags}" itemValue="tagId" itemLabel="tagName"/>
             </form:select>
 
-            <form:select path="authorIdSet" multiple="true" cssClass="select-style">
+            <form:select path="authorIdSet" multiple="1" cssClass="select-style">
                 <form:options items="${authors}" itemValue="authorId" itemLabel="authorName"/>
             </form:select>
 
