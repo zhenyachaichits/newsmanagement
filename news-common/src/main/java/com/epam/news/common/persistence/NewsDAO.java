@@ -10,7 +10,6 @@ import java.util.Set;
 /**
  * The interface News dao.
  */
-// TODO: 6/1/2016 set or list?
 public interface NewsDAO extends EntityDAO<Long, News> {
 
     /**
@@ -84,6 +83,7 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      */
     List<News> getNewsForPage(int pageNumber, int newsOnPage) throws DAOException;
 
+    List<News> getNewsForPage(NewsSearchCriteria criteria, int pageNumber, int newsOnPage) throws DAOException;
 
     /**
      * Delete news.

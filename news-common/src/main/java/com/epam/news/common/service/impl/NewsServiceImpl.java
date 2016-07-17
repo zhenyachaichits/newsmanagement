@@ -42,7 +42,7 @@ public class NewsServiceImpl implements NewsService {
                 news.setCreationDate(currentTime);
                 news.setModificationDate(currentTime);
                 return dao.add(news);
-            } else if (!dao.update(news)){
+            } else if (!dao.update(news)) {
                 throw new ServiceException("Couldn't update data");
             }
 
@@ -202,9 +202,14 @@ public class NewsServiceImpl implements NewsService {
      * @return the news for page
      */
     @Override
-    public List<News> getNewsForPage(int pageNumber, int newsOnPage) throws ServiceException {
+    public List<News> getNewsForPage(NewsSearchCriteria criteria, int pageNumber, int newsOnPage) throws ServiceException {
         try {
-            return dao.getNewsForPage(pageNumber, newsOnPage);
+            if (criteria == null || criteria.getAuthorIdSet() == null
+                    || criteria.getTagIdSet() == null) {
+                return dao.getNewsForPage(pageNumber, newsOnPage);
+            } else {
+                return dao.getNewsForPage(criteria, pageNumber, newsOnPage);
+            }
         } catch (DAOException e) {
             LOG.error("Error in method: getNewsForPage(pageNumber)", e);
             throw new ServiceException("Couldn't execute getting news for page service", e);
