@@ -7,9 +7,7 @@ import com.epam.news.common.domain.Tag;
 import com.epam.news.common.domain.criteria.NewsSearchCriteria;
 import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.exception.ServiceException;
-import com.epam.news.common.service.AuthorService;
 import com.epam.news.common.service.CommentService;
-import com.epam.news.common.service.TagService;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,11 +29,7 @@ public class NewsController {
     private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
 
     @Autowired
-    private TagService tagService;
-    @Autowired
-    private AuthorService authorService;
-    @Autowired
-    private NewsManagement management;
+    private NewsManagement manager;
     @Autowired
     private CommentService commentService;
 
@@ -43,11 +37,10 @@ public class NewsController {
     public String viewAllNews(@RequestParam(defaultValue = "1") int page, NewsSearchCriteria criteria,
                               ModelMap model) throws ControllerException {
         try {
-            List<NewsDetailsTO> newsList = management.getNewsForPage(page);
-            int pagesCount = management.getPagesCount();
-
-            List<Tag> tags = tagService.findAll();
-            List<Author> authors = authorService.findAll();
+            List<NewsDetailsTO> newsList = manager.getNewsForPage(criteria, page);
+            int pagesCount = manager.getPagesCount();
+            List<Tag> tags = manager.getAllTags();
+            List<Author> authors = manager.getAllAuthors();
 
             model.addAttribute("tags", tags);
             model.addAttribute("authors", authors);
@@ -66,7 +59,7 @@ public class NewsController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String viewSingleNews(@PathVariable Long id, ModelMap model) throws ControllerException {
         try {
-            NewsDetailsTO news = management.getNewsData(id);
+            NewsDetailsTO news = manager.getNewsData(id);
             Comment comment = new Comment();
 
             model.addAttribute("newsData", news);

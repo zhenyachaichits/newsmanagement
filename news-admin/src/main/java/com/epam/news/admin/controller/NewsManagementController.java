@@ -29,18 +29,14 @@ public class NewsManagementController {
     private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
 
     @Autowired
-    private TagService tagService;
-    @Autowired
-    private AuthorService authorService;
-    @Autowired
     private NewsManagement manager;
 
     @RequestMapping(method = RequestMethod.GET)
     public String viewNewsManagement(ModelMap model) throws ControllerException {
         try {
             NewsTO news = new NewsTO();
-            List<Tag> tags = tagService.findAll();
-            List<Author> authors = authorService.findAll();
+            List<Tag> tags = manager.getAllTags();
+            List<Author> authors = manager.getAllAuthors();
 
             model.addAttribute("newsData", news);
             model.addAttribute("tags", tags);
@@ -67,8 +63,8 @@ public class NewsManagementController {
      public String viewNewsManagement(@PathVariable Long id, ModelMap model) throws ControllerException {
          try {
              NewsDetailsTO news = manager.getNewsData(id);
-             List<Tag> tags = tagService.findAll();
-             List<Author> authors = authorService.findAll();
+             List<Tag> tags = manager.getAllTags();
+             List<Author> authors = manager.getAllAuthors();
 
              model.addAttribute("newsData", news);
              model.addAttribute("tags", tags);
