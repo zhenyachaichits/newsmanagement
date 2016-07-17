@@ -59,22 +59,9 @@ public class NewsManagementTest {
         News news = new News();
         newsTO.setNews(news);
 
-        List<Long> authorIdList = new ArrayList<>();
-        Author author = new Author();
-        newsTO.setAuthorIdList(authorIdList);
-
-        List<Long> tagIdList = new ArrayList<>();
-        Tag tag = new Tag();
-        newsTO.setTagIdList(tagIdList);
-
         when(newsDAO.add(news)).thenReturn(news);
-        when(authorDAO.add(author)).thenReturn(author);
-        when(tagDAO.add(tag)).thenReturn(tag);
 
         doReturn(news).when(newsService).save(news);
-        doReturn(author).when(authorService).save(author);
-        doReturn(tag).when(tagService).save(tag);
-
         newsManagementService.addNewsData(newsTO);
     }
 

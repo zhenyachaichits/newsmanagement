@@ -44,7 +44,7 @@ public class NewsDAOImpl implements NewsDAO {
             "COUNT(COMMENTS.COMMENT_ID) AS COUNT FROM NEWS LEFT JOIN COMMENTS " +
             "ON NEWS.NEWS_ID = COMMENTS.NEWS_ID GROUP BY NEWS.NEWS_ID, NEWS.TITLE, NEWS.SHORT_TEXT, " +
             "NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE ORDER BY COUNT DESC";
-    private static final String SQL_GET_NEWS_BY_SEARCH_CRITERIA_QUERY = "SELECT NEWS.NEWS_ID, NEWS.TITLE, " +
+    private static final String SQL_GET_NEWS_BY_SEARCH_CRITERIA_QUERY = "SELECT DISTINCT NEWS.NEWS_ID, NEWS.TITLE, " +
             "NEWS.SHORT_TEXT, NEWS.FULL_TEXT, NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE FROM NEWS " +
             "INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID INNER JOIN NEWS_AUTHOR " +
             "ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID WHERE NEWS_AUTHOR.AUTHOR_ID IN (?) AND NEWS_TAG.TAG_ID IN (?)";
@@ -59,6 +59,14 @@ public class NewsDAOImpl implements NewsDAO {
             "CREATION_DATE, MODIFICATION_DATE FROM (SELECT ROWNUM AS ROW_NUM, NEWS_ID, TITLE, SHORT_TEXT, " +
             "FULL_TEXT, CREATION_DATE, MODIFICATION_DATE FROM ( SELECT NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, " +
             "CREATION_DATE, MODIFICATION_DATE FROM NEWS ORDER BY MODIFICATION_DATE DESC)) " +
+            "WHERE ROWNUM <= ? AND ROW_NUM > (? - 1) * ?";
+    private static final String SQL_GET_NEWS_BY_CRITERIA_FOR_PAGE_QUERY = "SELECT NEWS_ID, TITLE, " +
+            "SHORT_TEXT, FULL_TEXT, CREATION_DATE, MODIFICATION_DATE FROM " +
+            "(SELECT ROWNUM AS ROW_NUM, NEWS_ID, TITLE, SHORT_TEXT, FULL_TEXT, CREATION_DATE, " +
+            "MODIFICATION_DATE FROM ( SELECT DISTINCT NEWS.NEWS_ID, NEWS.TITLE, NEWS.SHORT_TEXT, NEWS.FULL_TEXT, " +
+            "NEWS.CREATION_DATE, NEWS.MODIFICATION_DATE FROM NEWS INNER JOIN NEWS_TAG ON " +
+            "NEWS.NEWS_ID = NEWS_TAG.NEWS_ID INNER JOIN NEWS_AUTHOR ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID " +
+            "WHERE NEWS_AUTHOR.AUTHOR_ID IN (?) AND NEWS_TAG.TAG_ID IN (?) )) " +
             "WHERE ROWNUM <= ? AND ROW_NUM > (? - 1) * ?";
 
     @Autowired
@@ -345,6 +353,31 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setInt(1, newsOnPage);
             statement.setInt(2, pageNumber);
             statement.setInt(3, newsOnPage);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            return entityProcessor.toEntityList(resultSet);
+        } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get news list", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    @Override
+    public List<News> getNewsForPage(NewsSearchCriteria criteria, int pageNumber, int newsOnPage) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_GET_NEWS_BY_CRITERIA_FOR_PAGE_QUERY);
+
+            statement.setString(1, StringUtils.collectionToCommaDelimitedString(criteria.getAuthorIdSet()));
+            statement.setString(2, StringUtils.collectionToCommaDelimitedString(criteria.getTagIdSet()));
+            statement.setInt(3, newsOnPage);
+            statement.setInt(4, pageNumber);
+            statement.setInt(5, newsOnPage);
 
             ResultSet resultSet = statement.executeQuery();
 
