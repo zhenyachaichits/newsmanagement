@@ -1,5 +1,8 @@
 package com.epam.news.common.service.management;
 
+import com.epam.news.common.domain.Author;
+import com.epam.news.common.domain.Tag;
+import com.epam.news.common.domain.criteria.NewsSearchCriteria;
 import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.exception.ServiceException;
@@ -16,9 +19,13 @@ public interface NewsManagement {
 
     List<NewsDetailsTO> findAllNewsData() throws ServiceException;
 
-    List<NewsDetailsTO> getNewsForPage(int pageNumber) throws ServiceException;
+    List<NewsDetailsTO> getNewsForPage(NewsSearchCriteria criteria, int pageNumber) throws ServiceException;
 
     int getPagesCount() throws ServiceException;
 
     void deleteNewsData(Long... newsIds) throws ServiceException;
+
+    List<Author> getAllAuthors() throws ServiceException;
+
+    List<Tag> getAllTags() throws ServiceException;
 }

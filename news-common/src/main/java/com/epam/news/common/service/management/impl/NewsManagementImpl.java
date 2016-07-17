@@ -4,6 +4,7 @@ import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.Comment;
 import com.epam.news.common.domain.News;
 import com.epam.news.common.domain.Tag;
+import com.epam.news.common.domain.criteria.NewsSearchCriteria;
 import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.exception.ServiceException;
@@ -89,11 +90,11 @@ public class NewsManagementImpl implements NewsManagement {
     }
 
     @Override
-    public List<NewsDetailsTO> getNewsForPage(int pageNumber) throws ServiceException {
+    public List<NewsDetailsTO> getNewsForPage(NewsSearchCriteria criteria, int pageNumber) throws ServiceException {
         try {
             int newsOnPage = paginationUtil.getNewsOnPageNumber();
 
-            List<News> newsForPage = newsService.getNewsForPage(pageNumber, newsOnPage);
+            List<News> newsForPage = newsService.getNewsForPage(criteria, pageNumber, newsOnPage);
             List<NewsDetailsTO> newsDetailsList = new ArrayList<>(newsForPage.size());
 
             for (News news : newsForPage) {
@@ -112,9 +113,8 @@ public class NewsManagementImpl implements NewsManagement {
     public int getPagesCount() throws ServiceException {
         try {
             int allNewsCount = newsService.getNewsCount();
-            int pagesCount = paginationUtil.countPages(allNewsCount);
 
-            return pagesCount;
+            return paginationUtil.countPages(allNewsCount);
         } catch (ServiceException e) {
             LOG.error("Error in method: getPagesCount()", e);
             throw new ServiceException("Couldn't get pages count", e);
@@ -135,6 +135,16 @@ public class NewsManagementImpl implements NewsManagement {
         }
     }
 
+    @Override
+    public List<Author> getAllAuthors() throws ServiceException {
+        return authorService.findAll();
+    }
+
+    @Override
+    public List<Tag> getAllTags() throws ServiceException {
+        return tagService.findAll();
+    }
+
     private NewsDetailsTO fillInNewsDetails(News news) throws ServiceException {
         long newsId = news.getNewsId();
         List<Author> authors = authorService.getNewsAuthors(newsId);
@@ -153,4 +163,6 @@ public class NewsManagementImpl implements NewsManagement {
 
         return newsData;
     }
+
+
 }
