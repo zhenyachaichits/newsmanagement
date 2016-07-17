@@ -18,14 +18,40 @@
 
         <form:form modelAttribute="searchCriteria" action="/news" method="get" name="searchForm"
                    enctype="utf8">
-            <form:select path="tagIdSet" multiple="1">
-                <form:options items="${tags}" itemValue="tagId" itemLabel="tagName"/>
-            </form:select>
+            <dl class="dropdown">
+                <dt>
+                    <a href="#">
+                        <span class="hida">Select Tags</span>
+                        <p class="multiSel"></p>
+                    </a>
+                </dt>
 
-            <form:select path="authorIdSet" multiple="1" cssClass="select-style">
-                <form:options items="${authors}" itemValue="authorId" itemLabel="authorName"/>
-            </form:select>
+                <dd>
+                    <div class="mutliSelect">
+                        <ul>
+                            <form:checkboxes path="tagIdSet" element="li" itemValue="tagId" itemLabel="tagName"
+                                             items="${tags}" />
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dropdown">
+                <dt>
+                    <a href="#">
+                        <span class="hida">Select Authors</span>
+                        <p class="multiSel"></p>
+                    </a>
+                </dt>
 
+                <dd>
+                    <div class="mutliSelect">
+                        <ul>
+                            <form:checkboxes path="authorIdSet" element="li" itemValue="authorId" itemLabel="authorName"
+                                             items="${authors}" />
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
             <input type="hidden" name="page" value=""/>
             <form:button class="medium "> SEARCH </form:button>
         </form:form>

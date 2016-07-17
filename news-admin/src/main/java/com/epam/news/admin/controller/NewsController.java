@@ -12,8 +12,6 @@ import com.epam.news.common.service.CommentService;
 import com.epam.news.common.service.TagService;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = {"/", "/news"})
-@ComponentScan("com.epam.news.common")
 public class NewsController {
 
     private static final String VIEW_ALL_NEWS_PAGE_NAME = "allNewsView";

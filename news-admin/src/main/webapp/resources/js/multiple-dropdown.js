@@ -19,7 +19,7 @@ $(document).bind('click', function(e) {
 $('.mutliSelect input[type="checkbox"]').on('click', function() {
 
     var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
-        title = $(this).val() + ",";
+        title =$(this).closest('label').html() + ",";
 
     if ($(this).is(':checked')) {
         var html = '<span title="' + title + '">' + title + '</span>';

@@ -12,11 +12,6 @@ $(".edit").click(function (e) {
     return false;
 });
 
-$("input").click(function (e) {
-    e.stopPropagation();
-    return false;
-});
-
 $(".editor").click(function () {
     $(this).hide("fast");
     var nameValue = $(this).attr("name");
