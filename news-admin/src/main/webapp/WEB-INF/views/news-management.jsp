@@ -5,6 +5,7 @@
 <div align="center">
     <div class="content-panel">
         <form:form modelAttribute="newsData" method="post" enctype="utf8">
+            <form:hidden path="news.newsId" value="${newsData.news.newsId}"/>
             <form:input path="news.title" placeholder="Title" value="${newsData.news.title}"/>
             <form:textarea path="news.shortText" placeholder="Description" value="${newsData.news.shortText}"/>
             <form:textarea path="news.fullText" placeholder="Full Text" value="${newsData.news.fullText}"/>

@@ -51,7 +51,7 @@ public class NewsManagementController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String addNews(NewsTO newsData) throws ControllerException {
         try {
-            manager.addNewsData(newsData);
+            manager.saveNewsData(newsData);
         } catch (ServiceException e) {
             throw new ControllerException("Unable to save news data");
         }
