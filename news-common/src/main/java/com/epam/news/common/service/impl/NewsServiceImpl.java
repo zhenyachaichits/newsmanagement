@@ -38,9 +38,9 @@ public class NewsServiceImpl implements NewsService {
     public News save(News news) throws ServiceException {
         try {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            news.setModificationDate(currentTime);
             if (news.getNewsId() == null) {
                 news.setCreationDate(currentTime);
-                news.setModificationDate(currentTime);
                 return dao.add(news);
             } else if (!dao.update(news)) {
                 throw new ServiceException("Couldn't update data");

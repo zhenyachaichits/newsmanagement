@@ -67,7 +67,7 @@ public class AuthorDAOTest {
         authors.add(author);
         authors.add(author);
 
-        long[] idArray = dao.addAuthors(authors);
+        Long[] idArray = dao.addAuthors(authors);
 
         assertNotNull(idArray);
     }
