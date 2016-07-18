@@ -19,12 +19,12 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * @return generated id array
      * @throws DAOException the dao exception
      */
-    long[] addAuthors(List<Author> authors) throws DAOException;
+    Long[] addAuthors(List<Author> authors) throws DAOException;
 
     /**
      * Add new news author data.
      *
-     * @param newsId        the news id
+     * @param newsId       the news id
      * @param authorIdList the author id array
      * @throws DAOException the dao exception
      */
@@ -55,4 +55,5 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * @throws DAOException the dao exception
      */
     void deleteNewsAuthors(Long... newsId) throws DAOException;
+
 }

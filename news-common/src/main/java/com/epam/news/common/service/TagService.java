@@ -18,7 +18,7 @@ public interface TagService extends EntityService<Long, Tag> {
      * @return generated id array
      * @throws ServiceException the service exception
      */
-    long[] addTags(List<Tag> tags) throws ServiceException;
+    Long[] addTags(List<Tag> tags) throws ServiceException;
 
     /**
      * Add news tag.
@@ -45,7 +45,6 @@ public interface TagService extends EntityService<Long, Tag> {
      * @throws ServiceException the service exception
      */
     void deleteNewsTags(Long... newsId) throws ServiceException;
-
 
     /**
      * Gets news tags.

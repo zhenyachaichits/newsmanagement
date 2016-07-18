@@ -108,7 +108,7 @@ public class TagServiceImpl implements TagService {
      * @throws ServiceException the service exception
      */
     @Override
-    public long[] addTags(List<Tag> tags) throws ServiceException {
+    public Long[] addTags(List<Tag> tags) throws ServiceException {
         try {
             return dao.addTags(tags);
         } catch (DAOException e) {

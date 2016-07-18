@@ -1,8 +1,6 @@
 package com.epam.news.common.test.mockito;
 
-import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.News;
-import com.epam.news.common.domain.Tag;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.persistence.AuthorDAO;
 import com.epam.news.common.persistence.NewsDAO;
@@ -20,9 +18,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -62,14 +57,14 @@ public class NewsManagementTest {
         when(newsDAO.add(news)).thenReturn(news);
 
         doReturn(news).when(newsService).save(news);
-        newsManagementService.addNewsData(newsTO);
+        newsManagementService.saveNewsData(newsTO);
     }
 
     @Test(expected = ServiceException.class)
     public void testAddError() throws Exception {
         NewsTO newsTO = new NewsTO();
 
-        newsManagementService.addNewsData(newsTO);
+        newsManagementService.saveNewsData(newsTO);
     }
 
 }
