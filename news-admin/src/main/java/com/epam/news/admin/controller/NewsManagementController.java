@@ -62,11 +62,14 @@ public class NewsManagementController {
      @RequestMapping(value = "/{id}", method = RequestMethod.GET)
      public String viewNewsManagement(@PathVariable Long id, ModelMap model) throws ControllerException {
          try {
-             NewsDetailsTO news = manager.getNewsData(id);
+
+             NewsTO newsData = new NewsTO();
+             NewsDetailsTO newsDetails = manager.getNewsData(id);
              List<Tag> tags = manager.getAllTags();
              List<Author> authors = manager.getAllAuthors();
 
-             model.addAttribute("newsData", news);
+             model.addAttribute("newsData", newsData);
+             model.addAttribute("newsDetails", newsDetails);
              model.addAttribute("tags", tags);
              model.addAttribute("authors", authors);
          } catch (ServiceException e) {

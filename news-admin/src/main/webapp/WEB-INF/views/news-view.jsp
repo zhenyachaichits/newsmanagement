@@ -12,42 +12,41 @@
         <button class="delete-news"><i class="material-icons">delete_sweep</i></button>
     </div>
 
-    <div>
-
-
+    <div class="content-panel">
 
         <form:form modelAttribute="searchCriteria" action="/news" method="get" name="searchForm"
                    enctype="utf8">
-            <dl class="dropdown">
+            <dl class="dropdown tagIdSet">
                 <dt>
-                    <a href="#">
-                        <span class="hida">Select Tags</span>
-                        <p class="multiSel"></p>
+                    <a href="javascript:void(0)" name="tagIdSet">
+                        <span class="hidden-title tagIdSet">Select Tags</span>
+                        <p class="multiSel tagIdSet"></p>
                     </a>
                 </dt>
 
                 <dd>
                     <div class="mutliSelect">
-                        <ul>
+                        <ul class="tagIdSet">
                             <form:checkboxes path="tagIdSet" element="li" itemValue="tagId" itemLabel="tagName"
-                                             items="${tags}" />
+                                             items="${tags}"/>
                         </ul>
                     </div>
                 </dd>
             </dl>
-            <dl class="dropdown">
+
+            <dl class="dropdown authorIdSet">
                 <dt>
-                    <a href="#">
-                        <span class="hida">Select Authors</span>
-                        <p class="multiSel"></p>
+                    <a href="javascript:void(0)" name="authorIdSet">
+                        <span class="hidden-title authorIdSet">Select Authors</span>
+                        <p class="multiSel authorIdSet"></p>
                     </a>
                 </dt>
 
                 <dd>
                     <div class="mutliSelect">
-                        <ul>
+                        <ul class="authorIdSet">
                             <form:checkboxes path="authorIdSet" element="li" itemValue="authorId" itemLabel="authorName"
-                                             items="${authors}" />
+                                             items="${authors}"/>
                         </ul>
                     </div>
                 </dd>
