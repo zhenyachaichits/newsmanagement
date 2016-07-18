@@ -18,7 +18,7 @@ public interface AuthorService extends EntityService<Long, Author> {
      * @return generated id array
      * @throws ServiceException the service exception
      */
-    long[] addAuthors(List<Author> authors) throws ServiceException;
+    Long[] addAuthors(List<Author> authors) throws ServiceException;
 
     /**
      * Add news author.

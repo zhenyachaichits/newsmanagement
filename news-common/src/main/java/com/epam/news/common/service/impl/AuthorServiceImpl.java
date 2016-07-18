@@ -108,7 +108,7 @@ public class AuthorServiceImpl implements AuthorService {
      * @throws ServiceException the service exception
      */
     @Override
-    public long[] addAuthors(List<Author> authors) throws ServiceException {
+    public Long[] addAuthors(List<Author> authors) throws ServiceException {
         try {
             return dao.addAuthors(authors);
         } catch (DAOException e) {

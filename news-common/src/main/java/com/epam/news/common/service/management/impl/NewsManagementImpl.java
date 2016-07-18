@@ -45,15 +45,20 @@ public class NewsManagementImpl implements NewsManagement {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addNewsData(NewsTO newsData) throws ServiceException {
+    public void saveNewsData(NewsTO newsData) throws ServiceException {
         try {
             News news = newsService.save(newsData.getNews());
-            long newsId = news.getNewsId();
+            Long newsId = news.getNewsId();
+
+            if (newsData.getNews().getNewsId() != null) {
+                authorService.deleteNewsAuthors(newsId);
+                tagService.deleteNewsTags(newsId);
+            }
 
             authorService.addNewsAuthors(newsId, newsData.getAuthorIdList());
             tagService.addNewsTags(newsId, newsData.getTagIdList());
         } catch (Exception e) {
-            LOG.error("Error in method: addNewsData(NewsDetailsTO newsData)", e);
+            LOG.error("Error in method: saveNewsData(NewsDetailsTO newsData)", e);
             throw new ServiceException("Couldn't save news data by one transaction", e);
         }
     }

@@ -184,7 +184,7 @@ public class TagDAOImpl implements TagDAO {
      * @throws DAOException the service exception
      */
     @Override
-    public long[] addTags(List<Tag> tags) throws DAOException {
+    public Long[] addTags(List<Tag> tags) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -200,7 +200,7 @@ public class TagDAOImpl implements TagDAO {
             statement.executeBatch();
             ResultSet resultSet = statement.getGeneratedKeys();
 
-            long[] idArray = new long[tags.size()];
+            Long[] idArray = new Long[tags.size()];
             for (int i = 0; i < idArray.length && resultSet.next(); i++) {
                 idArray[i] = resultSet.getLong(1);
             }

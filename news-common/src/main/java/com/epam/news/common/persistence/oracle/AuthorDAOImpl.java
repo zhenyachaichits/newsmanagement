@@ -193,7 +193,7 @@ public class AuthorDAOImpl implements AuthorDAO {
      * @throws DAOException the dao exception
      */
     @Override
-    public long[] addAuthors(List<Author> authors) throws DAOException {
+    public Long[] addAuthors(List<Author> authors) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -210,7 +210,7 @@ public class AuthorDAOImpl implements AuthorDAO {
             statement.executeBatch();
             ResultSet resultSet = statement.getGeneratedKeys();
 
-            long[] idArray = new long[authors.size()];
+            Long[] idArray = new Long[authors.size()];
             for (int i = 0; i < idArray.length && resultSet.next(); i++) {
                 idArray[i] = resultSet.getLong(1);
             }
