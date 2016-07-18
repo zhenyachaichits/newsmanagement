@@ -59,7 +59,7 @@ public class NewsController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String viewSingleNews(@PathVariable Long id, ModelMap model) throws ControllerException {
         try {
-            NewsDetailsTO news = manager.getNewsData(id);
+            NewsDetailsTO news = manager.getNewsDetails(id);
             Comment comment = new Comment();
 
             model.addAttribute("newsData", news);

@@ -63,13 +63,11 @@ public class NewsManagementController {
      public String viewNewsManagement(@PathVariable Long id, ModelMap model) throws ControllerException {
          try {
 
-             NewsTO newsData = new NewsTO();
-             NewsDetailsTO newsDetails = manager.getNewsData(id);
+             NewsTO newsData = manager.getNewsData(id);
              List<Tag> tags = manager.getAllTags();
              List<Author> authors = manager.getAllAuthors();
 
              model.addAttribute("newsData", newsData);
-             model.addAttribute("newsDetails", newsDetails);
              model.addAttribute("tags", tags);
              model.addAttribute("authors", authors);
          } catch (ServiceException e) {
