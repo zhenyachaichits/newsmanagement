@@ -22,7 +22,7 @@
         <security:form-login login-processing-url="/j_spring_security_check"
                              login-page="/login"
                              default-target-url="/news"
-                             authentication-failure-url="/accessDenied"/>
+                             authentication-failure-url="/login"/>
         <security:logout logout-url="/j_spring_security_logout" logout-success-url="/login"/>
         <security:csrf/>
     </security:http>

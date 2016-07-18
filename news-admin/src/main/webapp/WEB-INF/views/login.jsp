@@ -7,12 +7,20 @@
 
         <c:url value="/j_spring_security_check" var="loginUrl"/>
         <form action="${loginUrl}" method="post">
-            <input name="username" value="${SPRING_SECURITY_LAST_USERNAME}" placeholder="Login"/>
-            <input type="password" name="password" placeholder="Password"/>
+            <input name="username" value="${sessionScope.SPRING_SECURITY_LAST_USERNAME}" placeholder="Login" required/>
+            <input type="password" name="password" placeholder="Password" required/>
 
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
             <button> SIGN IN</button>
         </form>
+
+        <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+            <font color="red">
+                Your login attempt was not successful.
+                <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+            </font>
+        </c:if>
+
     </div>
 </div>

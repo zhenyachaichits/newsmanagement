@@ -33,7 +33,7 @@
     display: block;
     padding: 8px 20px 5px 10px;
     min-height: 25px;
-    max-height: 50px;
+    max-height: 60px;
     line-height: 24px;
     overflow: scroll;
     width: 200px;
@@ -58,7 +58,7 @@ p.multiSel {
     left: 0px;
     padding: 2px 15px 2px 5px;
     top: 2px;
-    width: 220px;
+    width: 210px;
     list-style: none;
     height: 200px;
     overflow: auto;
