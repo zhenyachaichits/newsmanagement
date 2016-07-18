@@ -1,18 +1,19 @@
 package com.epam.news.common.persistence.oracle;
 
-import com.epam.news.common.persistence.TagDAO;
-import com.epam.news.common.persistence.util.processor.EntityProcessor;
-import com.epam.news.common.persistence.util.processor.impl.TagProcessor;
 import com.epam.news.common.domain.Tag;
 import com.epam.news.common.exception.DAOException;
 import com.epam.news.common.exception.EntityProcessorException;
+import com.epam.news.common.persistence.TagDAO;
 import com.epam.news.common.persistence.util.DAOUtil;
+import com.epam.news.common.persistence.util.processor.EntityProcessor;
+import com.epam.news.common.persistence.util.processor.impl.TagProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class TagDAOImpl implements TagDAO {
     private static final String SQL_GET_ALL_TAGS_QUERY = "SELECT TAG_ID, TAG_NAME FROM TAG";
     private static final String SQL_ADD_NEWS_TAG_QUERY = "INSERT INTO NEWS_TAG (NEWS_ID, TAG_ID) VALUES (?, ?)";
     private static final String SQL_GET_NEWS_TAGS_QUERY = "SELECT TAG.TAG_ID, TAG.TAG_NAME FROM TAG " +
+            "INNER JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG_ID WHERE NEWS_TAG.NEWS_ID = ?";
+    private static final String SQL_GET_NEWS_TAG_IDS_QUERY = "SELECT TAG.TAG_ID FROM TAG " +
             "INNER JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG_ID WHERE NEWS_TAG.NEWS_ID = ?";
     private static final String SQL_DELETE_NEWS_TAGS_QUERY = "DELETE FROM NEWS_TAG WHERE NEWS_ID = ?";
 
@@ -214,7 +217,7 @@ public class TagDAOImpl implements TagDAO {
     /**
      * Add news tag to News_Tag table
      *
-     * @param newsId the news id
+     * @param newsId    the news id
      * @param tagIdList the tag id array
      * @throws DAOException if SQLException thrown
      */
@@ -261,6 +264,38 @@ public class TagDAOImpl implements TagDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get id set", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public List<Long> getNewsTagIds(Long newsId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_GET_NEWS_TAG_IDS_QUERY);
+
+            statement.setLong(1, newsId);
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Long> idList = new ArrayList<>();
+            while (resultSet.next()) {
+                idList.add(resultSet.getLong(1));
+            }
+
+            return idList;
+        } catch (SQLException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {
             DAOUtil.closeStatement(statement);

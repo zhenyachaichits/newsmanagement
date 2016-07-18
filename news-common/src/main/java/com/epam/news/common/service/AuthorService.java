@@ -39,6 +39,15 @@ public interface AuthorService extends EntityService<Long, Author> {
     List<Author> getNewsAuthors(Long newsId) throws ServiceException;
 
     /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws ServiceException the service exception
+     */
+    List<Long> getNewsAuthorIds(Long newsId) throws ServiceException;
+
+    /**
      * Delete news authors.
      *
      * @param newsId the news id

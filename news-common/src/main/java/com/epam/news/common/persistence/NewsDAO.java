@@ -83,6 +83,15 @@ public interface NewsDAO extends EntityDAO<Long, News> {
      */
     List<News> getNewsForPage(int pageNumber, int newsOnPage) throws DAOException;
 
+    /**
+     * Gets news for page.
+     *
+     * @param criteria   the criteria
+     * @param pageNumber the page number
+     * @param newsOnPage the news on page
+     * @return the news for page
+     * @throws DAOException the dao exception
+     */
     List<News> getNewsForPage(NewsSearchCriteria criteria, int pageNumber, int newsOnPage) throws DAOException;
 
     /**

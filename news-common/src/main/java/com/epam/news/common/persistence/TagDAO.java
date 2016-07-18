@@ -39,6 +39,15 @@ public interface TagDAO extends EntityDAO<Long, Tag> {
     List<Tag> getNewsTags(Long newsId) throws DAOException;
 
     /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws DAOException the dao exception
+     */
+    List<Long> getNewsTagIds(Long newsId) throws DAOException;
+
+    /**
      * Delete news tags.
      *
      * @param newsId the news id

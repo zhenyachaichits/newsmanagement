@@ -147,7 +147,7 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.getNewsTags(newsId);
         } catch (DAOException e) {
-            LOG.error("Error in method: getNewsTags(long newsId)", e);
+            LOG.error("Error in method: getNewsAuthors(long newsId)", e);
             throw new ServiceException("Couldn't execute getting news tags service", e);
         }
     }
@@ -165,6 +165,23 @@ public class TagServiceImpl implements TagService {
         } catch (DAOException e) {
             LOG.error("Error in method deleteNewsTags(long newsId)", e);
             throw new ServiceException("Couldn't execute deleting news tags service", e);
+        }
+    }
+
+    /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public List<Long> getNewsTagIds(Long newsId) throws ServiceException {
+        try {
+            return dao.getNewsTagIds(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getNewsAuthorIds(long newsId)", e);
+            throw new ServiceException("Couldn't execute getting news tags service", e);
         }
     }
 }

@@ -59,14 +59,26 @@ public class NewsManagementImpl implements NewsManagement {
     }
 
     @Override
+    public NewsTO getNewsData(Long newsId) throws ServiceException {
+        try {
+            News news = newsService.find(newsId);
+
+            return fillInNewsData(news);
+        } catch (ServiceException e) {
+            LOG.error("Error in method: getNewsDetails(long newsId)", e);
+            throw new ServiceException("Couldn't get news data by one transaction", e);
+        }
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
-    public NewsDetailsTO getNewsData(long newsId) throws ServiceException {
+    public NewsDetailsTO getNewsDetails(Long newsId) throws ServiceException {
         try {
             News news = newsService.find(newsId);
 
             return fillInNewsDetails(news);
         } catch (ServiceException e) {
-            LOG.error("Error in method: getNewsData(long newsId)", e);
+            LOG.error("Error in method: getNewsDetails(long newsId)", e);
             throw new ServiceException("Couldn't get news data by one transaction", e);
         }
     }
@@ -160,6 +172,19 @@ public class NewsManagementImpl implements NewsManagement {
         newsData.setComments(comments);
         newsData.setNextNewsId(nextNewsId);
         newsData.setPreviousNewsId(previousNewsId);
+
+        return newsData;
+    }
+
+    private NewsTO fillInNewsData(News news) throws ServiceException {
+        long newsId = news.getNewsId();
+        List<Long> authors = authorService.getNewsAuthorIds(newsId);
+        List<Long> tags = tagService.getNewsTagIds(newsId);
+
+        NewsTO newsData = new NewsTO();
+        newsData.setNews(news);
+        newsData.setAuthorIdList(authors);
+        newsData.setTagIdList(tags);
 
         return newsData;
     }

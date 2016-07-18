@@ -39,6 +39,14 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      */
     List<Author> getNewsAuthors(Long newsId) throws DAOException;
 
+    /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws DAOException the dao exception
+     */
+    List<Long> getNewsAuthorIds(Long newsId) throws DAOException;
 
     /**
      * Delete news authors.
