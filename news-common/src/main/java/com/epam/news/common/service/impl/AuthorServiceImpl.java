@@ -153,6 +153,23 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public List<Long> getNewsAuthorIds(Long newsId) throws ServiceException {
+        try {
+            return dao.getNewsAuthorIds(newsId);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getNewsAuthorIds(long newsId)", e);
+            throw new ServiceException("Couldn't execute getting news authors service", e);
+        }
+    }
+
+    /**
      * Delete news authors.
      *
      * @param newsId the news id

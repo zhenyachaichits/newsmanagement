@@ -15,7 +15,9 @@ import java.util.List;
 public interface NewsManagement {
     void addNewsData(NewsTO newsData) throws ServiceException;
 
-    NewsDetailsTO getNewsData(long newsId) throws ServiceException;
+    NewsTO getNewsData(Long newsId) throws ServiceException;
+
+    NewsDetailsTO getNewsDetails(Long newsId) throws ServiceException;
 
     List<NewsDetailsTO> findAllNewsData() throws ServiceException;
 

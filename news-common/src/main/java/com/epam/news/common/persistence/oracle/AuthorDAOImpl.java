@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,6 +35,9 @@ public class AuthorDAOImpl implements AuthorDAO {
             "VALUES (?, ?)";
     private static final String SQL_GET_NEWS_AUTHORS_QUERY = "SELECT AUTHOR.AUTHOR_ID, AUTHOR.AUTHOR_NAME, " +
             "AUTHOR.EXPIRED FROM AUTHOR INNER JOIN NEWS_AUTHOR ON AUTHOR.AUTHOR_ID = NEWS_AUTHOR.AUTHOR_ID " +
+            "WHERE NEWS_AUTHOR.NEWS_ID = ?";
+    private static final String SQL_GET_NEWS_AUTHOR_IDS_QUERY = "SELECT AUTHOR.AUTHOR_ID " +
+            "FROM AUTHOR INNER JOIN NEWS_AUTHOR ON AUTHOR.AUTHOR_ID = NEWS_AUTHOR.AUTHOR_ID " +
             "WHERE NEWS_AUTHOR.NEWS_ID = ?";
     private static final String SQL_DELETE_NEWS_AUTHORS_QUERY = "DELETE FROM NEWS_AUTHOR WHERE NEWS_ID = ? ";
 
@@ -270,6 +274,38 @@ public class AuthorDAOImpl implements AuthorDAO {
 
             return entityProcessor.toEntityList(resultSet);
         } catch (SQLException | EntityProcessorException e) {
+            throw new DAOException("Couldn't get id set", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Gets news tags.
+     *
+     * @param newsId the news id
+     * @return the news tags
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public List<Long> getNewsAuthorIds(Long newsId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_GET_NEWS_AUTHOR_IDS_QUERY);
+
+            statement.setLong(1, newsId);
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Long> idList = new ArrayList<>();
+            while (resultSet.next()) {
+                idList.add(resultSet.getLong(1));
+            }
+
+            return idList;
+        } catch (SQLException e) {
             throw new DAOException("Couldn't get id set", e);
         } finally {
             DAOUtil.closeStatement(statement);
