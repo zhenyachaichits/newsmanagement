@@ -5,6 +5,10 @@
     color: #464547;
 }
 
+div.center {
+    margin: 40px auto;
+}
+
 ::-webkit-scrollbar {
     width: 6px;
     border: none;
@@ -28,6 +32,10 @@ body {
     padding: 0;
     min-height: 100%;
     position: relative;
+}
+
+body.login-page {
+    overflow: hidden;
 }
 
 header {
@@ -262,7 +270,19 @@ select:focus {
     background-color: rgba(181, 180, 182, 0.12);
     box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.27);
     width: 80%;
-    min-height: 60px;
+    height: 65px;
+    min-height: 30px;
+}
+
+.search-panel {
+    margin: 25px 25px 50px;
+    padding: 2%;
+    transition: background-color 0.3s ease;
+    background-color: rgba(181, 180, 182, 0.12);
+    box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.27);
+    width: 80%;
+    height: 65px;
+    min-height: 30px;
 }
 
 .content-panel {
@@ -553,15 +573,48 @@ div.pagination-holder {
 }
 
 .select-holder {
-    margin: 40px;
-    width: 50%;
+    padding-top: 30px;
+    width: 20%;
     display: inline-block;
 }
 
 .select-holder.author {
     float: left;
+    padding-left: 18%;
 }
 
 .select-holder.tag {
     float: right;
+    padding-right: 28%;
+}
+
+.right {
+    float: right;
+}
+
+.criteria-holder {
+    margin-top: 2%;
+    display: inline-block;
+    float: left;
+    left: 0;
+    width: 40%;
+}
+
+.select-holder.author.search {
+    float: left;
+    margin: 0;
+    padding-top: 0;
+    padding-left: 5%;
+}
+
+.select-holder.tag.search {
+    float: right;
+    margin: 0;
+    padding-top: 0;
+    padding-right: 20px;
+}
+
+.content-panel.login {
+    margin-top: 10%;
+    width: 250px;
 }

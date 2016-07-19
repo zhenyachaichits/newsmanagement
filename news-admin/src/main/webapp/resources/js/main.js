@@ -25,6 +25,11 @@ $(".show-comments").click(function () {
 });
 
 
+$(".reset").click(function() {
+   $("input[type='checkbox']").attr('checked', false);
+    searchForm.submit();
+});
+
 $(document).ready(function () {
     var path = window.location.pathname;
 

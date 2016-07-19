@@ -14,17 +14,17 @@
 
             <div class="holder">
                 <div class="select-holder tag">
-                    <dl class="dropdown tagIdSet">
+                    <dl class="dropdown tagIdList">
                         <dt>
-                            <a href="javascript:void(0)" name="tagIdSet">
-                                <span class="hidden-title tagIdSet">Select Tags</span>
-                                <p class="multiSel tagIdSet"></p>
+                            <a href="javascript:void(0)" name="tagIdList">
+                                <span class="hidden-title tagIdList">Select Tags</span>
+                                <p class="multiSel tagIdList"></p>
                             </a>
                         </dt>
 
                         <dd>
-                            <div class="mutliSelect">
-                                <ul class="tagIdSet">
+                            <div class="multiSelect">
+                                <ul class="tagIdList">
                                     <form:checkboxes path="tagIdList" element="li" itemValue="tagId" itemLabel="tagName"
                                                      items="${tags}"/>
                                 </ul>
@@ -34,17 +34,17 @@
                 </div>
 
                 <div class="select-holder author">
-                    <dl class="dropdown authorIdSet">
+                    <dl class="dropdown authorIdList">
                         <dt>
-                            <a href="javascript:void(0)" name="authorIdSet">
-                                <span class="hidden-title authorIdSet">Select Authors</span>
-                                <p class="multiSel authorIdSet"></p>
+                            <a href="javascript:void(0)" name="authorIdList">
+                                <span class="hidden-title authorIdList">Select Authors</span>
+                                <p class="multiSel authorIdList"></p>
                             </a>
                         </dt>
 
                         <dd>
-                            <div class="mutliSelect">
-                                <ul class="authorIdSet">
+                            <div class="multiSelect">
+                                <ul class="authorIdList">
                                     <form:checkboxes path="authorIdList" element="li" itemValue="authorId"
                                                      itemLabel="authorName"
                                                      items="${authors}"/>
@@ -56,18 +56,10 @@
 
             </div>
 
-            <%--<form:select path="tagIdList" modelAttribute="tagIdList" multiple="true">--%>
-            <%--<form:option value="-" label="Please Select" disabled="true"/>--%>
-            <%--<form:options items="${tags}" itemValue="tagId" itemLabel="tagName"/>--%>
-            <%--</form:select>--%>
+            <div align="holder">
+                <form:button formaction="/newsManagement/save" class="right"> SAVE </form:button>
+            </div>
 
-            <%--<form:select path="authorIdList" modelAttribute="authorIdList" multiple="true"--%>
-            <%--cssClass="select-style">--%>
-            <%--<form:option value="-" label="Please Select" disabled="true"/>--%>
-            <%--<form:options items="${authors}" itemValue="authorId" itemLabel="authorName"/>--%>
-            <%--</form:select>--%>
-
-            <form:button formaction="/newsManagement/save"> SAVE </form:button>
         </form:form>
     </div>
 </div>

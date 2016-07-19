@@ -13,6 +13,8 @@
 
 <body>
 
+<spring:htmlEscape defaultHtmlEscape="true" />
+
 <header class="sticky">
     <tiles:insertAttribute name="header"/>
 </header>

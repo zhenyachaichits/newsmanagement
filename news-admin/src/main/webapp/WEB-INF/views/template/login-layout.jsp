@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body class="login-page">
 
 <header class="sticky">
     <tiles:insertAttribute name="header"/>

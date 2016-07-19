@@ -47,6 +47,10 @@
     font-weight: 300;
 }
 
+.multiSelect {
+    position: fixed;
+}
+
 p.multiSel {
     margin: 0;
 }

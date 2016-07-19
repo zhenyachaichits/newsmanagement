@@ -1,5 +1,6 @@
 package com.epam.news.admin.controller;
 
+import com.epam.news.admin.util.ControllerUtil;
 import com.epam.news.admin.exception.ControllerException;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.Comment;
@@ -80,21 +81,18 @@ public class NewsController {
             throw new ControllerException("Unable to add news comment data", e);
         }
 
-        // TODO: 7/11/2016 REFACTOR
-        String referer = request.getHeader("Referer");
-        return "redirect:" + referer;
-        //return REDIRECT_NEWS_VALUE;
+        return ControllerUtil.redirectToPrevious(request);
     }
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
-    public String deleteNewsComment(@RequestParam Long id) throws ControllerException {
+    public String deleteNewsComment(@RequestParam Long id, HttpServletRequest request) throws ControllerException {
         try {
             commentService.delete(id);
         } catch (ServiceException e) {
             throw new ControllerException("Unable to delete news comment data", e);
         }
 
-        return REDIRECT_NEWS_VALUE;
+        return ControllerUtil.redirectToPrevious(request);
     }
 
 }

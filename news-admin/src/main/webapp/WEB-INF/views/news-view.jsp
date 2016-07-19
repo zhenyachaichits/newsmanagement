@@ -12,47 +12,60 @@
         <button class="delete-news"><i class="material-icons">delete_sweep</i></button>
     </div>
 
-    <div class="content-panel">
+    <div class="search-panel center">
 
         <form:form modelAttribute="searchCriteria" action="/news" method="get" name="searchForm"
                    enctype="utf8">
-            <dl class="dropdown tagIdSet">
-                <dt>
-                    <a href="javascript:void(0)" name="tagIdSet">
-                        <span class="hidden-title tagIdSet">Select Tags</span>
-                        <p class="multiSel tagIdSet"></p>
-                    </a>
-                </dt>
+            <div class="holder">
+                <div class="criteria-holder">
+                    <div class="select-holder tag search">
+                        <dl class="dropdown tagIdSet">
+                            <dt>
+                                <a href="javascript:void(0)" name="tagIdSet">
+                                    <span class="hidden-title tagIdSet">Select Tags</span>
+                                    <p class="multiSel tagIdSet"></p>
+                                </a>
+                            </dt>
 
-                <dd>
-                    <div class="mutliSelect">
-                        <ul class="tagIdSet">
-                            <form:checkboxes path="tagIdSet" element="li" itemValue="tagId" itemLabel="tagName"
-                                             items="${tags}"/>
-                        </ul>
+                            <dd>
+                                <div class="multiSelect">
+                                    <ul class="tagIdSet">
+                                        <form:checkboxes path="tagIdSet" element="li" itemValue="tagId"
+                                                         itemLabel="tagName"
+                                                         items="${tags}"/>
+                                    </ul>
+                                </div>
+                            </dd>
+                        </dl>
                     </div>
-                </dd>
-            </dl>
 
-            <dl class="dropdown authorIdSet">
-                <dt>
-                    <a href="javascript:void(0)" name="authorIdSet">
-                        <span class="hidden-title authorIdSet">Select Authors</span>
-                        <p class="multiSel authorIdSet"></p>
-                    </a>
-                </dt>
+                    <div class="select-holder author search">
+                        <dl class="dropdown authorIdSet">
+                            <dt>
+                                <a href="javascript:void(0)" name="authorIdSet">
+                                    <span class="hidden-title authorIdSet">Select Authors</span>
+                                    <p class="multiSel authorIdSet"></p>
+                                </a>
+                            </dt>
 
-                <dd>
-                    <div class="mutliSelect">
-                        <ul class="authorIdSet">
-                            <form:checkboxes path="authorIdSet" element="li" itemValue="authorId" itemLabel="authorName"
-                                             items="${authors}"/>
-                        </ul>
+                            <dd>
+                                <div class="multiSelect">
+                                    <ul class="authorIdSet">
+                                        <form:checkboxes path="authorIdSet" element="li" itemValue="authorId"
+                                                         itemLabel="authorName"
+                                                         items="${authors}"/>
+                                    </ul>
+                                </div>
+                            </dd>
+                        </dl>
                     </div>
-                </dd>
-            </dl>
-            <input type="hidden" name="page" value=""/>
-            <form:button class="medium "> SEARCH </form:button>
+                </div>
+
+
+                <input type="hidden" name="page" value=""/>
+                <form:button class="right"> SEARCH </form:button>
+                <form:button class="right edit reset" type="reset"> RESET </form:button>
+            </div>
         </form:form>
 
     </div>

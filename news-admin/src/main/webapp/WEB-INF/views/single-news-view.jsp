@@ -56,10 +56,13 @@
 
             <div class="news-comment-content">
                     ${comment.commentText}
-                        <form class="tst" action="/deleteComment.do" method="post" hidden>
+                        <form name="delete${comment.commentId}" action="/deleteComment.do" method="post" hidden>
                             <input type="hidden" name="id" value="${comment.commentId}"/>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
-                        <a href="" onclick="$(this).closest('.tst').submit()" class="option delete-icon"><i class="material-icons">delete</i></a>
+                        <a href="javascript:delete${comment.commentId}.submit()" class="option delete-icon">
+                            <i class="material-icons">delete</i>
+                        </a>
             </div>
 
             <fmt:formatDate pattern="yyyy-MM-dd 'at' hh:mm a" value="${comment.creationDate}"
