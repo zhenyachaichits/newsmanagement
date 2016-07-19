@@ -39,7 +39,7 @@ public class NewsController {
                               ModelMap model) throws ControllerException {
         try {
             List<NewsDetailsTO> newsList = manager.getNewsForPage(criteria, page);
-            int pagesCount = manager.getPagesCount();
+            int pagesCount = manager.getPagesCount(criteria);
             List<Tag> tags = manager.getAllTags();
             List<Author> authors = manager.getAllAuthors();
 
