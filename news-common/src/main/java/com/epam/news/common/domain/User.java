@@ -1,13 +1,21 @@
 package com.epam.news.common.domain;
 
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * The type User.
  */
 public class User {
     private Long userId;
+    @NotBlank
+    @Length(max = 32)
     private String userName;
+    @NotBlank
+    @Length(max = 32)
     private String login;
+    @NotBlank
     private String password;
 
     /**

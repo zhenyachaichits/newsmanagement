@@ -49,6 +49,9 @@ public class NewsDAOImpl implements NewsDAO {
             "INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID INNER JOIN NEWS_AUTHOR " +
             "ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID WHERE NEWS_AUTHOR.AUTHOR_ID IN (?) AND NEWS_TAG.TAG_ID IN (?)";
     private static final String SQL_GET_NEWS_COUNT_QUERY = "SELECT COUNT(*) AS COUNT FROM NEWS";
+    private static final String SQL_GET_NEWS_COUNT_BY_SEARCH_CRITERIA_QUERY = "SELECT COUNT(DISTINCT NEWS.NEWS_ID) " +
+            "AS COUNT FROM NEWS INNER JOIN NEWS_TAG ON NEWS.NEWS_ID = NEWS_TAG.NEWS_ID INNER JOIN NEWS_AUTHOR " +
+            "ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS_ID WHERE NEWS_AUTHOR.AUTHOR_ID IN (?) AND NEWS_TAG.TAG_ID IN (?)";
     private static final String SQL_GET_PREVIOUS_NEWS_BY_ID_QUERY = "SELECT PREVIOUS FROM " +
             "(SELECT LAG(NEWS_ID) OVER (ORDER BY MODIFICATION_DATE DESC) AS PREVIOUS, NEWS_ID FROM NEWS) " +
             "WHERE NEWS_ID = ?";
@@ -307,6 +310,39 @@ public class NewsDAOImpl implements NewsDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Couldn't get findAllNewsData news count", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Gets news count.
+     *
+     * @param criteria the criteria
+     * @return the news count
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public int getNewsCount(NewsSearchCriteria criteria) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_GET_NEWS_COUNT_BY_SEARCH_CRITERIA_QUERY);
+
+            statement.setString(1, StringUtils.collectionToCommaDelimitedString(criteria.getAuthorIdSet()));
+            statement.setString(2, StringUtils.collectionToCommaDelimitedString(criteria.getTagIdSet()));
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(NewsProcessor.COUNT);
+            } else {
+                throw new DAOException("Count was not found. Result set is empty");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't get news by criteria", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);
