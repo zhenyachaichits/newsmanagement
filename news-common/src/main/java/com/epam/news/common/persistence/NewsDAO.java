@@ -56,6 +56,15 @@ public interface NewsDAO extends EntityDAO<Long, News> {
     int getNewsCount() throws DAOException;
 
     /**
+     * Gets news count.
+     *
+     * @param criteria the criteria
+     * @return the news count
+     * @throws DAOException the dao exception
+     */
+    int getNewsCount(NewsSearchCriteria criteria) throws DAOException;
+
+    /**
      * Gets previous news.
      *
      * @param newsId the news id

@@ -127,9 +127,14 @@ public class NewsManagementImpl implements NewsManagement {
     }
 
     @Override
-    public int getPagesCount() throws ServiceException {
+    public int getPagesCount(NewsSearchCriteria criteria) throws ServiceException {
         try {
-            int allNewsCount = newsService.getNewsCount();
+            int allNewsCount;
+            if (criteria.getTagIdSet().isEmpty() && criteria.getAuthorIdSet().isEmpty()) {
+                allNewsCount = newsService.getNewsCount();
+            } else {
+                allNewsCount = newsService.getNewsCount(criteria);
+            }
 
             return paginationUtil.countPages(allNewsCount);
         } catch (ServiceException e) {
