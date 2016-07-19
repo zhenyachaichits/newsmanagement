@@ -1,11 +1,16 @@
 package com.epam.news.common.domain;
 
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * The type Tag.
  */
 public class Tag {
     private Long tagId;
+    @NotBlank
+    @Length(max = 30)
     private String tagName;
 
     /**

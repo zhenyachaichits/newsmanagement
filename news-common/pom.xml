@@ -21,6 +21,8 @@
         <commons.logging.version>1.2</commons.logging.version>
         <slf4j.version>1.5.2</slf4j.version>
         <log4j.version>2.6</log4j.version>
+        <validation.version>1.1.0.Final</validation.version>
+        <hibernate.validation.version>5.2.4.Final</hibernate.validation.version>
     </properties>
 
     <dependencies>
@@ -85,11 +87,25 @@
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validation.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.slf4j</groupId>

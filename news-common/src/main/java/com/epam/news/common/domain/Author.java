@@ -1,5 +1,9 @@
 package com.epam.news.common.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 
@@ -8,7 +12,10 @@ import java.sql.Timestamp;
  */
 public class Author {
     private Long authorId;
+    @NotBlank
+    @Length(max = 32)
     private String authorName;
+    @NotNull
     private Timestamp expiredDate;
 
     /**
