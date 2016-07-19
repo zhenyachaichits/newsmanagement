@@ -164,6 +164,23 @@ public class NewsServiceImpl implements NewsService {
     }
 
     /**
+     * Gets news count.
+     *
+     * @param criteria the criteria
+     * @return the news count
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public int getNewsCount(NewsSearchCriteria criteria) throws ServiceException {
+        try {
+            return dao.getNewsCount(criteria);
+        } catch (DAOException e) {
+            LOG.error("Error in method: getNewsCount()", e);
+            throw new ServiceException("Couldn't execute news counting service", e);
+        }
+    }
+
+    /**
      * Gets previous news.
      *
      * @param newsId the news id

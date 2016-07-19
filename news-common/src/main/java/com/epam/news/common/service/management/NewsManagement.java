@@ -23,7 +23,7 @@ public interface NewsManagement {
 
     List<NewsDetailsTO> getNewsForPage(NewsSearchCriteria criteria, int pageNumber) throws ServiceException;
 
-    int getPagesCount() throws ServiceException;
+    int getPagesCount(NewsSearchCriteria criteria) throws ServiceException;
 
     void deleteNewsData(Long... newsIds) throws ServiceException;
 

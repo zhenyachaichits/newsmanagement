@@ -38,6 +38,15 @@ public interface NewsService extends EntityService<Long, News> {
     int getNewsCount() throws ServiceException;
 
     /**
+     * Gets news count.
+     *
+     * @param criteria the criteria
+     * @return the news count
+     * @throws ServiceException the service exception
+     */
+    int getNewsCount(NewsSearchCriteria criteria) throws ServiceException;
+
+    /**
      * Gets previous news.
      *
      * @param newsId the news id
@@ -58,6 +67,7 @@ public interface NewsService extends EntityService<Long, News> {
     /**
      * Gets news for page.
      *
+     * @param criteria   the criteria
      * @param pageNumber the page number
      * @param newsOnPage the news on page
      * @return the news for page

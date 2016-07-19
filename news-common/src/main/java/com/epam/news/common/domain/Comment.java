@@ -1,5 +1,9 @@
 package com.epam.news.common.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 
@@ -7,9 +11,17 @@ import java.sql.Timestamp;
  * The type Comment.
  */
 public class Comment {
+
     private Long commentId;
+
+    @NotNull
     private Long newsId;
+
+    @NotBlank
+    @Length(max = 100)
     private String commentText;
+
+    @NotNull
     private Timestamp creationDate;
 
     /**
