@@ -130,10 +130,10 @@ public class NewsManagementImpl implements NewsManagement {
     public int getPagesCount(NewsSearchCriteria criteria) throws ServiceException {
         try {
             int allNewsCount;
-            if (criteria.getTagIdSet().isEmpty() && criteria.getAuthorIdSet().isEmpty()) {
-                allNewsCount = newsService.getNewsCount();
-            } else {
+            if (criteria.getTagIdSet() != null && criteria.getAuthorIdSet() != null) {
                 allNewsCount = newsService.getNewsCount(criteria);
+            } else {
+                allNewsCount = newsService.getNewsCount();
             }
 
             return paginationUtil.countPages(allNewsCount);
