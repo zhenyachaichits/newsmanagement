@@ -5,7 +5,6 @@ import com.epam.news.common.domain.Comment;
 import com.epam.news.common.domain.News;
 import com.epam.news.common.domain.Tag;
 
-import javax.validation.Valid;
 import java.util.List;
 
 

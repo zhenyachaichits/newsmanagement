@@ -1,8 +1,5 @@
 package com.epam.news.common.domain;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
 import java.sql.Timestamp;
 
 
@@ -10,21 +7,10 @@ import java.sql.Timestamp;
  * The type News.
  */
 public class News {
-
     private Long newsId;
-
-    @NotBlank
-    @Length(max = 100)
     private String title;
-
-    @NotBlank
-    @Length(max = 200)
     private String shortText;
-
-    @NotBlank
-    @Length(max = 4000)
     private String fullText;
-
     private Timestamp creationDate;
     private Timestamp modificationDate;
 
