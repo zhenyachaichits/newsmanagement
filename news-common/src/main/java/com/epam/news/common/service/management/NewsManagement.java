@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Yauhen_Chaichyts on 6/3/2016.
  */
 public interface NewsManagement {
-    void saveNewsData(NewsTO newsData) throws ServiceException;
+    Long saveNewsData(NewsTO newsData) throws ServiceException;
 
     NewsTO getNewsData(Long newsId) throws ServiceException;
 
