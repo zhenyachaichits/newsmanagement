@@ -1,18 +1,14 @@
 package com.epam.news.common.domain.to;
 
 import com.epam.news.common.domain.News;
-import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
  * Created by Yauhen_Chaichyts on 6/21/2016.
  */
 public class NewsTO {
-    @Valid
     private News news;
-    @NotEmpty
     private List<Long> authorIdList;
     private List<Long> tagIdList;
 
