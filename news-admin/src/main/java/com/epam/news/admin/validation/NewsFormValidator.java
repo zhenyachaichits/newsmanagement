@@ -1,13 +1,12 @@
 package com.epam.news.admin.validation;
 
 import com.epam.news.common.domain.to.NewsTO;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-/**
- * Created by Yauhen_Chaichyts on 7/18/2016.
- */
+@Component
 public class NewsFormValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
@@ -16,6 +15,6 @@ public class NewsFormValidator implements Validator {
 
     @Override
     public void validate(Object object, Errors errors) {
-        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", )
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "news.title", "title.required");
     }
 }

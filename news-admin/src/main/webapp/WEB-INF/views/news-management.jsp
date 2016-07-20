@@ -6,11 +6,16 @@
     <div class="holder">
         <form:form modelAttribute="newsData" method="post" enctype="utf8">
             <form:hidden path="news.newsId" value="${newsData.news.newsId}" cssClass="news-text"/>
-            <form:input path="news.title" placeholder="Title" value="${newsData.news.title}" cssClass="news-text"/>
+            <spring:bind path="news.title">
+                <form:input path="news.title" placeholder="Title" value="${newsData.news.title}"
+                            cssClass="news-text ${status.error ? 'error' : ''}" required="required"/>
+
+                <%--<form:errors path="news.title" cssClass="error"/>--%>
+            </spring:bind>
             <form:textarea path="news.shortText" placeholder="Description" value="${newsData.news.shortText}"
-                           cssClass="news-text"/>
+                           cssClass="news-text" required="required"/>
             <form:textarea path="news.fullText" placeholder="Full Text" value="${newsData.news.fullText}"
-                           cssClass="news-text full-text"/>
+                           cssClass="news-text full-text" required="required"/>
 
             <div class="holder">
                 <div class="select-holder tag">

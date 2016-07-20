@@ -27,12 +27,17 @@ public class NewsController {
 
     private static final String VIEW_ALL_NEWS_PAGE_NAME = "allNewsView";
     private static final String VIEW_SINGLE_NEWS_PAGE_NAME = "newsView";
-    private static final String REDIRECT_NEWS_VALUE = "redirect:/news";
+
+    private static final String MODEL_TAGS_ATTRIBUTE = "tags";
+    private static final String MODEL_AUTHORS_ATTRIBUTE = "authors";
+    private static final String MODEL_SEARCH_CRITERIA_ATTRIBUTE = "searchCriteria";
+    private static final String MODEL_CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String MODEL_NEWS_DATA_ATTRIBUTE = "newsData";
+    private static final String MODEL_PAGES_COUNT_ATTRIBUTE = "pagesCount";
+    private static final String MODEL_COMMENT_DATA_ATTRIBUTE = "commentData";
 
     @Autowired
     private NewsManagement manager;
-    @Autowired
-    private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String viewAllNews(@RequestParam(defaultValue = "1") int page, NewsSearchCriteria criteria,
@@ -43,12 +48,12 @@ public class NewsController {
             List<Tag> tags = manager.getAllTags();
             List<Author> authors = manager.getAllAuthors();
 
-            model.addAttribute("tags", tags);
-            model.addAttribute("authors", authors);
-            model.addAttribute("searchCriteria", criteria);
-            model.addAttribute("currentPage", page);
-            model.addAttribute("newsData", newsList);
-            model.addAttribute("pagesCount", pagesCount);
+            model.addAttribute(MODEL_TAGS_ATTRIBUTE, tags);
+            model.addAttribute(MODEL_AUTHORS_ATTRIBUTE, authors);
+            model.addAttribute(MODEL_SEARCH_CRITERIA_ATTRIBUTE, criteria);
+            model.addAttribute(MODEL_CURRENT_PAGE_ATTRIBUTE, page);
+            model.addAttribute(MODEL_NEWS_DATA_ATTRIBUTE, newsList);
+            model.addAttribute(MODEL_PAGES_COUNT_ATTRIBUTE, pagesCount);
 
         } catch (ServiceException e) {
             throw new ControllerException("Unable to load all news data", e);
@@ -63,36 +68,13 @@ public class NewsController {
             NewsDetailsTO news = manager.getNewsDetails(id);
             Comment comment = new Comment();
 
-            model.addAttribute("newsData", news);
-            model.addAttribute("commentData", comment);
+            model.addAttribute(MODEL_NEWS_DATA_ATTRIBUTE, news);
+            model.addAttribute(MODEL_COMMENT_DATA_ATTRIBUTE, comment);
         } catch (ServiceException e) {
             throw new ControllerException("Unable to load single news data", e);
         }
 
         return VIEW_SINGLE_NEWS_PAGE_NAME;
-    }
-
-
-    @RequestMapping(value = "/addComment", method = RequestMethod.POST)
-    public String addNewsComment(Comment commentData, HttpServletRequest request) throws ControllerException {
-        try {
-            commentService.save(commentData);
-        } catch (ServiceException e) {
-            throw new ControllerException("Unable to add news comment data", e);
-        }
-
-        return ControllerUtil.redirectToPrevious(request);
-    }
-
-    @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
-    public String deleteNewsComment(@RequestParam Long id, HttpServletRequest request) throws ControllerException {
-        try {
-            commentService.delete(id);
-        } catch (ServiceException e) {
-            throw new ControllerException("Unable to delete news comment data", e);
-        }
-
-        return ControllerUtil.redirectToPrevious(request);
     }
 
 }

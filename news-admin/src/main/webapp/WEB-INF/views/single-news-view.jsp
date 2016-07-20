@@ -56,7 +56,7 @@
 
             <div class="news-comment-content">
                     ${comment.commentText}
-                        <form name="delete${comment.commentId}" action="/deleteComment.do" method="post" hidden>
+                        <form name="delete${comment.commentId}" action="/comment/deleteComment.do" method="post" hidden>
                             <input type="hidden" name="id" value="${comment.commentId}"/>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
@@ -71,7 +71,7 @@
         </div>
     </c:forEach>
 
-    <form:form cssClass="holder comment-holder" modelAttribute="commentData" action="addComment.do" method="post" enctype="utf8">
+    <form:form cssClass="holder comment-holder" modelAttribute="commentData" action="/comment/addComment.do" method="post" enctype="utf8">
         <form:textarea path="commentText" cssClass="comment-text"/>
         <form:hidden path="newsId" value="${newsData.news.newsId}"/>
         <form:button class="medium add-comment"> POST </form:button>

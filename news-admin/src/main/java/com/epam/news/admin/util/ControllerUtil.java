@@ -15,4 +15,9 @@ public class ControllerUtil {
 
         return REDIRECT_ADDITION + previous;
     }
+
+    public static String toPrevious(HttpServletRequest request) {
+
+        return request.getHeader(REFERER_HEADER);
+    }
 }
