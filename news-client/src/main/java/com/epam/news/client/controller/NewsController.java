@@ -1,7 +1,12 @@
 package com.epam.news.client.controller;
 
 import com.epam.news.client.controller.command.Command;
+import com.epam.news.client.exception.CommandException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +20,16 @@ public final class NewsController extends HttpServlet {
     private static final String CONTENT_TYPE = "text/html";
     private static final String ERROR_MESSAGE = "ERROR";
     private static final String COMMAND_QUERY = "command=";
+    private static final String REQUEST_COMMAND_NAME_PARAMETER = "command";
+
+    private ApplicationContext context;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        context = new ClassPathXmlApplicationContext("client-context.xml");
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -26,49 +41,23 @@ public final class NewsController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String responseString;
-
-
-        String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
+        String commandName = request.getParameter(REQUEST_COMMAND_NAME_PARAMETER);
 
         if (commandName != null) {
-            Command command = ;
-            responseString = getResponseString(request, response, command, isAjax);
-        } else {
-            responseString = JspPageName.ERROR_PAGE;
+            Command command = (Command) context.getBean(commandName);
+            try {
+                String responseString = command.execute(request);
+
+                if (responseString.contains(COMMAND_QUERY)) {
+                    response.sendRedirect(responseString);
+                } else {
+                    forwardPage(request, response, responseString);
+                }
+            } catch (CommandException e) {
+                // TODO: 7/21/2016 refactor
+                throw new ServletException();
+            }
         }
-
-        boolean isXml = AjaxIdentifier.isResponseContextXml(response);
-
-
-        if (isAjax && !isXml) {
-            writeToResponse(response, responseString);
-        } else if (responseString.contains(COMMAND_QUERY)) {
-            response.sendRedirect(responseString);
-        } else {
-            forwardPage(request, response, responseString);
-        }
-
-    }
-
-    private String getResponseString(HttpServletRequest request, HttpServletResponse response,
-                                     Command command, boolean isAjax) {
-        String responseString;
-        try {
-            responseString = command.execute(request, response);
-
-        } catch (AccessDeniedException e) {
-            responseString = ExceptionHandler.handleAccessException(e);
-        } catch (InvalidSessionException e) {
-            responseString = ExceptionHandler.handleSessionException(e);
-        } catch (InvalidDataException e) {
-            responseString = ExceptionHandler.handleDataException(e);
-        } catch (CommandException e) {
-            responseString = ExceptionHandler.handleCommandException(e, isAjax);
-        } catch (Exception e) {
-            responseString = JspPageName.ERROR_PAGE;
-        }
-        return responseString;
     }
 
     private void forwardPage(HttpServletRequest request, HttpServletResponse response, String page) throws ServletException, IOException {
