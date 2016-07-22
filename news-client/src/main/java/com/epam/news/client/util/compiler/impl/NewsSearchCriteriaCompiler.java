@@ -20,19 +20,28 @@ public class NewsSearchCriteriaCompiler implements BeanCompiler<NewsSearchCriter
         String[] tagIds = request.getParameterValues(REQUEST_TAG_ID_SET_PARAMETER);
         String[] authorIds = request.getParameterValues(REQUEST_AUTHOR_ID_SET_PARAMETER);
 
-        Set<Long> tagIdSet = new HashSet<>(tagIds.length);
-        Set<Long> authorIdSet = new HashSet<>(authorIds.length);
-        for (String tagId : tagIds) {
-            tagIdSet.add(Long.parseLong(tagId));
-        }
-        for (String authorId : authorIds) {
-            tagIdSet.add(Long.parseLong(authorId));
-        }
-
         NewsSearchCriteria criteria = new NewsSearchCriteria();
-        criteria.setTagIdSet(tagIdSet);
-        criteria.setAuthorIdSet(authorIdSet);
+        criteria.setTagIdSet(fillInIdSet(tagIds));
+        criteria.setAuthorIdSet(fillInIdSet(authorIds));
 
         return criteria;
+    }
+
+    private Set<Long> fillInIdSet(String[] idArray) throws BeanCompilerException {
+        try {
+            if (idArray != null) {
+                Set<Long> idSet = new HashSet<>();
+
+                for (String id : idArray) {
+                    idSet.add(Long.parseLong(id));
+                }
+
+                return idSet;
+            } else {
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            throw new BeanCompilerException("Invalid data in request", e);
+        }
     }
 }

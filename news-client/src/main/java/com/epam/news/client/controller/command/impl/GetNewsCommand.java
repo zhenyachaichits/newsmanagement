@@ -16,21 +16,17 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/**
- * Created by Yauhen_Chaichyts on 7/20/2016.
- */
-
 @Component
 public class GetNewsCommand implements Command {
 
     private static final String REQUEST_PAGE_PARAMETER = "page";
-
     private static final String REQUEST_TAGS_ATTRIBUTE = "tags";
     private static final String REQUEST_AUTHORS_ATTRIBUTE = "authors";
     private static final String REQUEST_SEARCH_CRITERIA_ATTRIBUTE = "searchCriteria";
     private static final String REQUEST_CURRENT_PAGE_ATTRIBUTE = "currentPage";
     private static final String REQUEST_NEWS_DATA_ATTRIBUTE = "newsData";
     private static final String REQUEST_PAGES_COUNT_ATTRIBUTE = "pagesCount";
+    private static final String NEWS_VIEW = "newsView.tiles";
 
     @Autowired
     private NewsManagement manager;
@@ -55,7 +51,7 @@ public class GetNewsCommand implements Command {
             request.setAttribute(REQUEST_NEWS_DATA_ATTRIBUTE, newsList);
             request.setAttribute(REQUEST_PAGES_COUNT_ATTRIBUTE, pagesCount);
 
-            return "index.jsp";
+            return NEWS_VIEW;
         } catch (ServiceException | BeanCompilerException e) {
             throw new CommandException();
         }

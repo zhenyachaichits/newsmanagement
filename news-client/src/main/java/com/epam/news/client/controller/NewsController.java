@@ -2,6 +2,7 @@ package com.epam.news.client.controller;
 
 import com.epam.news.client.controller.command.Command;
 import com.epam.news.client.exception.CommandException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,14 +22,15 @@ public final class NewsController extends HttpServlet {
     private static final String ERROR_MESSAGE = "ERROR";
     private static final String COMMAND_QUERY = "command=";
     private static final String REQUEST_COMMAND_NAME_PARAMETER = "command";
+    private static final String CONTEXT_PATH = "client-context.xml";
 
+    @Autowired
     private ApplicationContext context;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
-        context = new ClassPathXmlApplicationContext("client-context.xml");
+        context = new ClassPathXmlApplicationContext(CONTEXT_PATH);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
