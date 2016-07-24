@@ -73,10 +73,11 @@
 
             <div class="holder">
                 <div class="news-title">
-                    <a href="/news/${newsEntry.news.newsId}" class="title">${newsEntry.news.title}</a>
-                    <a href="/newsManagement/${newsEntry.news.newsId}" class="option">
-                        <i class="material-icons">edit</i>
-                    </a>
+                    <form action="/news" name="show${newsEntry.news.newsId}">
+                        <input type="hidden" name="command" value="getNewsDetailsCommand">
+                        <input type="hidden" name="newsId" value="${newsEntry.news.newsId}">
+                    </form>
+                    <a href="javascript:show${newsEntry.news.newsId}.submit()" class="title">${newsEntry.news.title}</a>
                 </div>
 
                 <%--<fmt:formatDate pattern="yyyy-MM-dd" value="${newsEntry.news.creationDate}" var="creationDate"/>--%>

@@ -15,13 +15,13 @@
     </definition>
 
     <definition name="newsView" extends="pageTemplate">
-        <put-attribute name="title" value="News Management"/>
+        <put-attribute name="title" value="News"/>
         <put-attribute name="body" value="/WEB-INF/views/news-view.jsp"/>
     </definition>
 
-    <!--<definition name="newsManagement" extends="pageTemplate">-->
-        <!--<put-attribute name="title" value="News Management"/>-->
-        <!--<put-attribute name="body" value="/WEB-INF/views/news-management.jsp"/>-->
-    <!--</definition>-->
+    <definition name="singleNewsView" extends="pageTemplate">
+        <put-attribute name="title" value="News Management"/>
+        <put-attribute name="body" value="/WEB-INF/views/single-news-view.jsp"/>
+    </definition>
 
 </tiles-definitions>

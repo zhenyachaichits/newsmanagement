@@ -1,13 +1,25 @@
-<%@ c:taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <c:if test="${newsData.previousNewsId ne 0}">
-    <a href="/news/${newsData.previousNewsId}" class="navigate previous">
+    <form action="/news" name="showPrev">
+        <input type="hidden" name="command" value="getNewsDetailsCommand">
+        <input type="hidden" name="newsId" value="${newsData.previousNewsId}">
+    </form>
+    <a href="javascript:showPrev.submit()" class="navigate previous">
         <i class="material-icons">navigate_before</i>
     </a>
 </c:if>
 
 <c:if test="${newsData.nextNewsId ne 0}">
-    <a href="/news/${newsData.nextNewsId}" class="navigate next">
+    <form action="/news" name="showNext">
+        <input type="hidden" name="command" value="getNewsDetailsCommand">
+        <input type="hidden" name="newsId" value="${newsData.nextNewsId}">
+    </form>
+
+    <a href="javascript:showNext.submit()" class="navigate next">
         <i class="material-icons">navigate_next</i>
     </a>
 </c:if>
@@ -16,7 +28,7 @@
 
     <div class="holder">
         <div class="news-title">
-            <a href="/news/${newsData.news.newsId}" class="title">${newsData.news.title}</a>
+            <a href="javascript:void(0)" class="title">${newsData.news.title}</a>
         </div>
 
         <%--<fmt:formatDate pattern="yyyy-MM-dd" value="${newsData.news.creationDate}" var="creationDate"/>--%>
@@ -52,17 +64,11 @@
 
             <div class="news-comment-content">
                     ${comment.commentText}
-                <form name="delete${comment.commentId}" action="/comment/deleteComment.do" method="post" hidden>
-                    <input type="hidden" name="id" value="${comment.commentId}"/>
-                </form>
-                <a href="javascript:delete${comment.commentId}.submit()" class="option delete-icon">
-                    <i class="material-icons">delete</i>
-                </a>
             </div>
 
-            <fmt:formatDate pattern="yyyy-MM-dd 'at' hh:mm a" value="${comment.creationDate}"
-                            var="commentCreationDate"/>
-            <div class="news-comment-date">${commentCreationDate}</div>
+            <%--<fmt:formatDate pattern="yyyy-MM-dd 'at' hh:mm a" value="${comment.creationDate}"--%>
+                            <%--var="commentCreationDate"/>--%>
+            <%--<div class="news-comment-date">${commentCreationDate}</div>--%>
         </div>
     </c:forEach>
 

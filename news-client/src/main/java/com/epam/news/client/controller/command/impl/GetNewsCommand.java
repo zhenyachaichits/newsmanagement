@@ -1,14 +1,12 @@
 package com.epam.news.client.controller.command.impl;
 
 import com.epam.news.client.controller.command.Command;
-import com.epam.news.client.exception.BeanCompilerException;
 import com.epam.news.client.exception.CommandException;
 import com.epam.news.client.util.compiler.BeanCompiler;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.Tag;
 import com.epam.news.common.domain.criteria.NewsSearchCriteria;
 import com.epam.news.common.domain.to.NewsDetailsTO;
-import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,8 +50,8 @@ public class GetNewsCommand implements Command {
             request.setAttribute(REQUEST_PAGES_COUNT_ATTRIBUTE, pagesCount);
 
             return NEWS_VIEW;
-        } catch (ServiceException | BeanCompilerException e) {
-            throw new CommandException();
+        } catch (Exception e) {
+            throw new CommandException("Couldn't execute news getting command", e);
         }
     }
 }

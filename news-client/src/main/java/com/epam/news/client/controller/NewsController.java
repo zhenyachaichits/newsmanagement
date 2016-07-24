@@ -56,6 +56,7 @@ public final class NewsController extends HttpServlet {
                     forwardPage(request, response, responseString);
                 }
             } catch (CommandException e) {
+                //response.sendError(505);
                 // TODO: 7/21/2016 refactor
                 throw new ServletException();
             }
