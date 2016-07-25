@@ -8,7 +8,7 @@
     <div class="search-panel center">
 
         <form action="/news" method="get" name="searchForm"
-                   enctype="utf8">
+              enctype="utf8">
             <input type="hidden" name="command" value="getNewsCommand">
             <div class="holder">
                 <div class="criteria-holder">
@@ -24,9 +24,18 @@
                             <dd>
                                 <div class="multiSelect">
                                     <ul class="tagIdSet">
+                                        <c:forEach items="${tags}" var="tag">
+                                            <li>
+                                                <input id="${tag.tagId}" type="checkbox" name="tagIdSet"
+                                                       value="${tag.tagId}"
+                                                        <c:if test="${fn:contains(searchCriteria.tagIdSet, tag.tagId)}">
+                                                            checked </c:if> />
+                                                <label for="${tag.tagId}"> ${tag.tagName} </label>
+                                            </li>
+                                        </c:forEach>
                                         <%--<form:checkboxes path="tagIdSet" element="li" itemValue="tagId"--%>
-                                                         <%--itemLabel="tagName"--%>
-                                                         <%--items="${tags}"/>--%>
+                                        <%--itemLabel="tagName"--%>
+                                        <%--items="${tags}"/>--%>
                                     </ul>
                                 </div>
                             </dd>
@@ -45,9 +54,15 @@
                             <dd>
                                 <div class="multiSelect">
                                     <ul class="authorIdSet">
-                                        <%--<form:checkboxes path="authorIdSet" element="li" itemValue="authorId"--%>
-                                                         <%--itemLabel="authorName"--%>
-                                                         <%--items="${authors}"/>--%>
+                                        <c:forEach items="${authors}" var="author">
+                                            <li>
+                                                <input id="${author.authorId}" type="checkbox" name="authorIdSet"
+                                                       value="${author.authorId}"
+                                                        <c:if test="${fn:contains(searchCriteria.authorIdSet, author.authorId)}">
+                                                            checked </c:if> />
+                                                <label for="${author.authorId}"> ${author.authorName} </label>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </dd>
@@ -57,8 +72,8 @@
 
 
                 <input type="hidden" name="page" value=""/>
-                <button class="right"> SEARCH </button>
-                <button class="right edit reset" type="reset"> RESET </button>
+                <button class="right"> SEARCH</button>
+                <button class="right edit reset" type="reset"> RESET</button>
             </div>
         </form>
 
@@ -80,8 +95,8 @@
                     <a href="javascript:show${newsEntry.news.newsId}.submit()" class="title">${newsEntry.news.title}</a>
                 </div>
 
-                <%--<fmt:formatDate pattern="yyyy-MM-dd" value="${newsEntry.news.creationDate}" var="creationDate"/>--%>
-                <%--<div class="news-date">${creationDate} </div>--%>
+                    <%--<fmt:formatDate pattern="yyyy-MM-dd" value="${newsEntry.news.creationDate}" var="creationDate"/>--%>
+                    <%--<div class="news-date">${creationDate} </div>--%>
             </div>
 
 

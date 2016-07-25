@@ -6,6 +6,7 @@ import com.epam.news.client.exception.BeanCompilerException;
 import com.epam.news.client.exception.CommandException;
 import com.epam.news.client.util.RequestUtil;
 import com.epam.news.client.util.compiler.BeanCompiler;
+import com.epam.news.client.util.validator.BeanValidator;
 import com.epam.news.common.domain.Comment;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.CommentService;
@@ -17,16 +18,20 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AddCommentCommand implements Command {
 
-
     @Autowired
     private CommentService service;
     @Autowired
     private BeanCompiler<Comment> commentCompiler;
+    @Autowired
+    private BeanValidator<Comment> commentValidator;
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         try {
             Comment comment = commentCompiler.constructBean(request);
+            if (!commentValidator.validate(comment)) {
+                throw new CommandException("Invalid comment");
+            }
             service.save(comment);
 
             return RequestUtil.getPrevious(request);

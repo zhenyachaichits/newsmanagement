@@ -1,12 +1,15 @@
 package com.epam.news.client.controller.command.impl;
 
 import com.epam.news.client.controller.command.Command;
+import com.epam.news.client.exception.BeanCompilerException;
 import com.epam.news.client.exception.CommandException;
 import com.epam.news.client.util.compiler.BeanCompiler;
+import com.epam.news.client.util.validator.BeanValidator;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.Tag;
 import com.epam.news.common.domain.criteria.NewsSearchCriteria;
 import com.epam.news.common.domain.to.NewsDetailsTO;
+import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.management.NewsManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +29,8 @@ public class GetNewsCommand implements Command {
     private static final String REQUEST_PAGES_COUNT_ATTRIBUTE = "pagesCount";
     private static final String NEWS_VIEW = "newsView.tiles";
 
+    private static final int DEFAULT_PAGE = 1;
+
     @Autowired
     private NewsManagement manager;
     @Autowired
@@ -34,8 +39,8 @@ public class GetNewsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         try {
+            int page = getPage(request);
             NewsSearchCriteria criteria = criteriaCompiler.constructBean(request);
-            int page = Integer.parseInt(request.getParameter(REQUEST_PAGE_PARAMETER));
 
             List<NewsDetailsTO> newsList = manager.getNewsForPage(criteria, page);
             int pagesCount = manager.getPagesCount(criteria);
@@ -50,8 +55,17 @@ public class GetNewsCommand implements Command {
             request.setAttribute(REQUEST_PAGES_COUNT_ATTRIBUTE, pagesCount);
 
             return NEWS_VIEW;
-        } catch (Exception e) {
+        } catch (ServiceException | BeanCompilerException e) {
             throw new CommandException("Couldn't execute news getting command", e);
+        }
+    }
+
+
+    private int getPage(HttpServletRequest request) {
+        try {
+            return Integer.parseInt(request.getParameter(REQUEST_PAGE_PARAMETER));
+        } catch (NumberFormatException e) {
+            return DEFAULT_PAGE;
         }
     }
 }
