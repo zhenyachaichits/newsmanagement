@@ -1,0 +1,1 @@
+<p>2016 EPAM Systems, Inc. All Rights Reserved.</p>
