@@ -6,7 +6,10 @@
 }
 
 .error {
-    background-color: rgba(160, 73, 73, 0.23);
+    border: solid 1px rgba(228, 188, 188, 0.42);
+    color: rgba(173, 94, 94, 0.88);
+    background-color: rgba(160, 73, 73, 0.14);
+    margin: 10px;
 }
 
 .error:focus {

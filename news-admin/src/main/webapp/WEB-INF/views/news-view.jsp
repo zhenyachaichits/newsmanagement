@@ -79,8 +79,10 @@
 
             <div class="holder">
                 <div class="news-title">
-                    <a href="/news/${newsEntry.news.newsId}" class="title">${newsEntry.news.title}</a>
-                    <a href="/newsManagement/${newsEntry.news.newsId}" class="option">
+                    <c:url value="/news/${newsEntry.news.newsId}" var="viewNews"/>
+                    <a href="${viewNews}" class="title">${newsEntry.news.title}</a>
+                    <c:url value="/newsManagement/${newsEntry.news.newsId}" var="editNews"/>
+                    <a href="${editNews}" class="option">
                         <i class="material-icons">edit</i>
                     </a>
                 </div>
