@@ -5,6 +5,7 @@ import com.epam.news.admin.exception.ControllerException;
 import com.epam.news.admin.util.ControllerUtil;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.domain.Tag;
+import com.epam.news.common.domain.to.NewsDetailsTO;
 import com.epam.news.common.domain.to.NewsTO;
 import com.epam.news.common.exception.ServiceException;
 import com.epam.news.common.service.management.NewsManagement;
@@ -81,19 +82,23 @@ public class NewsManagementController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNews(@ModelAttribute("newsData") @Validated NewsTO newsData, BindingResult bindingResult,
-                           HttpServletRequest request) throws ControllerException {
-        //long newsId = newsData.getNews().getNewsId();
+    public String saveNews(@ModelAttribute("newsData") @Validated NewsTO newsData,
+                           BindingResult bindingResult, ModelMap model) throws ControllerException {
         try {
             if (bindingResult.hasErrors()) {
+                List<Tag> tags = manager.getAllTags();
+                List<Author> authors = manager.getAllAuthors();
+
+                model.addAttribute(MODEL_TAGS_ATTRIBUTE, tags);
+                model.addAttribute(MODEL_AUTHORS_ATTRIBUTE, authors);
                 return NEWS_MANAGEMENT_PAGE_NAME;
             }
-            manager.saveNewsData(newsData);
+            Long newsId =  manager.saveNewsData(newsData);
+
+            return REDIRECT_NEWS_VALUE + newsId;
         } catch (ServiceException e) {
             throw new ControllerException("Unable to save news data");
         }
-
-        return REDIRECT_NEWS_VALUE /*+ newsId*/;
     }
 
     @RequestMapping(value = "/deleteNews", method = RequestMethod.POST)
