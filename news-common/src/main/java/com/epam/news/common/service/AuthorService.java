@@ -23,7 +23,7 @@ public interface AuthorService extends EntityService<Long, Author> {
     /**
      * Add news author.
      *
-     * @param newsId   the news id
+     * @param newsId       the news id
      * @param authorIdList the author id array
      * @throws ServiceException the service exception
      */
@@ -54,4 +54,12 @@ public interface AuthorService extends EntityService<Long, Author> {
      * @throws ServiceException the service exception
      */
     void deleteNewsAuthors(Long... newsId) throws ServiceException;
+
+    /**
+     * Expire author.
+     *
+     * @param authorId the author id
+     * @throws ServiceException the service exception
+     */
+    void expireAuthor(Long authorId) throws ServiceException;
 }

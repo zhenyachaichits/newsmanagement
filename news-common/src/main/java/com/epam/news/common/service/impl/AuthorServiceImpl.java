@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -182,6 +183,23 @@ public class AuthorServiceImpl implements AuthorService {
         } catch (DAOException e) {
             LOG.error("Error in method: deleteNewsAuthors(long newsId)", e);
             throw new ServiceException("Couldn't execute deleting news authors service", e);
+        }
+    }
+
+    /**
+     * Expire author.
+     *
+     * @param authorId the author id
+     * @throws ServiceException the service exception
+     */
+    @Override
+    public void expireAuthor(Long authorId) throws ServiceException {
+        try {
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            dao.updateAuthorExpired(authorId, currentTime);
+        } catch (DAOException e) {
+            LOG.error("Error in method: deleteNewsAuthors(long newsId)", e);
+            throw new ServiceException("Couldn't execute author expiring service", e);
         }
     }
 }
