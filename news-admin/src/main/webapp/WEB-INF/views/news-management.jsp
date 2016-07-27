@@ -42,31 +42,33 @@
                     </dl>
                 </div>
 
-                <div class="select-holder author">
-                    <dl class="dropdown authorIdList">
-                        <dt>
-                            <a href="javascript:void(0)" name="authorIdList">
-                                <span class="hidden-title authorIdList">Select Authors</span>
-                                <p class="multiSel authorIdList"></p>
-                            </a>
-                        </dt>
+                <spring:bind path="authorIdList">
+                    <div class="select-holder author">
+                        <dl class="dropdown authorIdList">
+                            <dt>
+                                <a class="${status.error ? 'error' : ''}" href="javascript:void(0)" name="authorIdList">
+                                    <span class="hidden-title authorIdList">Select Authors</span>
+                                    <p class="multiSel authorIdList"></p>
+                                </a>
+                            </dt>
 
-                        <dd>
-                            <div class="multiSelect">
-                                <ul class="authorIdList">
-                                    <form:checkboxes path="authorIdList" element="li" itemValue="authorId"
-                                                     itemLabel="authorName"
-                                                     items="${authors}"/>
-                                </ul>
-                            </div>
-                        </dd>
-                    </dl>
-                </div>
+                            <dd>
+                                <div class="multiSelect">
+                                    <ul class="authorIdList ${status.error ? 'error' : ''}">
+                                        <form:checkboxes path="authorIdList" element="li" itemValue="authorId"
+                                                         itemLabel="authorName"
+                                                         items="${authors}" cssClass="${status.error ? 'error' : ''}"/>
+                                    </ul>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </spring:bind>
 
             </div>
 
             <div align="holder">
-                <form:button formaction="/newsManagement/save" class="right"> SAVE </form:button>
+                <form:button formaction="/newsManagement/save.do" class="right"> SAVE </form:button>
             </div>
 
         </form:form>
