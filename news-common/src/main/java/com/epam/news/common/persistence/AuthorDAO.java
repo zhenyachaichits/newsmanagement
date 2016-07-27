@@ -3,6 +3,7 @@ package com.epam.news.common.persistence;
 import com.epam.news.common.domain.Author;
 import com.epam.news.common.exception.DAOException;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -55,5 +56,14 @@ public interface AuthorDAO extends EntityDAO<Long, Author> {
      * @throws DAOException the dao exception
      */
     void deleteNewsAuthors(Long... newsId) throws DAOException;
+
+    /**
+     * Update author expired.
+     *
+     * @param authorId the author id
+     * @param expired  the expired
+     * @throws DAOException the dao exception
+     */
+    void updateAuthorExpired(Long authorId, Timestamp expired) throws DAOException;
 
 }

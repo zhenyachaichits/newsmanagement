@@ -32,7 +32,8 @@ public class TagDAOImpl implements TagDAO {
             "INNER JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG_ID WHERE NEWS_TAG.NEWS_ID = ?";
     private static final String SQL_GET_NEWS_TAG_IDS_QUERY = "SELECT TAG.TAG_ID FROM TAG " +
             "INNER JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG_ID WHERE NEWS_TAG.NEWS_ID = ?";
-    private static final String SQL_DELETE_NEWS_TAGS_QUERY = "DELETE FROM NEWS_TAG WHERE NEWS_ID = ?";
+    private static final String SQL_DELETE_NEWS_TAGS_BY_NEWS_ID_QUERY = "DELETE FROM NEWS_TAG WHERE NEWS_ID = ?";
+    private static final String SQL_DELETE_NEWS_TAGS_BY_TAG_ID_QUERY = "DELETE FROM NEWS_TAG WHERE TAG_ID = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -310,12 +311,12 @@ public class TagDAOImpl implements TagDAO {
      * @throws DAOException if SQLException thrown
      */
     @Override
-    public void deleteNewsTags(Long... newsIds) throws DAOException {
+    public void deleteNewsTagsByNewsId(Long... newsIds) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            statement = connection.prepareStatement(SQL_DELETE_NEWS_TAGS_QUERY);
+            statement = connection.prepareStatement(SQL_DELETE_NEWS_TAGS_BY_NEWS_ID_QUERY);
 
             for (Long newsId : newsIds) {
                 statement.setLong(1, newsId);
@@ -325,6 +326,31 @@ public class TagDAOImpl implements TagDAO {
             statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't delete tags by news id", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Delete news tags.
+     *
+     * @param tagId the news id
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public void deleteNewsTagsByTagId(Long tagId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_DELETE_NEWS_TAGS_BY_TAG_ID_QUERY);
+
+            statement.setLong(1, tagId);
+
+            statement.executeQuery();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't get id set", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

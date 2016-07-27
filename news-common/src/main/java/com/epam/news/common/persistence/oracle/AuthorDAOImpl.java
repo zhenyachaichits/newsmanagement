@@ -28,6 +28,8 @@ public class AuthorDAOImpl implements AuthorDAO {
             "WHERE AUTHOR_ID = ? AND EXPIRED >= CURRENT_TIMESTAMP OR EXPIRED IS NULL ";
     private static final String SQL_UPDATE_AUTHOR_QUERY = "UPDATE AUTHOR SET AUTHOR_NAME = ?, EXPIRED = ? " +
             "WHERE AUTHOR_ID = ?";
+    private static final String SQL_UPDATE_AUTHOR_EXPIRED_QUERY = "UPDATE AUTHOR SET EXPIRED = ? " +
+            "WHERE AUTHOR_ID = ?";
     private static final String SQL_DELETE_AUTHOR_QUERY = "DELETE FROM AUTHOR WHERE AUTHOR_ID = ?";
     private static final String SQL_GET_ALL_AUTHORS_QUERY = "SELECT AUTHOR_ID, AUTHOR_NAME, EXPIRED FROM AUTHOR " +
             "WHERE EXPIRED >= CURRENT_TIMESTAMP OR EXPIRED IS NULL";
@@ -335,6 +337,33 @@ public class AuthorDAOImpl implements AuthorDAO {
             statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Couldn't get id set", e);
+        } finally {
+            DAOUtil.closeStatement(statement);
+            DAOUtil.releaseConnection(connection, dataSource);
+        }
+    }
+
+    /**
+     * Update author expired.
+     *
+     * @param authorId the author id
+     * @param expired  the expired
+     * @throws DAOException the dao exception
+     */
+    @Override
+    public void updateAuthorExpired(Long authorId, Timestamp expired) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            statement = connection.prepareStatement(SQL_UPDATE_AUTHOR_QUERY);
+
+            statement.setTimestamp(1, expired);
+            statement.setLong(2, authorId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Couldn't update author", e);
         } finally {
             DAOUtil.closeStatement(statement);
             DAOUtil.releaseConnection(connection, dataSource);

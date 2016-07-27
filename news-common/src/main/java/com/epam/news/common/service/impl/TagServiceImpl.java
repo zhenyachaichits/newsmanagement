@@ -29,7 +29,7 @@ public class TagServiceImpl implements TagService {
      * Add new tag
      *
      * @param tag tag data
-     * @return added tag with id
+     * @return added tag with tagId
      * @throws ServiceException if DAOException was thrown
      */
     @Override
@@ -50,9 +50,9 @@ public class TagServiceImpl implements TagService {
     }
 
     /**
-     * Search tag by id
+     * Search tag by tagId
      *
-     * @param id tag id
+     * @param id tag tagId
      * @return found tag
      * @throws ServiceException if DAOException was thrown
      */
@@ -61,25 +61,26 @@ public class TagServiceImpl implements TagService {
         try {
             return dao.find(id);
         } catch (DAOException e) {
-            LOG.error("Error in method: find(Long id)", e);
+            LOG.error("Error in method: find(Long tagId)", e);
             throw new ServiceException("Couldn't execute tag finding service", e);
         }
     }
 
     /**
-     * Delete tag by id
+     * Delete tag by tagId
      *
-     * @param id tag id
+     * @param tagId tag tagId
      * @return
      * @throws ServiceException if DAOException was thrown
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean delete(Long id) throws ServiceException {
+    public boolean delete(Long tagId) throws ServiceException {
         try {
-            return dao.delete(id);
+            dao.deleteNewsTagsByTagId(tagId);
+            return dao.delete(tagId);
         } catch (DAOException e) {
-            LOG.error("Error in method: delete(Long id)", e);
+            LOG.error("Error in method: delete(Long tagId)", e);
             throw new ServiceException("Couldn't execute tag deleting service", e);
         }
     }
@@ -104,7 +105,7 @@ public class TagServiceImpl implements TagService {
      * Add multiple tags.
      *
      * @param tags the tags
-     * @return generated id array
+     * @return generated tagId array
      * @throws ServiceException the service exception
      */
     @Override
@@ -120,8 +121,8 @@ public class TagServiceImpl implements TagService {
     /**
      * Add new tag for news entry
      *
-     * @param newsId the news id
-     * @param tagIdList  the tag id
+     * @param newsId the news tagId
+     * @param tagIdList  the tag tagId
      * @throws ServiceException if DAOException was thrown
      */
     @Override
@@ -138,7 +139,7 @@ public class TagServiceImpl implements TagService {
     /**
      * Search tags for specified news entry
      *
-     * @param newsId the news id
+     * @param newsId the news tagId
      * @return list of found tags
      * @throws ServiceException if DAOException was thrown
      */
@@ -155,15 +156,15 @@ public class TagServiceImpl implements TagService {
     /**
      * Delete news tags.
      *
-     * @param newsId the news id
+     * @param newsId the news tagId
      * @throws ServiceException the service exception
      */
     @Override
     public void deleteNewsTags(Long... newsId) throws ServiceException {
         try {
-            dao.deleteNewsTags(newsId);
+            dao.deleteNewsTagsByNewsId(newsId);
         } catch (DAOException e) {
-            LOG.error("Error in method deleteNewsTags(long newsId)", e);
+            LOG.error("Error in method deleteNewsTagsByNewsId(long newsId)", e);
             throw new ServiceException("Couldn't execute deleting news tags service", e);
         }
     }
@@ -171,7 +172,7 @@ public class TagServiceImpl implements TagService {
     /**
      * Gets news tags.
      *
-     * @param newsId the news id
+     * @param newsId the news tagId
      * @return the news tags
      * @throws ServiceException the service exception
      */
