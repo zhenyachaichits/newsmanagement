@@ -60,7 +60,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deleteAuthor(Author author) throws ControllerException {
+    public String expireAuthor(Author author) throws ControllerException {
         try {
             service.delete(author.getAuthorId());
         } catch (ServiceException e) {

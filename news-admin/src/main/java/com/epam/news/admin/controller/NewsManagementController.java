@@ -82,7 +82,7 @@ public class NewsManagementController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNews(@ModelAttribute("newsData") @Validated NewsTO newsData,
+    public String saveNews(@ModelAttribute(MODEL_NEWS_DATA_ATTRIBUTE) @Validated NewsTO newsData,
                            BindingResult bindingResult, ModelMap model) throws ControllerException {
         try {
             if (bindingResult.hasErrors()) {

@@ -6,7 +6,8 @@
 <div>
     <div class="delete-box" align="center">
         <div align="center"><b class="items-count">0</b> items selected</div>
-        <form name="deleteNews" action="newsManagement/deleteNews.do" method="post">
+        <c:url value="/newsManagement/deleteNews.do" var="deleteNews"/>
+        <form name="deleteNews" action="${deleteNews}" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <button class="delete-news"><i class="material-icons">delete_sweep</i></button>
@@ -74,13 +75,11 @@
         <div class="content-panel news-content-box" id="${newsEntry.news.newsId}">
 
             <div class="holder">
-
-            </div>
-
-            <div class="holder">
                 <div class="news-title">
                     <c:url value="/news/${newsEntry.news.newsId}" var="viewNews"/>
-                    <a href="${viewNews}" class="title">${newsEntry.news.title}</a>
+                    <a href="${viewNews}" class="title">
+                        <c:out value="${newsEntry.news.title}"/>
+                    </a>
                     <c:url value="/newsManagement/${newsEntry.news.newsId}" var="editNews"/>
                     <a href="${editNews}" class="option">
                         <i class="material-icons">edit</i>
@@ -88,7 +87,12 @@
                 </div>
 
                 <fmt:formatDate pattern="yyyy-MM-dd" value="${newsEntry.news.creationDate}" var="creationDate"/>
-                <div class="news-date">${creationDate} </div>
+                <fmt:formatDate pattern="yyyy-MM-dd" value="${newsEntry.news.modificationDate}" var="modificationDate"/>
+                <div class="news-date">${creationDate}
+                    <c:if test="${creationDate ne modificationDate}">
+                        (modified ${modificationDate})
+                    </c:if>
+                </div>
             </div>
 
 
@@ -96,20 +100,22 @@
                 <div class="holder">
                     <div class="news-author">(by
                         <c:forEach items="${newsEntry.authors}" var="author">
-                            ${author.authorName},
+                            <c:out value="${author.authorName}"/>,
                         </c:forEach>
                         )
                     </div>
                 </div>
             </c:if>
 
-            <div class="news-content">${newsEntry.news.shortText}</div>
+            <div class="news-content">
+                <c:out value="${newsEntry.news.shortText}"/>
+            </div>
 
             <div class="holder">
                 <div class="news-tags">
                     <c:if test="${not empty(newsEntry.tags)}">
                         <c:forEach items="${newsEntry.tags}" var="tag">
-                            #${tag.tagName}
+                            #<c:out value="${tag.tagName}"/>
                         </c:forEach>
                     </c:if>
                 </div>

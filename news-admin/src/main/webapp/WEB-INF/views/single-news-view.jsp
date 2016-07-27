@@ -21,19 +21,38 @@
 <div class="content-panel news-holder">
 
     <div class="holder">
+
+        <c:url value="/newsManagement/deleteNews.do" var="deleteNews"/>
+        <form name="deleteNews" action="${deleteNews}" method="post">
+            <input type="hidden" name="newsIds" value="${newsData.news.newsId}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
         <div class="news-title">
-            <a href="javascript:void(0)" class="title">${newsData.news.title}</a>
+            <a href="javascript:void(0)" class="title"><c:out value="${newsData.news.title}"/></a>
+            <c:url value="/newsManagement/${newsData.news.newsId}" var="editNews"/>
+            <a href="${editNews}" class="option">
+                <i class="material-icons">edit</i>
+            </a>
+            <a href="javascript:deleteNews.submit()" class="option">
+                <i class="material-icons">delete</i>
+            </a>
         </div>
 
         <fmt:formatDate pattern="yyyy-MM-dd" value="${newsData.news.creationDate}" var="creationDate"/>
-        <div class="news-date">${creationDate}</div>
+        <fmt:formatDate pattern="yyyy-MM-dd" value="${newsData.news.modificationDate}" var="modificationDate"/>
+        <div class="news-date">${creationDate}
+            <c:if test="${creationDate ne modificationDate}">
+                (modified ${modificationDate})
+            </c:if>
+        </div>
     </div>
 
     <c:if test="${not empty(newsData.authors)}">
         <div class="holder">
             <div class="news-author">(by
                 <c:forEach items="${newsData.authors}" var="author">
-                    ${author.authorName},
+                    <c:out value="${author.authorName}"/>,
                 </c:forEach>
                 )
             </div>
@@ -42,8 +61,19 @@
 
     <div class="holder">
         <div class="news-content">
-            ${newsData.news.fullText}
+            <c:out value="${newsData.news.fullText}"/>
         </div>
+    </div>
+
+    <div class="holder">
+        <div class="news-tags">
+            <c:if test="${not empty(newsData.tags)}">
+                <c:forEach items="${newsData.tags}" var="tag">
+                    #<c:out value="${tag.tagName}"/>
+                </c:forEach>
+            </c:if>
+        </div>
+
     </div>
 
     <div class="news-comments-title">
@@ -57,7 +87,7 @@
         <div class="holder comment-holder">
 
             <div class="news-comment-content">
-                    ${comment.commentText}
+                <c:out value="${comment.commentText}"/>
                 <c:url value="/comment/deleteComment.do" var="deleteCommentLink"/>
                 <form name="delete${comment.commentId}" action="${deleteCommentLink}" method="post" hidden>
                     <input type="hidden" name="id" value="${comment.commentId}"/>
@@ -76,7 +106,7 @@
 
     <form:form cssClass="holder comment-holder" modelAttribute="commentData" action="/comment/addComment.do"
                method="post" enctype="utf8">
-        <form:textarea path="commentText" cssClass="comment-text"/>
+        <form:textarea path="commentText" cssClass="comment-text"  htmlEscape="true"/>
         <form:hidden path="newsId" value="${newsData.news.newsId}"/>
         <form:button class="medium add-comment"> POST </form:button>
     </form:form>
