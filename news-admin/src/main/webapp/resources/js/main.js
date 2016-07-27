@@ -50,6 +50,6 @@ $(document).ready(function () {
     });
 });
 
-$(".error").click(function() {
+$(".error").focus(function() {
    $(this).removeClass("error");
 });
