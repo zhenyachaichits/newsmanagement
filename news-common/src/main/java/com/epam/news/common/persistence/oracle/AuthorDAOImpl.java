@@ -356,7 +356,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         PreparedStatement statement = null;
         try {
             connection = DataSourceUtils.getConnection(dataSource);
-            statement = connection.prepareStatement(SQL_UPDATE_AUTHOR_QUERY);
+            statement = connection.prepareStatement(SQL_UPDATE_AUTHOR_EXPIRED_QUERY);
 
             statement.setTimestamp(1, expired);
             statement.setLong(2, authorId);
