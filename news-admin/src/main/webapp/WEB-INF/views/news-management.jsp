@@ -5,7 +5,6 @@
 <div class="content-panel">
     <div class="holder">
         <form:form modelAttribute="newsData" method="post" enctype="utf8">
-            <%--<form:errors path="*" cssClass="error"/>--%>
             <form:hidden path="news.newsId" value="${newsData.news.newsId}" cssClass="news-text"/>
             <spring:bind path="news.title">
                 <form:input path="news.title" placeholder="Title" value="${newsData.news.title}"
