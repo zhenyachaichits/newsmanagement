@@ -42,7 +42,7 @@ public class TagController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveTag(Tag tagData) throws ControllerException {
+    public String addTag(Tag tagData) throws ControllerException {
         try {
             service.save(tagData);
         } catch (ServiceException e) {

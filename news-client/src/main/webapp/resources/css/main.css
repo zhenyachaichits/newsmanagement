@@ -6,10 +6,7 @@
 }
 
 .error {
-    border: solid 1px rgba(228, 188, 188, 0.42);
-    color: rgba(173, 94, 94, 0.88);
-    background-color: rgba(160, 73, 73, 0.14);
-    margin: 10px;
+    background-color: rgba(160, 73, 73, 0.23);
 }
 
 .error:focus {
@@ -145,7 +142,7 @@ a.title {
 
 footer {
     position: absolute;
-    bottom: 0;
+    bottom: -25px;
     z-index: 1;
     height: 25px;
     width: 100%;
@@ -562,6 +559,7 @@ ul.pagination li a:hover:not(.active) {
 }
 
 div.pagination-holder {
+    padding: 20px;
     text-align: center;
     margin: 25px;
 }

@@ -3,8 +3,8 @@ $(document).click(function () {
     $(".edit").show("fast");
     $(".update").hide("fast");
     $(".delete").hide("fast");
-    $("form[action='tags/save.do']").children("input").prop('readonly', true);
-    $("form[action='authors/save.do']").children("input").prop('readonly', true);
+    $("form[action='tags/save']").children("input").prop('readonly', true);
+    $("form[action='authors/save']").children("input").prop('readonly', true);
 });
 
 $(".edit").click(function (e) {

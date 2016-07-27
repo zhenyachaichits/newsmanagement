@@ -49,7 +49,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAuthor(Author authorData) throws ControllerException {
+    public String addAuthor(final Author authorData) throws ControllerException {
         try {
             service.save(authorData);
         } catch (ServiceException e) {
@@ -59,10 +59,10 @@ public class AuthorController {
         return REDIRECT_AUTHORS_VALUE;
     }
 
-    @RequestMapping(value = "/expire", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String expireAuthor(Author author) throws ControllerException {
         try {
-            service.expireAuthor(author.getAuthorId());
+            service.delete(author.getAuthorId());
         } catch (ServiceException e) {
             throw new ControllerException("Unable to delete author");
         }
