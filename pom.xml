@@ -11,6 +11,7 @@
     <modules>
         <module>news-client</module>
         <module>news-admin</module>
+        <module>news-common</module>
     </modules>
 
 </project>
