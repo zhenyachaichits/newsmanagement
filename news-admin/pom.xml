@@ -157,6 +157,11 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.plugin.version}</version>
+                <configuration>
+                    <url>http://localhost:8084</url>
+                    <server>TomcatServer</server>
+                    <path>/admin</path>
+                </configuration>
             </plugin>
 
             <plugin>
