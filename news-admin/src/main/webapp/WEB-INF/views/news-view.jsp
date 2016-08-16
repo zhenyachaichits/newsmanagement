@@ -15,7 +15,7 @@
 
     <div class="search-panel center">
 
-        <form:form modelAttribute="searchCriteria" action="/news" method="get" name="searchForm"
+        <form:form modelAttribute="searchCriteria" action="news" method="get" name="searchForm"
                    enctype="utf8">
             <div class="holder">
                 <div class="criteria-holder">

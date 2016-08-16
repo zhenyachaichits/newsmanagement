@@ -7,7 +7,7 @@
 <div align="center">
 
     <div class="add-panel" align="center">
-        <form:form modelAttribute="authorData" action="/authors/save" method="post" enctype="utf8">
+        <form:form modelAttribute="authorData" action="authors/save.do" method="post" enctype="utf8">
             <form:input path="authorName" placeholder="Author name"/>
             <form:input path="expiredDate" type="date" placeholder="Expiration date"/>
             <form:button> ADD </form:button>

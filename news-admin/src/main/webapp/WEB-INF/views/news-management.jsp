@@ -67,7 +67,7 @@
             </div>
 
             <div align="holder">
-                <form:button formaction="/newsManagement/save" class="right"> SAVE </form:button>
+                <form:button formaction="save" class="right"> SAVE </form:button>
             </div>
 
         </form:form>

@@ -23,6 +23,7 @@
         <tiles.version>3.0.5</tiles.version>
         <log4j.version>2.6</log4j.version>
         <slf4j.version>1.6.2</slf4j.version>
+        <tomcat.plugin.version>2.0</tomcat.plugin.version>
     </properties>
 
     <dependencies>
@@ -119,6 +120,12 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat.plugin.version}</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

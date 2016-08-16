@@ -5,7 +5,7 @@
 <div align="center">
 
     <div class="add-panel" align="center">
-        <form:form modelAttribute="tagData" action="/tags/save" method="post" enctype="utf8">
+        <form:form modelAttribute="tagData" action="tags/save.do" method="post" enctype="utf8">
             <form:input path="tagName" placeholder="Tag name"/>
             <form:button> ADD </form:button>
         </form:form>
