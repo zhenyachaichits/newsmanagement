@@ -125,7 +125,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.plugin.version}</version>
                 <configuration>
-                    <url>http://localhost:8088</url>
+                    <url>http://localhost:8088/manager/html</url>
                     <server>TomcatServer</server>
                     <path>/</path>
                 </configuration>
