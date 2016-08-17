@@ -23,7 +23,7 @@
         <tiles.version>3.0.5</tiles.version>
         <log4j.version>2.6</log4j.version>
         <slf4j.version>1.6.2</slf4j.version>
-        <tomcat.plugin.version>2.0</tomcat.plugin.version>
+        <tomcat.plugin.version>2.2</tomcat.plugin.version>
     </properties>
 
     <dependencies>
@@ -125,7 +125,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.plugin.version}</version>
                 <configuration>
-                    <url>http://localhost:8084</url>
+                    <url>http://localhost:8088</url>
                     <server>TomcatServer</server>
                     <path>/</path>
                 </configuration>
