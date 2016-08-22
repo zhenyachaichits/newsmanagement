@@ -51,8 +51,8 @@ public class CommentServiceTest {
     @Test
     public void testAdd() throws Exception {
         Comment comment = new Comment();
-        when(dao.add(any())).thenReturn(comment);
-        Comment result = service.save(any());
+        when(dao.add(comment)).thenReturn(comment);
+        Comment result = service.save(comment);
 
         assertEquals(comment, result);
     }
@@ -60,6 +60,7 @@ public class CommentServiceTest {
     @Test
     public void testUpdate() throws Exception {
         Comment comment = new Comment();
+        comment.setCommentId(TEST_ID);
         when(dao.update(comment)).thenReturn(Boolean.TRUE);
 
         assertEquals(service.save(comment), comment);

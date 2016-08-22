@@ -53,8 +53,8 @@ public class TagServiceTest {
     @Test
     public void testAdd() throws Exception {
         Tag tag = new Tag();
-        when(dao.add(any())).thenReturn(tag);
-        Tag result = service.save(any());
+        when(dao.add(tag)).thenReturn(tag);
+        Tag result = service.save(tag);
 
         assertEquals(tag, result);
     }
@@ -62,6 +62,7 @@ public class TagServiceTest {
     @Test
     public void testUpdate() throws Exception {
         Tag tag = new Tag();
+        tag.setTagId(TEST_ID);
         when(dao.update(tag)).thenReturn(Boolean.TRUE);
 
         assertEquals(service.save(tag), tag);

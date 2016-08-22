@@ -64,6 +64,7 @@ public class NewsServiceTest {
     @Test
     public void testUpdate() throws Exception {
         News news = new News();
+        news.setNewsId(TEST_ID);
         when(dao.update(news)).thenReturn(Boolean.TRUE);
 
         assertEquals(service.save(news), news);

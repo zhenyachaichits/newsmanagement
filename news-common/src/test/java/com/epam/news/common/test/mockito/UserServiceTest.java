@@ -52,8 +52,8 @@ public class UserServiceTest {
     @Test
     public void testAdd() throws Exception {
         User user = new User();
-        when(dao.add(any())).thenReturn(user);
-        User result = service.save(any());
+        when(dao.add(user)).thenReturn(user);
+        User result = service.save(user);
 
         assertEquals(user, result);
     }
@@ -61,6 +61,7 @@ public class UserServiceTest {
     @Test
     public void testUpdate() throws Exception {
         User user = new User();
+        user.setUserId(TEST_ID);
         when(dao.update(user)).thenReturn(Boolean.TRUE);
 
         assertEquals(service.save(user), user);

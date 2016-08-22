@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -53,8 +54,8 @@ public class AuthorServiceTest {
     @Test
     public void testAdd() throws Exception {
         Author author = new Author();
-        when(dao.add(any())).thenReturn(author);
-        Author result = service.save(any());
+        when(dao.add(author)).thenReturn(author);
+        Author result = service.save(author);
 
         assertEquals(author, result);
     }
@@ -62,6 +63,7 @@ public class AuthorServiceTest {
     @Test
     public void testUpdate() throws Exception {
         Author author = new Author();
+        author.setAuthorId(TEST_ID);
         when(dao.update(author)).thenReturn(Boolean.TRUE);
 
         assertEquals(service.save(author), author);
