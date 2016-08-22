@@ -1,10 +1,12 @@
 package com.epam.news.common.domain;
 
 
+import java.io.Serializable;
+
 /**
  * The type User.
  */
-public class User {
+public class User implements Serializable {
     private Long userId;
     private String userName;
     private String login;

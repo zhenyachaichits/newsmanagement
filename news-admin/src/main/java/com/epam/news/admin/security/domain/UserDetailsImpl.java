@@ -25,7 +25,7 @@ public final class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add((GrantedAuthority) () -> role.getRoleName());
+        authorities.add(role::getRoleName);
         return authorities;
     }
 
@@ -41,6 +41,10 @@ public final class UserDetailsImpl implements UserDetails {
 
     public User getUser() {
         return user;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public String getFullName() {

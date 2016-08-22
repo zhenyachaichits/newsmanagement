@@ -46,7 +46,7 @@ public class TagController {
         try {
             service.save(tagData);
         } catch (ServiceException e) {
-            throw new ControllerException();
+            throw new ControllerException("Unable to save tag", e);
         }
 
         return REDIRECT_TAGS_VALUE;

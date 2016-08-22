@@ -64,7 +64,7 @@ public class AuthorController {
         try {
             service.expireAuthor(author.getAuthorId());
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to delete author");
+            throw new ControllerException("Unable to delete author", e);
         }
 
         return REDIRECT_AUTHORS_VALUE;

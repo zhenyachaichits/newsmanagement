@@ -1,12 +1,13 @@
 package com.epam.news.common.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 
 /**
  * The type Author.
  */
-public class Author {
+public class Author implements Serializable {
     private Long authorId;
     private String authorName;
     private Timestamp expiredDate;

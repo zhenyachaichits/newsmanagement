@@ -1,12 +1,13 @@
 package com.epam.news.common.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 
 /**
  * The type News.
  */
-public class News {
+public class News implements Serializable {
     private Long newsId;
     private String title;
     private String shortText;

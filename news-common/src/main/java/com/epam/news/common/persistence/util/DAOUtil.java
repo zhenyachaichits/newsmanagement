@@ -17,18 +17,26 @@ public final class DAOUtil {
 
     private static final Logger LOG = LogManager.getLogger(DAOUtil.class);
 
+    private DAOUtil() {}
+
+    /**
+     *
+     * Close statement and log info in case when error occurred
+     *
+     * @param statement the statement to be closed
+     */
     public static void closeStatement(Statement statement) {
         if (statement != null) {
             try {
                 statement.close();
             } catch (SQLException e) {
-                LOG.error("Unable to close statement");
+                LOG.error("Unable to close statement", e);
             }
         }
     }
 
     /**
-     * This method simplify process of releasing connection to data source.
+     * This method is to simplify process of releasing connection to data source.
      *
      * @param connection the connection
      * @param dataSource the data source

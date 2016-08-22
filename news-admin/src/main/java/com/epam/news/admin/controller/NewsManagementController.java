@@ -75,7 +75,7 @@ public class NewsManagementController {
             model.addAttribute(MODEL_TAGS_ATTRIBUTE, tags);
             model.addAttribute(MODEL_AUTHORS_ATTRIBUTE, authors);
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to show news management data");
+            throw new ControllerException("Unable to show news management data", e);
         }
 
         return NEWS_MANAGEMENT_PAGE_NAME;
@@ -97,7 +97,7 @@ public class NewsManagementController {
 
             return REDIRECT_NEWS_VALUE + newsId;
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to save news data");
+            throw new ControllerException("Unable to save news data", e);
         }
     }
 
@@ -106,7 +106,7 @@ public class NewsManagementController {
         try {
             manager.deleteNewsData(newsIds);
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to delete news data");
+            throw new ControllerException("Unable to delete news data", e);
         }
 
         return REDIRECT_NEWS_VALUE;

@@ -1,0 +1,5 @@
+projectKey=com.epam.news:news-management
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/com.epam.news:news-management
+ceTaskId=AVajUkhBIVhW4lT5EE80
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVajUkhBIVhW4lT5EE80

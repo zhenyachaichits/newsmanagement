@@ -42,7 +42,7 @@ $('.multiSelect input[type="checkbox"]').on('click', function () {
     } else {
         $('span[title="' + title + '"]').remove();
         var ret = $(".hidden-title." + name);
-        if ($("input[name='" + name + "']:checked").length == 0) {
+        if ($("input[name='" + name + "']:checked").length === 0) {
             $(".hidden-title." + name).show();
         }
         $('a[name=' + name + ']').append(ret);

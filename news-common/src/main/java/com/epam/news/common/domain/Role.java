@@ -1,10 +1,12 @@
 package com.epam.news.common.domain;
 
 
+import java.io.Serializable;
+
 /**
  * The type Role. Contains information about user access level
  */
-public class Role {
+public class Role implements Serializable {
     private Long userId;
     private String roleName;
 

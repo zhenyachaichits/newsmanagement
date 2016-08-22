@@ -1,12 +1,13 @@
 package com.epam.news.common.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 
 /**
  * The type Comment.
  */
-public class Comment {
+public class Comment implements Serializable {
     private Long commentId;
     private Long newsId;
     private String commentText;

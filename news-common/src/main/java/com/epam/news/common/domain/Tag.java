@@ -1,10 +1,12 @@
 package com.epam.news.common.domain;
 
 
+import java.io.Serializable;
+
 /**
  * The type Tag.
  */
-public class Tag {
+public class Tag implements Serializable {
     private Long tagId;
     private String tagName;
 
