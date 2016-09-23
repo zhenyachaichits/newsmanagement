@@ -2,4 +2,4 @@
 
 EPAM Java Lab task.
 
-Deployed app link: http://localhost:8084/admin
+Deployed app link: http://10.6.102.60:8084/
